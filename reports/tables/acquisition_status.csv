@@ -1,0 +1,7 @@
+logical_id,status,http_status,error_type,url
+acs/2025/variables,not_published_api,404,HTTPError,https://api.census.gov/data/2025/acs/acs5/variables.json
+acs/2026/variables,not_published_api,404,HTTPError,https://api.census.gov/data/2026/acs/acs5/variables.json
+acs_state_flows/2023/variables,not_published_api,404,HTTPError,https://api.census.gov/data/2023/acs/flows/variables.json
+acs_state_flows/2024/variables,not_published_api,404,HTTPError,https://api.census.gov/data/2024/acs/flows/variables.json
+acs_state_flows/2025/variables,not_published_api,404,HTTPError,https://api.census.gov/data/2025/acs/flows/variables.json
+acs_state_flows/2026/variables,not_published_api,404,HTTPError,https://api.census.gov/data/2026/acs/flows/variables.json

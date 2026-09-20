@@ -1,0 +1,169 @@
+{
+  "checked_on": "2026-09-09",
+  "requested_start_year": 2009,
+  "scope": "50 states and DC for county analysis; source records for Puerto Rico and foreign origins are retained and flagged where published. Retrieved NOAA files contain all 50 states and DC with native county geography.",
+  "year_convention": "IRS second filing year; ACS five-year period ending year; FEMA incident starting year; NOAA calendar year.",
+  "sources": [
+    {
+      "id": "irs",
+      "publisher": "Internal Revenue Service, Statistics of Income",
+      "dataset": "County-to-county migration inflow and outflow",
+      "url": "https://www.irs.gov/statistics/soi-tax-stats-migration-data",
+      "available_start": 1991,
+      "latest_verified_end": 2023,
+      "requested_available_end_years": "2009-2023",
+      "grain": "County pair / migration filing-year interval / publication view, plus summary records",
+      "access": "Public HTTPS ZIP/XLS through 2011; CSV from 2012; no API key",
+      "fields": [
+        "origin county",
+        "destination county",
+        "returns",
+        "individuals",
+        "AGI in thousands of nominal dollars"
+      ],
+      "limitations": [
+        "Matched tax returns, not full population",
+        "Series breaks in 2012 and 2023 ending years",
+        "Suppressed cells and omitted pairs are not zeros",
+        "Inflow and outflow files are alternative publication views; do not sum them",
+        "Native geographic boundaries; no historical reallocation"
+      ]
+    },
+    {
+      "id": "acs",
+      "publisher": "US Census Bureau",
+      "dataset": "ACS five-year detailed county tables",
+      "url": "https://www.census.gov/data/developers/data-sets/acs-5year.html",
+      "available_start": 2009,
+      "latest_verified_end": 2024,
+      "requested_available_end_years": "2009-2024",
+      "grain": "County / five-year estimate ending year",
+      "access": "Census API, CENSUS_API_KEY",
+      "fields": [
+        "population",
+        "age",
+        "income",
+        "poverty",
+        "employment",
+        "education",
+        "home values",
+        "rent",
+        "vacancy",
+        "homeownership",
+        "90% margins of error"
+      ],
+      "limitations": [
+        "Adjacent windows overlap four years",
+        "Selected employment and education table availability differs in early vintages; availability is reported per variable",
+        "Negative API special values become null with flags",
+        "Dollar estimates retain their published dollar-year basis",
+        "Derived percentages do not have propagated MOEs",
+        "Native county boundaries, including Connecticut planning regions"
+      ]
+    },
+    {
+      "id": "acs_flows",
+      "publisher": "US Census Bureau",
+      "dataset": "ACS county-to-county migration flows",
+      "url": "https://www.census.gov/data/developers/data-sets/acs-migration-flows.html",
+      "available_start": 2009,
+      "latest_verified_end": 2020,
+      "requested_available_end_years": "2009-2020",
+      "grain": "Current county / previous county or world region / five-year period",
+      "access": "2009 fixed-width bulk file; 2010-2015 Census API by state; later county-to-county releases national API queries",
+      "fields": [
+        "origin",
+        "destination",
+        "movers",
+        "90% margin of error"
+      ],
+      "limitations": [
+        "Estimates of moves in the prior year pooled over five survey years, not five-year cumulative totals",
+        "Only total flows requested, not changing demographic cross-tabulations",
+        "Foreign origins are retained separately from domestic pairs",
+        "Not concatenated with newer state-origin flows or IRS flows"
+      ]
+    },
+    {
+      "id": "acs_state_flows",
+      "publisher": "US Census Bureau",
+      "dataset": "ACS state-to-county migration flows",
+      "url": "https://www.census.gov/data/developers/data-sets/acs-migration-flows.html",
+      "available_start": 2021,
+      "latest_verified_end": null,
+      "requested_available_end_years": "2021 onward, probe published API vintages",
+      "grain": "Origin state / destination county / five-year period",
+      "access": "Census API, CENSUS_API_KEY",
+      "fields": [
+        "origin state",
+        "destination county",
+        "movers",
+        "90% margin of error"
+      ],
+      "limitations": [
+        "Cannot reconstruct county-pair flows",
+        "Within-state moves may include within-county mobility; not a county-to-county substitute"
+      ]
+    },
+    {
+      "id": "fema",
+      "publisher": "Federal Emergency Management Agency",
+      "dataset": "OpenFEMA DisasterDeclarationsSummaries v2",
+      "url": "https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2",
+      "available_start": 1953,
+      "latest_verified_end": null,
+      "requested_available_end_years": "2009 through retrieval; current year incomplete",
+      "grain": "Declaration / designated geographic area",
+      "access": "Public bulk CSV from OpenFEMA; no key",
+      "fields": [
+        "disaster number",
+        "incident type",
+        "incident dates",
+        "declaration date",
+        "county codes",
+        "program flags"
+      ],
+      "limitations": [
+        "Declarations do not measure all hazards or damage severity",
+        "County geography unavailable before 1964",
+        "Statewide/tribal/unmapped records preserved but excluded from county counts",
+        "Annual count is distinct disaster numbers by incident starting year",
+        "Missing incident dates are retained without assigning an incident year",
+        "Prior years can be revised"
+      ]
+    },
+    {
+      "id": "noaa",
+      "publisher": "NOAA NCEI",
+      "dataset": "nClimDiv county monthly temperature and precipitation",
+      "url": "https://www.ncei.noaa.gov/pub/data/cirs/climdiv/",
+      "available_start": 1895,
+      "latest_verified_end": null,
+      "requested_available_end_years": "2009 through latest published month",
+      "grain": "County / month / climate variable",
+      "access": "Versioned fixed-width bulk files, no CDO token",
+      "fields": [
+        "precipitation inches",
+        "average temperature F",
+        "average maximum temperature F",
+        "average minimum temperature F"
+      ],
+      "limitations": [
+        "Climate state codes must be mapped to FIPS; DC has the special NCDC county code 18511",
+        "County area averages, not resident-weighted exposure",
+        "Retrieved files contain all 50 states and DC; inspect native county boundaries and actual join coverage",
+        "Actual temperature files use -99.90 for missing months; the older readme lists -99.99; both are handled",
+        "Annual totals/means require 12 valid months",
+        "Annual temperatures are unweighted means of 12 monthly means",
+        "Recent years and older data can be revised"
+      ]
+    }
+  ],
+  "analysis_geography": "Counties outside AK/CT; official Alaska and Connecticut state features and interstate migration totals, labeled geography_level=state.",
+  "cleaning_support_sources": [
+    "Census ACS five-year state API 2009-2024",
+    "IRS state CSVs 2019-2023 and county-file interstate state summaries 2009-2018",
+    "NOAA statewide monthly temperature/precipitation",
+    "Census 2020 AIANNH/county land-overlap relationship file"
+  ]
+}

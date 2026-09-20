@@ -1,0 +1,17 @@
+rule,flagged_rows
+missing_required_value,3689
+literal_missing_marker,0
+blank_identifier,0
+malformed_fips,0
+outside_us_county_scope,0
+invalid_year,0
+duplicate_county_year,0
+nonfinite_numeric,0
+nonpositive_denominator_or_median,0
+percentage_outside_0_100,0
+invalid_count,0
+invalid_age_or_climate,0
+inconsistent_net_migration,0
+inconsistent_rate,0
+rate_denominator_review,1
+geography_review,0
