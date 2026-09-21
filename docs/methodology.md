@@ -53,13 +53,23 @@ actual absent counties and join rates are reported in the notebook.
 - ACS negative special values become null with flags. MOEs remain alongside
   estimates. Metadata determine which estimate variables exist; their associated
   MOEs are requested even if omitted from the standalone variable listing.
-  Missing B23025/B15003 tables in early releases are not backfilled from incompatible
-  tables. Derived percentages require positive denominators; education requires
+  Missing B23025 (2009-2010) and B15003 (2009-2011) measures are reconstructed
+  from matching five-year B23001 and B15002 tables, respectively. Employment sums
+  disjoint employed/unemployed sex-age cells (including ages 65+); education sums
+  male/female counts. MOEs of sums use the root-sum-of-squares approximation.
+  Reconstruction flags distinguish historical observations from imputation.
+  Education/employment counts never use state/national median fills; unresolved
+  gaps remain missing and fail final validation. Derived percentages require positive denominators; education requires
   all four degree-count components. Derived percentage MOEs are not propagated.
 - Income, rent, and home values retain the published dollar basis. Pooled
   correlations can reflect inflation/trends; common-year and within-year
   comparisons provide sensitivity checks, not an inflation-adjusted series.
-- FEMA county-year tables count distinct disaster numbers, not rows/program flags.
+- FEMA county-year tables count distinct underlying incidents (`incidentId`),
+  combining declaration numbers within each analysis geography. `fema_county_events`
+  stores one row per geography/event with all declaration numbers; the earliest
+  local incident-start date assigns its year, preventing cross-year double counting.
+  Missing/invalid incident IDs fall back to declaration numbers, with an explicit
+  method flag; titles alone are not used to guess event identity.
   Explicit statewide records expand to reference counties; unambiguous tribal names
   map through Census 2020 land overlaps. Unresolved areas remain in an audit. In the panel, absent counts become zero only for completed years covered
   by the bulk snapshot. This means no mapped declaration, not no hazard.
@@ -102,10 +112,45 @@ range/arithmetic checks. This does not erase missingness from the source audit
 tables or assert that all publisher estimates are correct.
 
 The full rule set, exact exclusions, retained IQR flags, transformations, and
-sampling limitations are documented in [the notebook cleaning guide](notebook-cleaning.md).
+sampling limitations are documented in [the cleaned-data glossary](data-glossary.md).
 Rows requiring denominator review (inflow/outflow above 1,000 per 1,000 ACS
 residents) are held out, rather than clipped or described as proven errors.
 Year/state retention summaries accompany the predictor-imputed results. Population
 and education bands and a log10 population column supplement the original values.
 
-Training-only socioeconomic imputation uses 2009 to 2018; validation is 2019 to 2020 and testing is 2021 to 2023. Base counts are scaled by observed population, imputed counts are bounded by their universes, and derived rates are recalculated. Outcomes and population are not imputed. See the notebook cleaning guide for date completion, flags and reference-geography limits.
+Training-only socioeconomic imputation uses 2009 to 2018; validation is 2019 to 2020 and testing is 2021 to 2023. Base counts are scaled by observed population, imputed counts are bounded by their universes, and derived rates are recalculated. Outcomes, population, and education/employment counts are not median-imputed. See the notebook cleaning guide for date completion, flags and reference-geography limits.
+
+
+## Historical ACS reconstruction and comparability
+
+[The data glossary](data-glossary.md) documents all downstream fields and source
+count definitions. `scripts/download_cleaning_support.py` downloads immutable
+county and state B15002/B23001 components with the original five-year window.
+One-year tables were considered but are not mixed into the panel: they describe
+a different period and omit counties below the publication threshold.
+See [Census product guidance](https://www.census.gov/programs-surveys/acs/guidance/estimates.html)
+and [the 2009 employment table](https://api.census.gov/data/2009/acs/acs5/groups/B23001.html).
+
+Reconstruction fixes structural table availability, not every comparability issue.
+Early windows straddle the 2008 employment/education questionnaire changes; the
+published historical estimates preserve those measurement limitations. Monetary
+values still use each release's published dollar basis, five-year windows overlap,
+and native county boundaries are not fully harmonized.
+
+FEMA event identity follows the publisher's `incidentId` in
+[Disaster Declarations Summaries v2](https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2).
+Distinct IDs are not merged merely because titles or dates resemble one another.
+The `declarations` analysis column retains its name for compatibility but now
+means distinct FEMA incidents, not distinct declaration numbers.
+
+
+## Monetary imputation dollar basis
+
+Before fitting monetary donor medians, convert training observations using annual
+BLS CPI-U (`CUUR0000SA0`) to the latest ACS year in the panel (currently 2024).
+Convert each fill back to its receiving row's dollar year and preserve observed
+values exactly. Cleaned exports therefore retain their published-year units;
+common-dollar exports are reserved for analysis-specific preparation.
+See [the glossary](data-glossary.md#monetary-imputation-dollar-basis) for formulas,
+index selection, and provenance. Factors and fitted-statistic units are recorded
+in `reports/tables/monetary_imputation_factors.csv` and `socioeconomic_imputer.json`.

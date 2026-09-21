@@ -10,13 +10,13 @@ The median county population is 26,767, while the largest county has 9,848,406 r
 
 ![Chart](../reports/figures/eda/02_home_value_distribution.png)
 
-The median of county home-value estimates is $174,550, compared with a mean of $211,411. The upper tail motivates comparing ranks and inspecting extreme counties rather than automatically deleting high home values.
+The median of county home-value estimates is $174,600, compared with a mean of $211,434. The upper tail motivates comparing ranks and inspecting extreme counties rather than automatically deleting high home values.
 
 ## 3. 03_net_migration_over_time
 
 ![Chart](../reports/figures/eda/03_net_migration_over_time.png)
 
-The line tracks median net migration for the same 3,008 counties observed in every plotted year, with the middle half shaded. This equal-county statistic is not a national population-weighted rate, and the marked IRS series changes limit comparisons across those breaks.
+The line tracks median net migration for the same 3,007 counties observed in every plotted year, with the middle half shaded. This equal-county statistic is not a national population-weighted rate, and the marked IRS series changes limit comparisons across those breaks.
 
 ## 4. 04_inflow_vs_outflow
 
@@ -52,7 +52,7 @@ Annual average temperature has a Spearman correlation of 0.15 with net migration
 
 ![Chart](../reports/figures/eda/09_disasters_and_migration.png)
 
-The comparison includes 2,256 counties with no mapped declaration, 610 with one, and 184 with two or more. A zero means no matching declaration rather than no hazard, and these same-year distributions do not identify a disaster’s causal migration impact.
+The comparison includes 2,261 counties with no mapped incident, 698 with one, and 91 with two or more. A zero means no matching FEMA incident rather than no hazard, and these same-year distributions do not identify a disaster’s causal migration impact.
 
 ## 10. 10_correlation_matrix
 

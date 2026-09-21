@@ -128,3 +128,5 @@ This project's original code and documentation are licensed under the
 
 Third-party datasets and other third-party materials remain subject to their
 respective licenses. Document source-data licenses in `docs/data-sources.md`.
+
+See [the cleaned-data glossary](docs/data-glossary.md) for variable definitions, units, provenance flags, and event-count semantics.

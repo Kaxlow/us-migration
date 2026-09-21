@@ -1,0 +1,9 @@
+year,measure,source_rows,field_available,missing_before_reconstruction
+2009,unemployed,3221,False,3221
+2009,bachelors,3221,False,3221
+2010,unemployed,3221,False,3221
+2010,bachelors,3221,False,3221
+2011,unemployed,3221,True,0
+2011,bachelors,3221,False,3221
+2012,unemployed,3221,True,0
+2012,bachelors,3221,True,0

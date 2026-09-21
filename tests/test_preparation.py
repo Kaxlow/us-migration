@@ -25,7 +25,8 @@ def predictors():
                        'inflow_individuals':[10,20,np.nan],'outflow_individuals':[5,8,3]})
     for col in SocioeconomicImputer.levels: rows[col]=[100.,np.nan,900.]
     for col in SocioeconomicImputer.counts: rows[col]=[100.,np.nan,100.]
-    for col in ['bachelors','masters','professional_degree','doctorate']:rows[col]=[10.,np.nan,10.]
+    for col in SocioeconomicImputer.historical_counts: rows[col]=[100.,100.,100.]
+    for col in ['bachelors','masters','professional_degree','doctorate']:rows[col]=[10.,10.,10.]
     return rows
 
 
@@ -35,7 +36,7 @@ def test_imputation_ignores_future_values_and_preserves_outcomes():
     other=SocioeconomicImputer().fit(changed)
     assert imputer.stats==other.stats
     result,_=imputer.transform(frame)
-    assert result.loc[1,'median_household_income']==100
+    assert np.isclose(result.loc[1,'median_household_income'],100*imputer.price_index[2019]/imputer.price_index[2018])
     assert result.loc[1,'bachelors_plus_pct']==40
     assert result.loc[1,'median_household_income_imputed']
     assert pd.isna(result.loc[2,'inflow_individuals'])

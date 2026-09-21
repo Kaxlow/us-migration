@@ -58,12 +58,14 @@ def main():
         report.append(f'| {r.table} | {r.rows:,} | {r.min_year}–{r.max_year} | {r.duplicate_keys} |')
     report+=['', '## Data quality findings', '',
         '- IRS 2009–2011 uses legacy XLS archives; later CSVs require UTF-8 or Windows-1252 decoding. The cleaner preserves both publication views and exports inflow-view domestic county pairs separately.',
-        '- ACS 2009–2010 lack the selected B23025 and B15003 tables; 2011 lacks the selected B15003 table. These are availability gaps, not observed zeros. Published MOEs are retained wherever estimates are available.',
+        '- ACS 2009–2010 lack the selected B23025 and B15003 tables; 2011 lacks the selected B15003 table. These measures are reconstructed from same-window B23001 employment and B15002 education observations, with component-based MOEs; no median imputation is used for education or employment.',
         '- ACS county-to-county data end in 2020. State-to-county API vintages observed here end in 2022; later attempted metadata endpoints returned 404.',
         '- NOAA county state codes were mapped explicitly to Census FIPS. No annual climate value is generated without all 12 monthly observations.',
         '- Retrieved NOAA files include all 50 states and DC. The special DC climate code is crosswalked to 11001, and both documented -99.99 and observed -99.90 temperature missing markers are recognized.',
         '- IRS 2013–2014 contains 2,020 exact duplicate source rows across both views. The original records and a duplicate audit table are preserved; the canonical inflow table removes 1,007 repeated county-pair records after checking for numeric conflicts.',
         '- Alaska and Connecticut use official state-level features and interstate outcomes in the analysis file; county-only charts report them separately.',
+        '- FEMA counts use distinct official incident IDs per analysis geography, combining different declaration numbers for the same event. Original declarations and the event mapping audit are retained.',
+        '- Monetary imputation fits training donors in a common dollar basis using annual BLS CPI-U, then converts fills back to each row year; observed ACS monetary values are preserved.',
         '- The panel is a native-geography descriptive join, not a geographically harmonized or release-date-safe modeling dataset.', '',
         '## Correlation findings', '']
     cleaning_manifest=ROOT/'data/processed/analysis_cleaning_manifest.json'

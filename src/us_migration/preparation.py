@@ -13,3 +13,5 @@ annual_climate = definitions()['annual_climate']
 clean_state_climate = definitions()['clean_state_climate']
 repair_identifiers = definitions()['repair_identifiers']
 SocioeconomicImputer = definitions()['SocioeconomicImputer']
+
+deduplicate_fema_events = definitions()['deduplicate_fema_events']

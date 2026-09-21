@@ -90,16 +90,16 @@ rho=cross[['temperature_f','net_individuals_per_1000']].corr(method='spearman').
 charts.append(finish_chart(fig,'08_temperature_and_migration.png',
     f'Annual average temperature has a Spearman correlation of {rho:.2f} with net migration, with variation among counties at similar temperatures.',
     'Climate is an area average correlated with regional conditions, so this plot does not isolate a temperature effect.'))"""),
-('Declaration counts do not separate migration neatly',"""disasters=cross.assign(declaration_group=np.select([cross.declarations.eq(0),cross.declarations.eq(1)],['None','One'],default='Two or more'))
+('Incident counts do not separate migration neatly',"""disasters=cross.assign(declaration_group=np.select([cross.declarations.eq(0),cross.declarations.eq(1)],['None','One'],default='Two or more'))
 fig,ax=plt.subplots(figsize=(10,6))
 sns.boxplot(data=disasters,x='declaration_group',y='net_individuals_per_1000',order=['None','One','Two or more'],hue='declaration_group',palette=[blue,orange,red],legend=False,showfliers=True,ax=ax)
 ax.axhline(0,color='gray',ls=':')
-ax.set(title=f'9. Net migration by disaster declarations — {latest}',xlabel='County-coded declarations by incident starting year',ylabel='Net IRS individuals per 1,000 ACS residents')
+ax.set(title=f'9. Net migration by disaster incidents — {latest}',xlabel='Distinct FEMA incidents by earliest local starting year',ylabel='Net IRS individuals per 1,000 ACS residents')
 counts=disasters.declaration_group.value_counts()
 charts.append(finish_chart(fig,'09_disasters_and_migration.png',
-    f'The comparison includes {counts.get("None",0):,} counties with no mapped declaration, {counts.get("One",0):,} with one, and {counts.get("Two or more",0):,} with two or more.',
-    'A zero means no matching declaration rather than no hazard, and these same-year distributions do not identify a disaster’s causal migration impact.'))"""),
-('Correlations differ across migration measures',"""labels={'population':'Population','median_age':'Median age','median_household_income':'Household income','median_home_value':'Home value','median_gross_rent':'Gross rent','poverty_pct':'Poverty %','unemployment_pct':'Unemployment %','vacancy_pct':'Housing vacancy %','homeownership_pct':'Homeownership %','bachelors_plus_pct':'Bachelor’s+ %','declarations':'Declarations','precipitation_inches':'Precipitation','temperature_f':'Temperature','inflow_individuals_per_1000':'Inflow rate','outflow_individuals_per_1000':'Outflow rate','net_individuals_per_1000':'Net migration rate'}
+    f'The comparison includes {counts.get("None",0):,} counties with no mapped incident, {counts.get("One",0):,} with one, and {counts.get("Two or more",0):,} with two or more.',
+    'A zero means no matching FEMA incident rather than no hazard, and these same-year distributions do not identify a disaster’s causal migration impact.'))"""),
+('Correlations differ across migration measures',"""labels={'population':'Population','median_age':'Median age','median_household_income':'Household income','median_home_value':'Home value','median_gross_rent':'Gross rent','poverty_pct':'Poverty %','unemployment_pct':'Unemployment %','vacancy_pct':'Housing vacancy %','homeownership_pct':'Homeownership %','bachelors_plus_pct':'Bachelor’s+ %','declarations':'Disaster incidents','precipitation_inches':'Precipitation','temperature_f':'Temperature','inflow_individuals_per_1000':'Inflow rate','outflow_individuals_per_1000':'Outflow rate','net_individuals_per_1000':'Net migration rate'}
 pearson,spearman,pair_counts=correlation_bundle(cross,FEATURES+OUTCOMES,'validated_latest_year')
 assert not spearman.isna().any().any()
 display(pair_counts)

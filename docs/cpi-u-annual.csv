@@ -1,0 +1,17 @@
+year,cpi_u,series,source_url,source_sha256
+2009,214.537,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2010,218.056,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2011,224.939,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2012,229.594,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2013,232.957,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2014,236.736,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2015,237.017,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2016,240.007,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2017,245.12,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2018,251.107,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2009&endyear=2018&annualaverage=true,59af4ddabdb42abcc9981366fab1761f256683b2efdceb96066670f28238f3eb
+2019,255.657,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2019&endyear=2024&annualaverage=true,b750406cefc387c9533a188941e275fb6c7937292e0562eb12ca30af1870c66c
+2020,258.811,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2019&endyear=2024&annualaverage=true,b750406cefc387c9533a188941e275fb6c7937292e0562eb12ca30af1870c66c
+2021,270.97,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2019&endyear=2024&annualaverage=true,b750406cefc387c9533a188941e275fb6c7937292e0562eb12ca30af1870c66c
+2022,292.655,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2019&endyear=2024&annualaverage=true,b750406cefc387c9533a188941e275fb6c7937292e0562eb12ca30af1870c66c
+2023,304.702,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2019&endyear=2024&annualaverage=true,b750406cefc387c9533a188941e275fb6c7937292e0562eb12ca30af1870c66c
+2024,313.689,CUUR0000SA0,https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0?startyear=2019&endyear=2024&annualaverage=true,b750406cefc387c9533a188941e275fb6c7937292e0562eb12ca30af1870c66c

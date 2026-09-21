@@ -27,3 +27,5 @@ remove obsolete files left by earlier analyses.
 
 See [the workflow](../docs/workflow.md) for setup and acquisition steps, and
 [methodology](../docs/methodology.md) for interpretation limits.
+
+See [the cleaned-data glossary](../docs/data-glossary.md) for variable definitions, units, provenance flags, and event-count semantics.

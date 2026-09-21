@@ -6,6 +6,6 @@
 - `audit_data.py`: verify hashes/state shards, export observed coverage, and summarize EDA findings.
 - `build_notebooks.py`: regenerate only the ten-chart notebook (clears its outputs); validate and preserve the authoritative cleaning notebook.
 - `notebook_chart_cells.py`: editable source for the ten chart cells used by the generator.
-- `download_cleaning_support.py`: acquire state ACS/IRS/NOAA supplements and the Census tribal/county relationship file.
+- `download_cleaning_support.py`: acquire state ACS/IRS/NOAA supplements, historical five-year ACS components, annual CPI-U, and the Census tribal/county relationship file.
 
 Run with the repo Python environment. See [workflow](../docs/workflow.md) for full commands, inputs, outputs, and limitations.

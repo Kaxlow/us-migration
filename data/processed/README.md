@@ -29,3 +29,5 @@ cleaning supplements first as described in [the workflow](../../docs/workflow.md
 See [the output table guide](../../docs/workflow.md#2-clean-source-tables) for
 table grains and purposes, and [methodology](../../docs/methodology.md) for
 definitions, inclusion rules, and interpretation limits.
+
+See [the cleaned-data glossary](../../docs/data-glossary.md) for variable definitions, units, provenance flags, and event-count semantics.

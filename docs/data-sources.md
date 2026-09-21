@@ -32,3 +32,11 @@ units, ownership, home values, and gross rent. Availability is checked per vinta
 
 See [workflow](workflow.md) for acquisition commands and [methodology](methodology.md)
 for time alignment, geographic scope, measurement units, and missing-value rules.
+
+
+Historical ACS supplements use same-vintage five-year B15002 (education, 2009-2011)
+and B23001 (employment, 2009-2010), at county and state levels. Their immutable
+snapshots live in `data/raw/acs_historical/`; field membership is selected and
+validated from the saved Census variable metadata. See [the glossary](data-glossary.md).
+
+Monetary imputation uses BLS annual CPI-U, series `CUUR0000SA0`, from `https://api.bls.gov/publicAPI/v2/timeseries/data/CUUR0000SA0`. Immutable responses are stored in `data/raw/inflation/cpi_u/`; [the compact annual reference](cpi-u-annual.csv) preserves source URLs and hashes.

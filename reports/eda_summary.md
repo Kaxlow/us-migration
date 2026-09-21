@@ -1,8 +1,8 @@
 # Download and exploratory analysis report
 
-Generated 2026-09-20T04:14:49.891327+00:00.
+Generated 2026-09-21T00:18:08.328056+00:00.
 
-Verified SHA-256 checksums for 457 active snapshots (1.34 GB). Previous immutable versions and exploratory verification files may use additional disk space.
+Verified SHA-256 checksums for 473 active snapshots (1.34 GB). Previous immutable versions and exploratory verification files may use additional disk space.
 
 County panel: 49,717 rows, 3,109 distinct native county codes, 2009–2024. Counts include code changes across years, not a fixed geography.
 
@@ -23,7 +23,8 @@ Missing historical ACS flow state shards: 0.
 | fema_declarations | 34,290 | 2009–2026 | 0.0 |
 | fema_cleaned_incidents | 34,290 | 2009–2026 | 0.0 |
 | fema_area_county_mapping | 34,589 | 2009–2026 | 0.0 |
-| fema_county_year | 19,440 | 2009–2026 | 0.0 |
+| fema_county_events | 25,050 | 2009–2026 | 0.0 |
+| fema_county_year | 19,435 | 2009–2026 | 0.0 |
 | climate_monthly | 2,714,688 | 2009–2026 | 0.0 |
 | climate_county_year | 53,414 | 2009–2025 | 0.0 |
 | climate_state_year | 34 | 2009–2025 | 0.0 |
@@ -32,17 +33,19 @@ Missing historical ACS flow state shards: 0.
 ## Data quality findings
 
 - IRS 2009–2011 uses legacy XLS archives; later CSVs require UTF-8 or Windows-1252 decoding. The cleaner preserves both publication views and exports inflow-view domestic county pairs separately.
-- ACS 2009–2010 lack the selected B23025 and B15003 tables; 2011 lacks the selected B15003 table. These are availability gaps, not observed zeros. Published MOEs are retained wherever estimates are available.
+- ACS 2009–2010 lack the selected B23025 and B15003 tables; 2011 lacks the selected B15003 table. These measures are reconstructed from same-window B23001 employment and B15002 education observations, with component-based MOEs; no median imputation is used for education or employment.
 - ACS county-to-county data end in 2020. State-to-county API vintages observed here end in 2022; later attempted metadata endpoints returned 404.
 - NOAA county state codes were mapped explicitly to Census FIPS. No annual climate value is generated without all 12 monthly observations.
 - Retrieved NOAA files include all 50 states and DC. The special DC climate code is crosswalked to 11001, and both documented -99.99 and observed -99.90 temperature missing markers are recognized.
 - IRS 2013–2014 contains 2,020 exact duplicate source rows across both views. The original records and a duplicate audit table are preserved; the canonical inflow table removes 1,007 repeated county-pair records after checking for numeric conflicts.
 - Alaska and Connecticut use official state-level features and interstate outcomes in the analysis file; county-only charts report them separately.
+- FEMA counts use distinct official incident IDs per analysis geography, combining different declaration numbers for the same event. Original declarations and the event mapping audit are retained.
+- Monetary imputation fits training donors in a common dollar basis using annual BLS CPI-U, then converts fills back to each row year; observed ACS monetary values are preserved.
 - The panel is a native-geography descriptive join, not a geographically harmonized or release-date-safe modeling dataset.
 
 ## Correlation findings
 
-The validated predictor-imputed cohort contains 46,027 geography-years; 3,690 input rows are excluded with recorded reasons.
+The validated predictor-imputed cohort contains 46,026 geography-years; 3,691 input rows are excluded with recorded reasons.
 It has 0 missing values, 0 infinities, and 0 duplicate county-year keys under the documented rules.
 Raw-versus-cleaned comparison images are in `reports/figures/cleaning/`; the ten captioned findings charts are in `reports/figures/eda/` and `reports/eda_visualizations.md`.
 Ordinary IQR outliers are retained and flagged; denominator-review cases above 1,000 per 1,000 residents are held out without claiming the original counts are erroneous.

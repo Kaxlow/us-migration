@@ -79,7 +79,8 @@ final analysis; the provenance file records that range and exact input snapshots
 | `acs_county_flows` | County/foreign-origin to county estimates, with domestic-pair flags and MOEs |
 | `acs_state_county_flows` | State-origin to county estimates; separate from county-pair flows |
 | `fema_declarations` | Declaration-area records, dates, county-code flags, and duration diagnostics |
-| `fema_county_year` | Distinct disaster numbers beginning in each county/year; sparse event table |
+| `fema_county_events` | One geography/event with declaration numbers, event dates, and linkage method |
+| `fema_county_year` | Distinct incident IDs by earliest local start year; sparse event table |
 | `climate_monthly` | County × month × climate variable, missing monthly values retained |
 | `climate_county_year` | Annual precipitation sums and means of monthly temperatures; 12-month completeness counts |
 | `county_year_panel` | ACS-centered, same-ending-year descriptive join of characteristics, IRS totals, FEMA, NOAA |
@@ -108,7 +109,7 @@ Open these notebooks in the IDE and select the repo's Python environment, or run
 
 Notebook 01 can start directly from existing raw snapshots and rebuilds the source
 tables itself; a separate `clean_data.py` run is optional when using that notebook.
-See [the notebook cleaning guide](notebook-cleaning.md) for exact inclusion rules,
+See [the cleaned-data glossary](data-glossary.md) for exact inclusion rules,
 derived variables, selection limitations, and the complete list of ten charts.
 
 The runner registers its kernel and runtime files locally under `data/interim/`.
@@ -132,3 +133,17 @@ Raw/cleaned data and credentials are excluded from Git. The notebooks, code,
 manifest, compact report, and diagnostic CSVs are reviewable project artifacts.
 Review notebook outputs before committing. No modeling, geographic reallocation,
 inflation adjustment, causal analysis, or deployment occurs in this pipeline.
+
+Historical ACS reconstruction and event deduplication are audited in `reports/tables/acs_historical_reconstruction.csv` and `reports/tables/fema_event_deduplication.csv`. See [the data glossary](data-glossary.md) for cleaned fields.
+
+
+## Monetary imputation dollar basis
+
+Before fitting monetary donor medians, convert training observations using annual
+BLS CPI-U (`CUUR0000SA0`) to the latest ACS year in the panel (currently 2024).
+Convert each fill back to its receiving row's dollar year and preserve observed
+values exactly. Cleaned exports therefore retain their published-year units;
+common-dollar exports are reserved for analysis-specific preparation.
+See [the glossary](data-glossary.md#monetary-imputation-dollar-basis) for formulas,
+index selection, and provenance. Factors and fitted-statistic units are recorded
+in `reports/tables/monetary_imputation_factors.csv` and `socioeconomic_imputer.json`.
