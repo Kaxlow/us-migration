@@ -1,11 +1,11 @@
-# US Migration
+# Do County Characteristics Explain Migration Flows?
 
-Python data science project for exploring migration in the United States.
+A machine learning project that aims to explore and understand migration in the United States.
 
 ## Research website
 
-The responsive [research website](website/README.md) presents the introduction,
-interactive county maps, data preparation, and ten exploratory charts. Run
+The responsive [research website](https://kaxlow.github.io/us-migration/) presents the introduction,
+interactive county maps, data preparation, and ten exploratory charts. If launching from a local copy of the repository, run
 `.\us-migration\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory website`
 and open http://127.0.0.1:8000. See its README for independent data-export commands.
 

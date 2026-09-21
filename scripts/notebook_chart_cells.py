@@ -22,13 +22,13 @@ trend=balanced.groupby('year').net_individuals_per_1000.agg(median='median',q25=
 fig,ax=plt.subplots(figsize=(11,6))
 ax.fill_between(trend.index,trend.q25,trend.q75,color=blue,alpha=.2,label='Middle 50% of counties')
 ax.plot(trend.index,trend['median'],marker='o',color=blue,label='County median')
-ax.axhline(0,color='gray',ls=':'); ax.axvline(2012,color=orange,ls='--',label='IRS series change in 2012'); ax.axvline(2023,color=red,ls='--',label='IRS series change in 2023')
+ax.axhline(0,color='gray',ls=':')
 ax.set(title=f'3. Net migration in a balanced county sample — {years[0]}–{latest}',xlabel='IRS interval ending year',ylabel='Net IRS individuals per 1,000 ACS residents',xticks=years)
 ax.tick_params(axis='x',rotation=45); ax.legend(fontsize=9)
 trend.to_csv(TABLES/'chart03_balanced_trend.csv')
 charts.append(finish_chart(fig,'03_net_migration_over_time.png',
     f'The line tracks median net migration for the same {len(balanced_ids):,} counties observed in every plotted year, with the middle half shaded.',
-    'This equal-county statistic is not a national population-weighted rate, and the marked IRS series changes limit comparisons across those breaks.'))"""),
+    'This equal-county statistic is not a national population-weighted rate; changes in IRS methods can affect comparability over time.'))"""),
 ('Inflow and outflow tend to move together',"""fig,ax=plt.subplots(figsize=(9,7))
 ax.scatter(cross.outflow_individuals_per_1000,cross.inflow_individuals_per_1000,c=blue,alpha=.3,s=13,edgecolors='none')
 rates=cross[['outflow_individuals_per_1000','inflow_individuals_per_1000']]

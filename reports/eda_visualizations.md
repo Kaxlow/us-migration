@@ -16,7 +16,7 @@ The median of county home-value estimates is $174,600, compared with a mean of $
 
 ![Chart](../reports/figures/eda/03_net_migration_over_time.png)
 
-The line tracks median net migration for the same 3,007 counties observed in every plotted year, with the middle half shaded. This equal-county statistic is not a national population-weighted rate, and the marked IRS series changes limit comparisons across those breaks.
+The line tracks median net migration for the same 3,007 counties observed in every plotted year, with the middle half shaded. This equal-county statistic is not a national population-weighted rate; changes in IRS methods can affect comparability over time.
 
 ## 4. 04_inflow_vs_outflow
 

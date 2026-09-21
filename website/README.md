@@ -1,7 +1,8 @@
 # US Migration research website
 
-A static, responsive research site. No build step, Node installation, API keys,
-or runtime internet access is required. Serve this directory over HTTP:
+A static, responsive research site. No build step, Node installation, or API keys
+are required. Fira Sans loads from Google Fonts, with a sans-serif fallback when
+offline; chart libraries and data are served locally. Serve this directory over HTTP:
 
 ```powershell
 .\us-migration\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory website
@@ -50,6 +51,7 @@ Rebuild the two exports from the repository root:
 .\us-migration\Scripts\python.exe -m pip install pyshp==3.1.6
 .\us-migration\Scripts\python.exe scripts/build_population_map.py
 .\us-migration\Scripts\python.exe scripts/export_website_data.py
+.\us-migration\Scripts\python.exe scripts/export_cleaning_evidence.py
 .\us-migration\Scripts\python.exe -m pytest tests/test_website_data.py -q
 ```
 
@@ -67,3 +69,11 @@ Browser checks cover desktop/mobile layout, all ten chart traces, year changes,
 state-level map records, county search, empty chapter headings, and console errors.
 Data tests check county coverage, growth arithmetic, geography grouping totals,
 analysis uniqueness, net-count arithmetic, and chart cohort size.
+
+The Data Cleaning section follows notebook sections 2–9 in order. Its comparison
+images come from the notebook; expandable tables preserve saved cell outputs.
+Additional joined and paired imputation snapshots come from the notebook's saved
+Parquet exports, labeled separately from cell outputs. `cleaning-evidence.json`
+records the notebook and export checksums. Regenerate it after rerunning notebook 01.
+Populated chapters have section links using `#chapter/section-id`; section navigation
+preserves chart and map state. Conclusion has no section navigation until content is added.

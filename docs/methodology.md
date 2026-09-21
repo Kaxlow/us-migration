@@ -94,7 +94,7 @@ Correlation analysis excludes numeric identifiers and MOE/flag columns. Matrices
 use pairwise available data with at least 30 observations and export pair counts.
 Pearson describes linear association; Spearman describes rank association. The
 current notebooks compare the latest common year and a balanced-county time
-series, with the IRS methodology break marked. Their ten findings charts use a
+series, with IRS methodology changes noted as a comparability limitation. Their ten findings charts use a
 predictor-imputed analysis table with identical observations across correlation cells;
 matrix pair counts are exported explicitly.
 No independence-based significance tests or causal interpretations are made.
