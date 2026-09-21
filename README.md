@@ -2,6 +2,13 @@
 
 Python data science project for exploring migration in the United States.
 
+## Research website
+
+The responsive [research website](website/README.md) presents the introduction,
+interactive county maps, data preparation, and ten exploratory charts. Run
+`.\us-migration\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory website`
+and open http://127.0.0.1:8000. See its README for independent data-export commands.
+
 ## Project scope
 
 - Research question: Which county characteristics are associated with US migration patterns?

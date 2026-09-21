@@ -30,6 +30,7 @@ dist/
 .DS_Store
 Thumbs.db
 *.log
+/.playwright-mcp/
 
 # Data and generated artifacts: retain directory documentation
 /data/raw/*

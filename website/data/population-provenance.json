@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/metro/totals/cbsa-est2025-alldata.csv",
+    "retrieved_at": "2026-09-21T00:36:23.897804+00:00",
+    "sha256": "bf6fad83753456413d047d1acebeb434bd067eba9d6d0be62b3f737ad1301852"
+  },
+  {
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv",
+    "retrieved_at": "2026-09-21T00:36:23.405732+00:00",
+    "sha256": "4f5a499d851e2cb48fd7a5405e5a9235453a8a66933657aacd10df0e264f35d5"
+  },
+  {
+    "url": "https://www2.census.gov/geo/tiger/GENZ2025/shp/cb_2025_us_county_20m.zip",
+    "retrieved_at": "2026-09-21T00:37:26.995376+00:00",
+    "sha256": "745a193ddcb63337befa83a55c031c0fdd0c16a66fd12b56e2f274829624bb65"
+  },
+  {
+    "url": "https://www2.census.gov/geo/tiger/GENZ2025/shp/cb_2025_us_state_20m.zip",
+    "retrieved_at": "2026-09-21T00:37:27.566600+00:00",
+    "sha256": "9340b6d995e971b2b4230518f4fa85e6cd9e7fe6811afabc90a6a8b1191530f6"
+  }
+]
