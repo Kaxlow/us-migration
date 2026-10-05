@@ -54,3 +54,31 @@ footer strong{letter-spacing:0;font-size:13px;font-weight:500}
 @media(max-width:600px){.chart-card .chart{height:430px}}
 
 .questions + .prose{margin-top:36px}
+
+/* Consistent chapter headers and responsive introduction visuals. */
+.hero{grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+.hero p{max-width:none}
+.hero-note{border:0;padding:0;font-size:16px;width:100%}
+.section.prose{max-width:none;margin-left:0;margin-right:0}
+.section>.eyebrow{text-align:left}
+.section-title,.section-banner,.source-subheading,.cleaning-stage h3{width:100%;text-align:center}
+.section-banner{display:block}
+.section-banner .section-title{width:100%}
+.map-card{display:flex;flex-direction:column}
+.map-wrap{min-height:0;overflow:hidden}
+.map-svg{height:clamp(180px,calc(100svh - 320px),610px);max-height:61vw;touch-action:none;cursor:grab}
+.map-svg:active{cursor:grabbing}
+.map-top .map-hint{margin:8px 0 0}
+.map-detail[hidden]{display:none}
+.map-controls label{position:relative;display:flex;align-items:center;gap:12px}
+.map-controls label>.small{white-space:nowrap}
+.analytics-privacy{font-size:12px;color:var(--muted)}
+.county-suggestions{position:absolute;top:100%;left:0;min-width:260px;max-width:min(340px,75vw);background:white;border:1px solid var(--line);box-shadow:0 8px 24px #0002;z-index:7;padding:6px;border-radius:5px;font-size:12px}
+.county-suggestions button{display:block;width:100%;text-align:left;border:0;border-radius:0;padding:9px;white-space:normal}
+.growth-comparison{margin:0 0 28px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.growth-comparison figcaption{font-weight:600;margin-bottom:20px}
+.growth-row{display:grid;grid-template-columns:minmax(180px,1fr) minmax(100px,2fr) 75px;gap:18px;align-items:center;margin:18px 0;font-size:14px}
+.growth-track{background:#eee7d7;height:24px;border-radius:4px;overflow:hidden}
+.growth-bar{height:100%;background:var(--gold);border-radius:4px}
+.growth-row strong{text-align:right;color:var(--gold)}
+@media(max-width:600px){.growth-row{grid-template-columns:minmax(0,1fr) 75px;gap:8px}.growth-row>span{grid-column:1/-1}.map-svg{height:calc(100svh - 380px);min-height:170px;max-height:61vw}.map-controls{width:100%}.map-top{gap:12px}.growth-comparison{padding:18px 0}}
