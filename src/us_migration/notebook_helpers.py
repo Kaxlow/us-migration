@@ -13,6 +13,7 @@ import pandas as pd
 from IPython.display import display, Markdown
 
 from .acquisition import ROOT
+from .snapshot_style import PAPER, INK, style_cell
 from .eda import FEATURES, OUTCOMES
 from .cleaning import US_STATES
 
@@ -54,10 +55,10 @@ def table_image(frames, labels, title, filename):
     title_lines=textwrap.fill(title,95)
     top=.2+.23*(title_lines.count('\n')+1)
     total=top+sum(sum(h)+.38 for h in heights)+.12
-    fig=plt.figure(figsize=(12,total),facecolor='#1e1e1e')
-    fig.text(.02,1-.12/total,title_lines,va='top',fontsize=13,weight='bold',color='#e6e6e6')
+    fig=plt.figure(figsize=(12,total),facecolor=PAPER)
+    fig.text(.02,1-.12/total,title_lines,va='top',fontsize=13,weight='bold',color=INK)
     cursor=top
-    for rows,row_heights,label,color in zip(rendered,heights,labels,['#b76553','#359c97']*len(frames)):
+    for rows,row_heights,label,color in zip(rendered,heights,labels,[INK]*len(frames)):
         fig.text(.02,1-(cursor+.07)/total,label,va='top',fontsize=10,weight='bold',color=color)
         cursor+=.34
         height=sum(row_heights)
@@ -66,9 +67,7 @@ def table_image(frames, labels, title, filename):
         table.auto_set_font_size(False);table.set_fontsize(9)
         for (row,col),cell in table.get_celld().items():
             cell.set_height(row_heights[row]/height)
-            cell.set_edgecolor('#454545')
-            cell.set_facecolor(color if row==0 else ('#252526' if row%2 else '#303033'))
-            cell.set_text_props(color='#e6e6e6',weight='bold' if row==0 else 'normal')
+            style_cell(cell, row)
         cursor+=height+.04
     path=ROOT/'reports/figures/cleaning'/filename
     path.parent.mkdir(parents=True,exist_ok=True)

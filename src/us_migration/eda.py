@@ -9,7 +9,8 @@ from .acquisition import ROOT
 FEATURES = ['population','median_age','median_household_income','median_home_value','median_gross_rent',
     'poverty_pct','unemployment_pct','vacancy_pct','homeownership_pct','bachelors_plus_pct',
     'declarations','precipitation_inches','temperature_f']
-OUTCOMES = ['inflow_individuals_per_1000','outflow_individuals_per_1000','net_individuals_per_1000']
+from .outcomes import RATE_FIELDS
+OUTCOMES = RATE_FIELDS
 TABLES = ROOT/'reports/tables'
 
 

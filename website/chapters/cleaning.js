@@ -1,3 +1,4 @@
+import {base,esc} from '../shared.js';
 /* Descriptions follow notebook 01; evidence is exported from its saved outputs. */
 const cleaningStages = [
   {
@@ -50,12 +51,12 @@ const cleaningStages = [
   {
     title: 'Impute missing data and publish', reference: 'Notebook section 9',
     text: 'Fit socioeconomic donor medians on 2009-2018 training observations only, with state medians and a training-wide fallback. Fit monetary donors in common 2024 CPI-U dollars, then convert fills back to the receiving year; preserve observed values. Scale eligible counts by population, bound imputed counts by their universes, and recalculate derived percentages. Never median-fill migration outcomes, population, climate, or education and employment counts. Apply the quality rules again and publish the validated dataset with imputation flags, exclusions, and retention summaries.',
-    evidence: [['9.3.', 'Imputed values by variable, split coverage, and post-imputation exclusions'], ['9.4.', 'After preparation: transformed records and year-by-year retention']],
+    evidence: [['9.3.', 'Imputed values by variable, split coverage, and post-imputation exclusions'], ['9.4.', 'After preparation: transformed records and year-by-year retention'], ['9.6.', 'Net migration, inflow, and outflow counts and rates']],
     note: 'Validation uses 2019-2020 and testing uses 2021-2023. Saved outputs report 49,717 input rows, 46,026 accepted rows, and 3,691 exclusions. No missing values, infinities, or duplicate keys remain in the final cohort.'
   }
 ];
 
-function cleaningContent() {
+export function cleaningContent(cleaningEvidence) {
   return `<p>Data preparation preserves the original records, standardizes each source, and combines comparable geography-year observations. The process then checks data quality, fills eligible missing socioeconomic values using training data only, and validates the final analysis dataset. The comparisons and audit tables below show what changed at each stage. For the full implementation, saved cell outputs, and additional checks, see the <a href="${base}notebooks/01_data_cleaning.ipynb">Data Cleaning notebook</a>.</p>
     <h3>Prepare and verify the source records</h3><p>Read the download catalog and verify snapshot checksums. Keep raw files separate from cleaned outputs and retain source hashes for traceability. Store geographic codes as strings to preserve leading zeros, normalize formatted numeric values, and record each source's reference period: IRS interval-ending years, ACS five-year windows, FEMA incident-start years, and NOAA calendar years.</p>
     <div class="cleaning-sequence">${cleaningStages.map((stage, index) => `

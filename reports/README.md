@@ -29,3 +29,10 @@ See [the workflow](../docs/workflow.md) for setup and acquisition steps, and
 [methodology](../docs/methodology.md) for interpretation limits.
 
 See [the cleaned-data glossary](../docs/data-glossary.md) for variable definitions, units, provenance flags, and event-count semantics.
+
+## Net migration, inflows, and outflows
+
+All three rates per 1,000 ACS residents receive equal emphasis. County downloads
+retain their supporting counts. The ten EDA chart groups, cluster distributions,
+PCA associations, and score quintiles compare the same observations across
+outcomes. Findings and captions are regenerated from executed analyses.

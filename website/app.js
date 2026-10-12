@@ -1,86 +1,137 @@
-/* Static research atlas: all measurements are exported from documented sources. */
-const $ = s => document.querySelector(s);
-const base = 'https://github.com/Kaxlow/us-migration/blob/main/';
-const chapters = ['Introduction','Data Prep + EDA','Clustering','PCA','NaiveBayes','DecTrees','SVMs','Regression','NN','Conclusion'];
-const slugs = ['introduction','data-prep-eda','clustering','pca','naivebayes','dectrees','svms','regression','nn','conclusion'];
-const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmt = n => Number(n).toLocaleString('en-US',{maximumFractionDigits:1});
-const pct = n => `${n>=0?'+':''}${n.toFixed(2)}%`;
-const prose = p => p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>');
-let population,analysis,geo,states,intro,cleaningEvidence,resizeObserver;
-const nav=$('#navigation');nav.innerHTML=chapters.map((x,i)=>`<a href="#${slugs[i]}">${x}</a>`).join('');
-function hero(kicker,title,subtitle,note){return `<div class="hero ${note?'':'hero-full'}"><div><div class="eyebrow">${kicker}</div><h1>${title}</h1><p>${subtitle}</p></div><div class="hero-note">${note}</div></div>`;}
-function mapMarkup(id,migration=false){return `<div class="map-card" id="${id}"><div class="map-top"><div><h3 class="visualization-title">${migration?'1. The geography of domestic migration':'A changing population, county by county'}</h3><p>${migration?'IRS individuals · per 1,000 ACS residents':'Population change · July 2024 → July 2025'}</p><p class="map-hint">Drag to pan · Scroll or pinch to zoom · Use + / − to zoom</p></div><div class="map-controls">${migration?`<label>Year <select class="year">${analysis.years.map(y=>`<option ${y===analysis.latest?'selected':''}>${y}</option>`).join('')}</select></label>`:''}<label><span class="small">Find a county </span><input type="search" autocomplete="off" placeholder="Type a county or state…" aria-label="Find a county or state" aria-controls="${id}-list" aria-expanded="false"><div class="county-suggestions" id="${id}-list" hidden></div></label><button class="zoom-in" aria-label="Zoom in">+</button><button class="zoom-out" aria-label="Zoom out">−</button><button class="reset">Reset</button></div></div><div class="map-wrap"><svg class="map-svg" viewBox="0 0 1000 610" role="img" aria-label="${migration?'Domestic migration':'Population percentage change'} map of US counties"></svg><div class="tooltip" hidden></div></div><div class="map-bottom"><span class="small">Hover or tap to inspect</span><div class="legend"><div class="gradient"></div><div class="legend-labels"><span>${migration?'−30':'−3%'} or less</span><span>0</span><span>${migration?'+30':'+3%'} or more</span></div><span>Gray = unavailable / excluded</span></div></div><div class="map-detail" aria-live="polite" hidden></div>${migration?`<p class="time-note">Period: <span class="map-year-note">${analysis.latest}</span> (IRS interval ending year); selectable years ${analysis.years[0]}-${analysis.latest}.</p>`:''}</div>`;}
-function introduction(){return hero('01 / Introduction','Migration: All around US','','Counties are as varied as the people of the United States. County-level data indicate if differences between counties can explain migration patterns.')+`<section class="section"><div class="section-heading"><h2>The national picture</h2></div>${mapMarkup('population-map')}<p class="caption">Figure 1. Percent change in county population, 2024–2025. <a href="${population.source}">U.S. Census Bureau, Vintage 2025 Population Estimates</a>. <a href="${base}scripts/build_population_map.py">Computation code ↗</a></p></section><section class="section prose"><div class="eyebrow">Understanding the movement</div><h2>Why migration matters</h2>${intro.paragraphs.map(p=>`<p>${prose(p)}</p>${p.includes('data-growth')?growthComparison():''}`).join('')}</section><section class="section"><div class="eyebrow">Research framework</div><div class="research-root">How are a county’s economic, demographic, and environmental factors associated with net migration?</div><div class="questions">${intro.questions.map((q,i)=>`<div class="question"><b>${String(i+1).padStart(2,'0')}</b><span>${esc(q)}</span></div>`).join('')}</div><div class="prose"><p>The analysis uses county-level domestic migration<a href="#geography-note" class="footnote">¹</a> as its primary outcome. Economic, housing, demographic, and environmental characteristics provide complementary views of each community. Current features include income, unemployment, housing values and rent, age, education, temperature, precipitation, and disaster history. Employment growth, affordability measures, population density, drought, and wider hazard exposure are planned extensions.</p><p>Together, these questions move from describing where migration is occurring, to examining associated factors, discovering county profiles, and testing prediction. Exploratory analysis, unsupervised learning, and supervised learning form the research agenda; model results have not yet been added.</p><p id="geography-note" class="caption">¹ Alaska and Connecticut use official state-level ACS and NOAA characteristics and IRS interstate flows because county-equivalent boundaries changed during the study period. They are labeled as states and excluded from county-only EDA charts. Other county boundaries retain their source-year geography.</p></div></section>`;}
-function growthComparison(){const names=['Metropolitan areas','Micropolitan areas','Outside metropolitan and micropolitan areas'],max=Math.max(...population.groups.map(g=>Math.abs(g.change)));return `<figure class="growth-comparison"><figcaption>Population growth, 2024–2025</figcaption>${population.groups.map((g,i)=>`<div class="growth-row"><span>${names[i]}</span><div class="growth-track"><div class="growth-bar" style="width:${Math.abs(g.change)/max*100}%"></div></div><strong>${pct(g.change)}</strong></div>`).join('')}<p class="caption">Growth of summed populations, not the average county percentage. Classification: <a href="${population.classificationSource}">Vintage 2025 CBSA components</a>.</p></figure>`;}
-const sourceCards=[['IRS','County-to-county tax-return flows: origins, destinations, returns (approximate households), individuals, and aggregate adjusted gross income.','https://www.irs.gov/statistics/soi-tax-stats-migration-data','https://www.irs.gov/pub/irs-soi/','data/raw/README.md'],['Census Bureau','ACS five-year demographic, housing, employment, and socioeconomic estimates; migration flows compare current residence with residence one year earlier.','https://www.census.gov/data/developers/data-sets/acs-5year.html','https://api.census.gov/data/2024/acs/acs5?get=NAME,B01003_001E&for=county:*','docs/data-sources.md'],['FEMA','Disaster declaration records, mapped to analysis geographies and deduplicated into distinct underlying incidents.','https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2','https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries','data/raw/README.md'],['NOAA','County and official state climate histories: monthly temperature and precipitation, aggregated to complete calendar years.','https://www.ncei.noaa.gov/pub/data/cirs/climdiv/county-readme.txt','https://www.ncei.noaa.gov/pub/data/cirs/climdiv/','docs/data-sources.md']];
-const titles=['Population spans several orders of magnitude','Home values have a long upper tail','Migration varies within a fixed sample','Inflow and outflow move together','The largest county gains and losses','Homeownership and migration balance','Education groups overlap','Similar climates, different outcomes','Disasters and migration distributions','A connected set of characteristics'];
-function eda(){return hero('02 / Data preparation & exploration','Findings patterns within the data.','','')+`<section class="section"><div class="eyebrow">01 / Data sources</div><div class="sources">${sourceCards.map((s,i)=>`<article class="source-card"><div class="source-number">0${i+1}</div><h3>${s[0]}</h3><p>${s[1]}</p><a href="${s[2]}">Source documentation ↗</a><a href="${s[3]}">${i===1||i===2?'API endpoint':'Public file endpoint'} ↗</a><a href="${base+s[4]}">Repository data guide ↗</a></article>`).join('')}</div><div class="prose"><h3 class="source-subheading">Why these sources?</h3><p>These government datasets provide free public records with long historical coverage and documented definitions. Programmatic access makes acquisition repeatable, although the available years differ by source.</p><h3>How the data were collected</h3><p>The downloader calls Census and OpenFEMA APIs and retrieves IRS and NOAA public bulk files. Each active snapshot records its source URL, retrieval timestamp, checksum, and response metadata. Original files remain immutable and separate from cleaned tables.</p><p><a href="https://api.census.gov/data/2020/acs/flows.html">ACS migration-flow API</a> · <a href="${base}src/us_migration/acquisition.py">Acquisition code</a> · <a href="${base}docs/coverage-observed.csv">Observed coverage</a> · <a href="${base}data/raw/README.md">Raw data instructions</a></p></div></section><section class="section"><div class="eyebrow">02 / Data cleaning</div>${cleaningContent()}</section><section class="section"><div class="eyebrow">03 / Data exploration</div><h2>From a glance: migration insights</h2>${mapMarkup('migration-map',true)}<p class="caption">Net domestic IRS individuals per 1,000 ACS residents. Choose a year; hover or tap for inflow, outflow, and net counts. Alaska and Connecticut show state-level interstate movement. Gray geographies are unavailable or excluded; they are not zero.</p><div class="chart-grid">${titles.map((t,i)=>`<article class="chart-card ${[2,4,9].includes(i)?'wide':''}"><h3 class="visualization-title">${i+2}. ${t}</h3><div class="chart-scroll" ${i===9?'tabindex="0" aria-label="Scrollable correlation matrix"':''}><div class="chart" id="chart-${i}" role="img" aria-label="${esc(t)}"></div></div><p class="caption">${esc(analysis.captions[i].replace("Hexagon density shows", "The county scatter plot shows"))}${[5,7].includes(i)?' Interactive points replace notebook hexagons; every county is retained.':''}</p><p class="time-note">Period: ${i===2?'2009-2023 (IRS interval ending years)':analysis.latest+' (IRS interval ending year; ACS five-year window ending '+analysis.latest+')'}.</p></article>`).join('')}</div><p class="section-source">For analysis code and additional detail, see the <a href="${base}notebooks/02_eda_findings.ipynb">EDA notebook</a>.</p></section>`;}
-function render(){resizeObserver?.disconnect();document.querySelectorAll('.chart').forEach(el=>{if(el.data)Plotly.purge(el);});const slug=location.hash.slice(1).split('/')[0]||'introduction';let index=slugs.indexOf(slug);if(index<0)index=0;nav.querySelectorAll('a').forEach((a,i)=>{if(i===index)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.title=`Do County Characteristics Explain Migration Flows? | ${chapters[index]}`;$('#main').innerHTML=index===0?introduction():index===1?eda():hero(`${String(index+1).padStart(2,'0')} / Research chapters`,chapters[index],'','')+(index===9?'':`<div class="empty-sections">${['Overview','Data','Code','Results'].map(s=>`<section><h2>${s}</h2></section>`).join('')}</div>`);setupSectionNavigation(index);openOutgoingLinks();if(index===0){document.querySelectorAll('[data-growth]').forEach(el=>el.textContent=pct(population.groups[+el.dataset.growth].change));drawMap('population-map',false);}if(index===1){drawMap('migration-map',true);drawCharts();} }
-function drawMap(id,isMigration){const root=document.getElementById(id),svg=d3.select(root.querySelector('svg')),layer=svg.append('g'),tip=root.querySelector('.tooltip'),detail=root.querySelector('.map-detail');const projection=d3.geoAlbersUsa().fitExtent([[15,15],[985,595]],geo),path=d3.geoPath(projection),color=d3.scaleLinear().domain(isMigration?[-30,0,30]:[-3,0,3]).range(['#697787','#f5f0e4','#b27c16']).clamp(true);const features=isMigration?[...geo.features.filter(f=>!['02','09'].includes(f.id.slice(0,2))),...states.features.filter(f=>['02','09'].includes(f.id)).map(f=>({...f,id:f.id+'000'}))]:geo.features;let records,selected;
- const zoom=d3.zoom().scaleExtent([1,12]).on('zoom',e=>layer.attr('transform',e.transform));svg.call(zoom);root.querySelector('.zoom-in').onclick=()=>svg.call(zoom.scaleBy,1.7);root.querySelector('.zoom-out').onclick=()=>svg.call(zoom.scaleBy,1/1.7);root.querySelector('.reset').onclick=()=>{svg.call(zoom.transform,d3.zoomIdentity);root.querySelector('input').value='';selected=null;paths.classed('selected',false);detail.hidden=true;detail.textContent='';hideSuggestions();};
- function label(r){return isMigration?r.county_name:`${r.name}, ${r.state}`;}
- function info(f){const r=records.get(f.id);if(!r)return `<strong>${esc(f.properties.name)}</strong> · No eligible observation${isMigration?' in '+root.querySelector('.year').value:''}.`;return isMigration?`<strong>${esc(label(r))}${r.geography_level==='state'?' (state)':''}</strong><span>Inflow: ${fmt(r.inflow_individuals)}</span><span>Outflow: ${fmt(r.outflow_individuals)}</span><span>Net: ${fmt(r.net_individuals)}</span><span>Rate: ${fmt(r.net_individuals_per_1000)} / 1,000</span>`:`<strong>${esc(label(r))}</strong><span>2025 population: ${fmt(r.population2025)}</span><span>2024–2025 change: ${pct(r.change)}</span>`;}
- const paths=layer.selectAll('path.county').data(features).join('path').attr('class','county').attr('d',path).on('pointermove',(event,f)=>{tip.hidden=false;tip.innerHTML=info(f);const box=root.querySelector('.map-wrap').getBoundingClientRect();tip.style.left=Math.max(5,Math.min(event.clientX-box.left+12,box.width-tip.offsetWidth-8))+'px';tip.style.top=Math.max(5,event.clientY-box.top-75)+'px';}).on('pointerleave',()=>tip.hidden=true).on('click',(_,f)=>{selected=f.id;paths.classed('selected',x=>x.id===selected);detail.hidden=false;detail.innerHTML=info(f);});paths.append('title');layer.append('g').selectAll('path').data(states.features).join('path').attr('d',path).attr('class','state-border');
- function update(){if(isMigration)root.querySelector('.map-year-note').textContent=root.querySelector('.year').value;records=new Map((isMigration?analysis.migration[root.querySelector('.year').value].map(row=>Object.fromEntries(analysis.migrationFields.map((k,i)=>[k,row[i]]))):population.counties).map(r=>[isMigration?r.county_fips:r.id,r]));paths.attr('fill',f=>{const r=records.get(f.id);return r?color(isMigration?r.net_individuals_per_1000:r.change):'#dedbd3';});paths.select('title').text(f=>records.has(f.id)?label(records.get(f.id)):f.properties.name+' — unavailable');hideSuggestions();if(selected){const f=features.find(f=>f.id===selected);detail.hidden=false;detail.innerHTML=info(f);}}
- root.querySelector('.year')?.addEventListener('change',update);const input=root.querySelector('input'),suggestions=root.querySelector('.county-suggestions');
- function hideSuggestions(){suggestions.hidden=true;suggestions.replaceChildren();input.setAttribute('aria-expanded','false');}
- function choose(key){selected=key;const r=records.get(key),f=features.find(f=>f.id===key);input.value=label(r);hideSuggestions();paths.classed('selected',x=>x.id===selected);detail.hidden=false;detail.innerHTML=f?info(f):'This source-year geography has no matching 2025 boundary.';if(f){const [[x0,y0],[x1,y1]]=path.bounds(f),scale=Math.min(9,.75/Math.max((x1-x0)/1000,(y1-y0)/610));svg.call(zoom.transform,d3.zoomIdentity.translate(500-scale*(x0+x1)/2,305-scale*(y0+y1)/2).scale(scale));}}
- function suggest(){const q=input.value.trim().toLowerCase();hideSuggestions();if(q.length<2)return;const matches=[...records.entries()].filter(([,r])=>label(r).toLowerCase().includes(q)).sort((a,b)=>Number(!label(a[1]).toLowerCase().startsWith(q))-Number(!label(b[1]).toLowerCase().startsWith(q))).slice(0,8);suggestions.hidden=false;input.setAttribute('aria-expanded','true');if(!matches.length){suggestions.textContent='No matching county or state.';return;}matches.forEach(([key,r])=>{const button=document.createElement('button');button.type='button';button.textContent=label(r);button.onclick=()=>choose(key);suggestions.append(button);});}
- input.addEventListener('input',suggest);input.addEventListener('keydown',e=>{if(e.key==='Escape')hideSuggestions();if(e.key==='ArrowDown'&&!suggestions.hidden){e.preventDefault();suggestions.querySelector('button')?.focus();}if(e.key==='Enter'&&!suggestions.hidden){e.preventDefault();suggestions.querySelector('button')?.click();}});suggestions.addEventListener('keydown',e=>{const buttons=[...suggestions.querySelectorAll('button')],i=buttons.indexOf(document.activeElement);if(e.key==='Escape'){hideSuggestions();input.focus();}if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();buttons[(i+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length]?.focus();}});root.addEventListener('focusout',e=>{if(!root.contains(e.relatedTarget))hideSuggestions();});root.querySelector('.year')?.addEventListener('change',()=>{if(input.value)suggest();});update();}
-function drawCharts(){const rows=analysis.cross.map(r=>Object.fromEntries(analysis.fields.map((k,i)=>[k,r[i]]))),col=k=>rows.map(r=>r[k]),gold='#b8841d',orange='#697787';const net='net_individuals_per_1000';const rate='Net IRS individuals / 1,000 ACS residents';const config={responsive:true,displaylogo:false,modeBarButtonsToRemove:['select2d','lasso2d'],toImageButtonOptions:{format:'png',scale:2}};
- function plot(i,traces,x,y,extra={}){Plotly.newPlot(`chart-${i}`,traces,{paper_bgcolor:'#fff',plot_bgcolor:'#fff',font:{family:'Fira Sans, sans-serif',size:11,color:'#75694f'},margin:{l:65,r:20,t:20,b:65},showlegend:false,hovermode:'closest',xaxis:{title:{text:x,standoff:16},gridcolor:'#f0ebe0',zerolinecolor:'#ded3ba',automargin:true},yaxis:{title:{text:y,standoff:12},gridcolor:'#f0ebe0',zerolinecolor:'#ded3ba',automargin:true},...extra},config);}
- const log=col('population').map(Math.log10),bins=d3.bin().thresholds(35)(log);plot(0,[{type:'bar',x:bins.map(b=>10**((b.x0+b.x1)/2)),y:bins.map(b=>b.length),width:bins.map(b=>10**b.x1-10**b.x0),marker:{color:gold},hovertemplate:'Population ≈ %{x:,.0f}<br>%{y} counties<extra></extra>'}],'ACS population · logarithmic scale','Counties',{xaxis:{type:'log',title:'ACS population · logarithmic scale',tickvals:[1000,10000,100000,1000000,10000000],ticktext:['1k','10k','100k','1m','10m'],gridcolor:'#f0ebe0'}});
- plot(1,[{type:'histogram',x:col('median_home_value'),nbinsx:40,marker:{color:gold},hovertemplate:'Home value %{x:$,.0f}<br>%{y} counties<extra></extra>'}],'Median home value · 2023 dollars','Counties',{shapes:[{type:'line',x0:d3.median(col('median_home_value')),x1:d3.median(col('median_home_value')),y0:0,y1:1,yref:'paper',line:{color:orange,dash:'dash'}}]});
- const t=analysis.trend;plot(2,[{x:t.map(r=>r.year),y:t.map(r=>r.q25),mode:'lines',line:{width:0},hoverinfo:'skip'},{x:t.map(r=>r.year),y:t.map(r=>r.q75),mode:'lines',fill:'tonexty',fillcolor:'#b8841d25',line:{width:0},name:'Middle 50%'},{x:t.map(r=>r.year),y:t.map(r=>r.median),mode:'lines+markers',line:{color:gold,width:3},name:'Median',hovertemplate:'%{x}<br>Median %{y:.2f}<extra></extra>'}],'IRS interval ending year',rate);
- function scatter(i,x,y,xlabel,ylabel,logAxes=false){const traces=[{type:'scatter',mode:'markers',x:col(x),y:col(y),text:col('county_name'),marker:{color:gold,size:5,opacity:.35},hovertemplate:'%{text}<br>x: %{x:.2f}<br>y: %{y:.2f}<extra></extra>'}];let extra={};if(logAxes){const rates=[...col(x),...col(y)],min=Math.min(...rates),max=Math.max(...rates);if(min>0){extra={xaxis:{type:'log',title:xlabel,range:[Math.log10(min)-.1,Math.log10(max)+.1],gridcolor:'#f0ebe0'},yaxis:{type:'log',title:ylabel,range:[Math.log10(min)-.1,Math.log10(max)+.1],gridcolor:'#f0ebe0'}};}traces.push({x:[min,max],y:[min,max],mode:'lines',line:{color:orange,dash:'dash'},hoverinfo:'skip'});}plot(i,traces,xlabel,ylabel,extra);}
- scatter(3,'outflow_individuals_per_1000','inflow_individuals_per_1000','Outflow / 1,000 · log scale','Inflow / 1,000 · log scale',true);
- const eligible=rows.filter(r=>r.population>=10000).sort((a,b)=>a[net]-b[net]),ranked=[...eligible.slice(0,10),...eligible.slice(-10)];plot(4,[{type:'bar',orientation:'h',x:ranked.map(r=>r[net]),y:ranked.map(r=>r.county_name),marker:{color:ranked.map(r=>r[net]<0?orange:gold)},hovertemplate:'%{y}<br>%{x:.2f} / 1,000<extra></extra>'}],rate,'',{margin:{l:innerWidth<600?145:230,r:25,t:10,b:65},yaxis:{automargin:true,tickfont:{size:10}}});
- scatter(5,'homeownership_pct',net,'Owner-occupied housing (%)',rate);
- function boxes(i,key,labels,xlabel){plot(i,labels.map((label,j)=>({type:'box',name:label,y:rows.filter(r=>key(r)===label).map(r=>r[net]),boxpoints:'outliers',marker:{color:[gold,'#d5b466',orange,'#8c6a29'][j],size:3},line:{width:1.5},hovertemplate:label+'<br>%{y:.2f}<extra></extra>'})),xlabel,rate);}
- boxes(6,r=>r.education_band,['Under 20%','20 to <30%','30 to <40%','40% or more'],"Adults 25+ with bachelor’s degree or higher");scatter(7,'temperature_f',net,'Annual mean temperature (°F)',rate);boxes(8,r=>r.declarations===0?'None':r.declarations===1?'One':'Two or more',['None','One','Two or more'],'Distinct FEMA incidents');
- const labels=['Population','Median age','Income','Home value','Rent','Poverty','Unemployment','Vacancy','Homeownership','Bachelor’s+','FEMA incidents','Precipitation','Temperature','Inflow','Outflow','Net migration'];plot(9,[{type:'heatmap',x:labels,y:labels,z:analysis.correlation.values,zmin:-1,zmax:1,colorscale:[[0,orange],[.5,'#faf6eb'],[1,gold]],colorbar:{title:'Spearman ρ',thickness:10},hovertemplate:'%{y} × %{x}<br>Spearman ρ = %{z:.3f}<extra></extra>'}],'','',{margin:{l:innerWidth<600?95:140,r:50,t:10,b:110},xaxis:{tickangle:-45,tickfont:{size:10},automargin:true},yaxis:{autorange:'reversed',tickfont:{size:10},automargin:true}});
- resizeObserver=new ResizeObserver(entries=>entries.forEach(e=>{if(e.target.data)Plotly.Plots.resize(e.target);}));document.querySelectorAll('.chart').forEach(el=>resizeObserver.observe(el));}
-Promise.all(['population.json','analysis.json','county.geojson','state.geojson','introduction.json','cleaning-evidence.json'].map(f=>fetch('data/'+f).then(r=>{if(!r.ok)throw Error(f+' could not be loaded');return r.json();}))).then(data=>{[population,analysis,geo,states,intro,cleaningEvidence]=data;render();scrollToSection();window.addEventListener('hashchange',()=>{if(location.hash==='#geography-note'||location.hash==='#main')return;const chapter=location.hash.slice(1).split('/')[0]||'introduction';if(chapter!==activeChapter)render();scrollToSection();});}).catch(error=>{window.portfolioTelemetry?.reportError(error, { component: 'atlas-bootstrap' });$('#main').innerHTML=`<div class="loading"><h2>The atlas could not load.</h2><p>${esc(error.message)}. Serve the website through a local HTTP server, then reload.</p><button onclick="location.reload()">Try again</button></div>`;});
+import {Plotly} from './vendor.js';
+import {chapters} from './chapters/index.js';
+import {esc} from './shared.js';
 
-let activeChapter = '';
-function setupSectionNavigation(index) {
-  activeChapter = slugs[index];
-  const main = document.getElementById('main');
-  const hero = main.querySelector('.hero');
-  hero.id = 'chapter-top';
-  const links = [];
-  main.querySelectorAll('h2, .section > .eyebrow').forEach((heading) => {
-    if(heading.classList.contains('eyebrow') && heading.parentElement.querySelector(':scope > h2'))return;
-    const sectionNames = {'Four perspectives on a place.': 'Data sources', 'Preserve the evidence. Make the rules explicit.': 'Data cleaning', 'From a glance: migration insights': 'EDA findings', 'Ten views of the evidence.': 'EDA findings', 'One question. Ten lines of inquiry.': 'Research questions'};
-    const label = (sectionNames[heading.textContent] || heading.textContent).replace(/^\d+ \/ /, '');
-    const id = 'section-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    heading.id = id;
-    if(heading.tagName==='H2')heading.classList.add('section-title');
-    if (heading.parentElement.classList.contains('section-heading')) heading.parentElement.classList.add('section-banner');
-    links.push({id, label});
+const main=document.getElementById('main');
+const nav=document.getElementById('navigation');
+let data, activeChapter, cleanup;
+const chapterViews=new Map();
+history.scrollRestoration='manual';
+let restoring=false;
+function savePosition(){if(!restoring)history.replaceState({...history.state,scrollY:window.scrollY},'');}
+let sectionFrame;
+window.addEventListener('scroll',()=>{savePosition();if(!sectionFrame)sectionFrame=requestAnimationFrame(()=>{sectionFrame=null;highlightSection();});},{passive:true});
+function highlightSection(){
+  const headings=[...main.querySelectorAll('.section-title')];
+  if(!headings.length)return;
+  const threshold=document.querySelector('.chapter-title').getBoundingClientRect().bottom+24;
+  let current=headings[0];
+  for(const heading of headings)if(heading.getBoundingClientRect().top<=threshold)current=heading;
+  if(window.scrollY>0&&window.scrollY+window.innerHeight>=document.documentElement.scrollHeight-2)current=headings.at(-1);
+  main.querySelectorAll('.section-nav a').forEach(link=>{
+    if(link.hash.split('/')[1]===current.id)link.setAttribute('aria-current','location');
+    else link.removeAttribute('aria-current');
   });
-  const sectionNav = document.createElement('nav');
-  sectionNav.className = 'section-nav';
-  sectionNav.setAttribute('aria-label', chapters[index] + ' sections');
-  sectionNav.innerHTML = '<span>On this page</span>' + links.map(link => `<a href="#${activeChapter}/${link.id}">${esc(link.label)}</a>`).join('');
-  if(links.length)hero.after(sectionNav);
 }
-function scrollToSection() {
-  const id = location.hash.slice(1).split('/')[1];
-  document.querySelectorAll('.section-nav a').forEach(a => {
-    if (a.hash === location.hash || (!id && a.hash.endsWith('/chapter-top'))) a.setAttribute('aria-current', 'location');
+document.addEventListener('click',event=>{
+  const link=event.target.closest('a[href^="#"]');
+  if(!link||link.hash==='#main'||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+  event.preventDefault();savePosition();history.pushState({},'',link.hash);route();
+});
+window.addEventListener('popstate',()=>{
+  const position=history.state?.scrollY;
+  restoring=true;route(position);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{restoring=false;}));
+});
+nav.innerHTML=chapters.map(chapter=>`<a href="#${chapter.slug}">${chapter.title}</a>`).join('');
+
+function render(chapter) {
+  // Keep mounted chapter nodes and control state for history traversal. Rebuilding
+  // async charts here changes page height underneath a restored scroll position.
+  if(activeChapter)chapterViews.set(activeChapter,{nodes:[...main.childNodes],cleanup});
+  activeChapter=chapter;
+  nav.querySelectorAll('a').forEach(a=>{
+    if(a.hash===`#${chapter.slug}`)a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
-  if (id) requestAnimationFrame(() => {const target=document.getElementById(id);if(target){target.scrollIntoView();target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}});
-  else window.scrollTo(0, 0);
+  document.title=`Do County Characteristics Explain Migration Flows? | ${chapter.title}`;
+  const previous=chapterViews.get(chapter);
+  const pending=previous?.nodes.some(node=>node.querySelector?.('[data-phase-chart] .interactive-body:empty')||node.querySelector?.('#cluster-map')&&!node.querySelector('#cluster-map .county'));
+  if(previous&&!pending){main.replaceChildren(...previous.nodes);cleanup=previous.cleanup;updateStickyOffsets();return;}
+  main.innerHTML=`<h1 class="chapter-title">${chapter.heading}</h1><div class="chapter-layout"><nav class="section-nav" aria-label="${esc(chapter.title)} sections"></nav><div class="chapter-content">${chapter.render(data)}</div></div>`;
+  const headings=[...main.querySelectorAll('.chapter-content > .section > h2')];
+  headings.forEach(heading=>{
+    heading.id='section-'+heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    heading.classList.add('section-title');
+  });
+  main.querySelector('.section-nav').innerHTML='<span>On this page</span>'+headings.map(h=>`<a href="#${chapter.slug}/${h.id}">${esc(h.textContent)}</a>`).join('');
+  linkResearchQuestions();
+  main.querySelectorAll('a[href]').forEach(link=>{
+    if(!link.getAttribute('href').startsWith('#')){link.target='_blank';link.rel='noopener noreferrer';}
+  });
+  cleanup=chapter.init(data);
+  updateStickyOffsets();
 }
 
-function openOutgoingLinks() {
-  document.querySelectorAll('a[href]').forEach(link => {
-    if (!link.getAttribute('href').startsWith('#')) {
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
+// Link narrative references, including text interpolated from exported findings.
+function linkResearchQuestions(){
+  const walker=document.createTreeWalker(main.querySelector('.chapter-content'),NodeFilter.SHOW_TEXT);
+  const nodes=[];
+  while(walker.nextNode())if(!walker.currentNode.parentElement.closest('a,script,style'))nodes.push(walker.currentNode);
+  for(const node of nodes){
+    const pattern=/\bQuestion(?:s)?\s+(?:10|[1-9])(?:\s*(?:,|and|&|–|-)\s*(?:10|[1-9]))*\b|\b(?:10|ten) research questions\b/gi;
+    if(!pattern.test(node.textContent))continue;
+    pattern.lastIndex=0;
+    const fragment=document.createDocumentFragment();let offset=0;
+    for(const match of node.textContent.matchAll(pattern)){
+      fragment.append(node.textContent.slice(offset,match.index));
+      const a=document.createElement('a');a.href='#introduction/section-research-framework';a.textContent=match[0];fragment.append(a);
+      offset=match.index+match[0].length;
     }
+    fragment.append(node.textContent.slice(offset));node.replaceWith(fragment);
+  }
+}
+function scrollToSection(){
+  const links=[...main.querySelectorAll('.section-nav a')];
+  const id=location.hash.slice(1).split('/')[1]||links[0]?.hash.split('/')[1];
+  links.forEach((a,i)=>{
+    if(a.hash.split('/')[1]===id)a.setAttribute('aria-current','location');
+    else a.removeAttribute('aria-current');
+  });
+  requestAnimationFrame(()=>{
+    updateStickyOffsets();
+    const target=document.getElementById(id);
+    if(target){target.scrollIntoView({block:'start'});if(location.hash.includes('/')){target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}}
   });
 }
+function route(position){
+  if(!data)return;
+  if(location.hash==='#main')return;
+  const slug=location.hash.slice(1).split('/')[0];
+  const chapter=chapters.find(c=>c.slug===slug)||chapters[0];
+  if(chapter!==activeChapter)render(chapter);
+  const section=location.hash.split('/')[1]||main.querySelector('.section-nav a')?.hash.split('/')[1];
+  main.querySelectorAll('.section-nav a').forEach(link=>{if(link.hash.split('/')[1]===section)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
+  if(typeof position==='number')requestAnimationFrame(()=>{updateStickyOffsets();window.scrollTo(0,position);});
+  else scrollToSection();
+}
+window.addEventListener('pagehide',()=>{cleanup?.();for(const [chapter,view] of chapterViews)if(chapter!==activeChapter)view.cleanup?.();});
+function updateStickyOffsets(){
+  document.documentElement.style.setProperty('--masthead-height',document.querySelector('.site-masthead').getBoundingClientRect().height+'px');
+  document.documentElement.style.setProperty('--chapter-height',(main.querySelector('.chapter-title')?.getBoundingClientRect().height||0)+'px');
+  fitFigures();
+}
+function fitFigures(){
+  const chrome=document.querySelector('.site-masthead').getBoundingClientRect().height+(main.querySelector('.chapter-title')?.getBoundingClientRect().height||0);
+  const available=window.innerHeight-chrome-36;
+  main.querySelectorAll('.chart-card,.map-card').forEach(card=>{
+    if(card.closest('.chart-card')!==card&&card.closest('.chart-card'))return;
+    const plot=card.querySelector('.chart,svg,img');if(!plot)return;
+    const overhead=card.getBoundingClientRect().height-plot.getBoundingClientRect().height;
+    const limit=Math.max(80,Math.floor(available-overhead));
+    if(plot.style.maxHeight!==limit+'px')plot.style.maxHeight=limit+'px';
+  });
+}
+new ResizeObserver(fitFigures).observe(main);
+new ResizeObserver(updateStickyOffsets).observe(document.querySelector('.site-masthead'));
+window.addEventListener('resize',updateStickyOffsets);
+document.fonts.ready.then(updateStickyOffsets);
+const files={population:'population.json',analysis:'analysis.json',geo:'county.geojson',states:'state.geojson',intro:'introduction.json',cleaningEvidence:'cleaning-evidence.json',clusteringResults:'clustering.json',pcaResults:'pca.json'};
+Promise.all(Object.entries(files).map(async([key,file])=>{
+  const response=await fetch('data/'+file,{cache:'no-cache'});
+  if(!response.ok)throw Error(file+' could not be loaded');
+  return [key,await response.json()];
+})).then(entries=>{data=Object.fromEntries(entries);route();window.addEventListener('hashchange',()=>{if(!restoring)route();});}).catch(error=>{
+  window.portfolioTelemetry?.reportError(error,{component:'atlas-bootstrap'});
+  main.innerHTML=`<div class="loading"><h2>The atlas could not load.</h2><p>${esc(error.message)}. Serve the website through a local HTTP server, then reload.</p><button onclick="location.reload()">Try again</button></div>`;
+});

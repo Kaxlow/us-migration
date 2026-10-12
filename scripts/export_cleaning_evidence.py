@@ -12,7 +12,7 @@ def main():
     path = ROOT / 'notebooks/01_data_cleaning.ipynb'
     notebook = json.loads(path.read_text(encoding='utf-8'))
     selected = {'2.7.', '3.8.', '4.4.', '5.5.', '6.4.', '7.2.', '7.3.',
-                '8.5.', '9.3.', '9.4.', '9.5.'}
+                '8.5.', '9.3.', '9.4.', '9.5.', '9.6.'}
     sections = {}
     section = None
     for index, cell in enumerate(notebook['cells']):
@@ -52,7 +52,7 @@ def main():
                                 'after': row[variable], 'imputed': True})
     export_snapshots = {
         'joined': panel[['county_fips', 'year', 'population', 'inflow_individuals',
-                         'outflow_individuals', 'net_individuals_per_1000',
+                         'outflow_individuals', 'net_individuals', 'inflow_individuals_per_1000', 'outflow_individuals_per_1000', 'net_individuals_per_1000',
                          'declarations', 'temperature_f']].head(5).to_html(index=False, border=0),
         'imputed': pd.DataFrame(comparisons).to_html(index=False, border=0, na_rep='Missing')
     }

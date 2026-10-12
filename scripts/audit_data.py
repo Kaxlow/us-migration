@@ -82,14 +82,18 @@ def main():
         pearson=pd.read_csv(ROOT/'reports/tables/validated_latest_year_pearson.csv',index_col=0)
         counts=pd.read_csv(ROOT/'reports/tables/validated_latest_year_pair_counts.csv',index_col=0)
         from us_migration.eda import FEATURES
-        target='net_individuals_per_1000'
-        ranks=pd.DataFrame({'spearman':spearman[target], 'pearson':pearson[target], 'pair_count':counts[target]}).loc[FEATURES]
-        ranks=ranks.loc[ranks.spearman.abs().sort_values(ascending=False).index]
-        ranks.to_csv(ROOT/'reports/tables/migration_correlations.csv')
-        report.append('Largest absolute Spearman associations with net IRS individuals per 1,000 ACS residents in the latest-year validated county cross section with training-imputed socioeconomic predictors:')
-        report.append('')
-        for name,row in ranks.head(5).iterrows():
-            report.append(f"- {name}: Spearman {row.spearman:.3f}, Pearson {row.pearson:.3f}, pair count {int(row.pair_count):,}.")
+        from us_migration.outcomes import OUTCOME_DEFINITIONS
+        all_ranks=[]
+        for o in OUTCOME_DEFINITIONS:
+            target=o['rate']
+            ranks=pd.DataFrame({'spearman':spearman[target],'pearson':pearson[target],'pair_count':counts[target]}).loc[FEATURES]
+            ranks=ranks.loc[ranks.spearman.abs().sort_values(ascending=False).index]
+            ranks.index.name='feature'; ranks['outcome']=o['id']; all_ranks.append(ranks)
+            report.extend([f"Largest absolute associations with {o['label'].lower()} rates per 1,000 ACS residents:",''])
+            for name,row in ranks.head(5).iterrows():
+                report.append(f"- {name}: Spearman {row.spearman:.3f}, Pearson {row.pearson:.3f}, pair count {int(row.pair_count):,}.")
+            report.append('')
+        pd.concat(all_ranks).to_csv(ROOT/'reports/tables/migration_correlations.csv')
     report+=['', 'These are exploratory associations. Population-denominator mismatch, nominal dollar units, overlapping ACS windows, changing geography, and IRS series breaks constrain interpretation. They do not establish causation.', '',
         '## Reproducibility', '',
         'See `docs/workflow.md` for commands, `docs/coverage-manifest.json` for planned scope, `docs/coverage-observed.csv` for observed source-year coverage, and the executed notebooks for diagnostics and plots. Raw requests, timestamps, headers, and checksums live under `data/raw/`; exact processed input versions are listed in `data/processed/provenance.json`.', '',

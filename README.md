@@ -1,6 +1,8 @@
 # Do County Characteristics Explain Migration Flows?
 
-A machine learning project that aims to explore and understand migration in the United States.
+A machine learning project studying net migration, inflows, and outflows across US counties.
+
+All three rates per 1,000 ACS residents receive equal emphasis. Counts describe movement volumes and rankings; similar net migration can accompany very different inflow and outflow levels.
 
 ## Research website
 
@@ -9,9 +11,14 @@ interactive county maps, data preparation, and ten exploratory charts. If launch
 `.\us-migration\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory website`
 and open http://127.0.0.1:8000. See its README for independent data-export commands.
 
+Phase 2 adds completed Clustering and PCA chapters with executed notebooks,
+sample images, downloadable results and GitHub section links. Run just those
+analyses with `python scripts/run_phase2.py` after the cleaned dataset exists.
+See [Phase 2 methodology and reproduction](docs/methodology.md#clustering-and-pca).
+
 ## Project scope
 
-- Research question: Which county characteristics are associated with US migration patterns?
+- Research question: How are counties’ economic, demographic, and environmental characteristics associated with net migration, inflows, and outflows?
 - Coverage: 2009 onward, through each source's latest published release; native county geographies.
 - Sources: IRS migration, ACS county characteristics and migration flows, FEMA declarations, NOAA county climate.
 - Deliverables: immutable raw snapshots, separate cleaned tables, a descriptive county-year panel, and executed EDA notebooks.

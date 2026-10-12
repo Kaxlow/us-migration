@@ -16,7 +16,7 @@ The median of county home-value estimates is $174,600, compared with a mean of $
 
 ![Chart](../reports/figures/eda/03_net_migration_over_time.png)
 
-The line tracks median net migration for the same 3,007 counties observed in every plotted year, with the middle half shaded. This equal-county statistic is not a national population-weighted rate; changes in IRS methods can affect comparability over time.
+All three panels use the same 3,007 counties in every year; lines show county medians and shading shows the middle 50%. Equal-county summaries describe the fixed sample; IRS methodology changes limit comparisons over time.
 
 ## 4. 04_inflow_vs_outflow
 
@@ -28,34 +28,34 @@ County inflow and outflow rates have a Spearman correlation of 0.80, illustratin
 
 ![Chart](../reports/figures/eda/05_county_gains_and_losses.png)
 
-The chart compares the ten largest gains and ten largest losses among eligible counties with at least 10,000 ACS residents. The stated population threshold reduces tiny-denominator rankings, but rates still combine different IRS and ACS reference populations.
+Largest net gains and losses and highest inflow/outflow rates in 2023, among counties with population at least 10,000. Supporting count rankings use the full eligible county cohort and include population and corresponding rates.
 
 ## 6. 06_homeownership_and_migration
 
 ![Chart](../reports/figures/eda/06_homeownership_and_migration.png)
 
-The Spearman association between homeownership and net migration is 0.29 in the county sample with training-imputed predictors. Hexagon density shows variation around this association and does not establish that homeownership causes migration.
+Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.
 
 ## 7. 07_education_bands
 
 ![Chart](../reports/figures/eda/07_education_bands.png)
 
-Fixed education bands compare the median, middle half, and flagged tail values of county net migration rates. Visible overlap and retained outliers show why an education category alone cannot determine a county’s migration outcome.
+Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.
 
 ## 8. 08_temperature_and_migration
 
 ![Chart](../reports/figures/eda/08_temperature_and_migration.png)
 
-Annual average temperature has a Spearman correlation of 0.15 with net migration, with variation among counties at similar temperatures. Climate is an area average correlated with regional conditions, so this plot does not isolate a temperature effect.
+Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.
 
 ## 9. 09_disasters_and_migration
 
 ![Chart](../reports/figures/eda/09_disasters_and_migration.png)
 
-The comparison includes 2,261 counties with no mapped incident, 698 with one, and 91 with two or more. A zero means no matching FEMA incident rather than no hazard, and these same-year distributions do not identify a disaster’s causal migration impact.
+Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.
 
 ## 10. 10_correlation_matrix
 
 ![Chart](../reports/figures/eda/10_correlation_matrix.png)
 
-All cells use the same 3,050 complete counties, and homeownership % has the largest absolute rank association with net migration among the selected characteristics. Correlated predictors and different inflow versus outflow relationships motivate multivariable analysis, while this matrix alone provides no causal evidence.
+All cells use the same 3,050 counties. Strongest absolute associations: Net migration: Homeownership % (rho 0.290); Inflow: Home value (rho 0.442); Outflow: Gross rent (rho 0.420). Correlated characteristics and different relationships across outcomes motivate multivariable analysis.

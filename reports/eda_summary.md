@@ -1,6 +1,6 @@
 # Download and exploratory analysis report
 
-Generated 2026-09-21T00:18:08.328056+00:00.
+Generated 2026-10-11T05:21:20.433972+00:00.
 
 Verified SHA-256 checksums for 473 active snapshots (1.34 GB). Previous immutable versions and exploratory verification files may use additional disk space.
 
@@ -50,13 +50,30 @@ It has 0 missing values, 0 infinities, and 0 duplicate county-year keys under th
 Raw-versus-cleaned comparison images are in `reports/figures/cleaning/`; the ten captioned findings charts are in `reports/figures/eda/` and `reports/eda_visualizations.md`.
 Ordinary IQR outliers are retained and flagged; denominator-review cases above 1,000 per 1,000 residents are held out without claiming the original counts are erroneous.
 
-Largest absolute Spearman associations with net IRS individuals per 1,000 ACS residents in the latest-year validated county cross section with training-imputed socioeconomic predictors:
+Largest absolute associations with net migration rates per 1,000 ACS residents:
 
 - homeownership_pct: Spearman 0.290, Pearson 0.292, pair count 3,050.
 - median_age: Spearman 0.252, Pearson 0.254, pair count 3,050.
 - median_home_value: Spearman 0.238, Pearson 0.085, pair count 3,050.
 - precipitation_inches: Spearman 0.210, Pearson 0.208, pair count 3,050.
 - temperature_f: Spearman 0.145, Pearson 0.163, pair count 3,050.
+
+Largest absolute associations with inflow rates per 1,000 ACS residents:
+
+- median_home_value: Spearman 0.442, Pearson 0.298, pair count 3,050.
+- median_gross_rent: Spearman 0.409, Pearson 0.369, pair count 3,050.
+- median_household_income: Spearman 0.241, Pearson 0.277, pair count 3,050.
+- bachelors_plus_pct: Spearman 0.229, Pearson 0.258, pair count 3,050.
+- temperature_f: Spearman 0.210, Pearson 0.210, pair count 3,050.
+
+Largest absolute associations with outflow rates per 1,000 ACS residents:
+
+- median_gross_rent: Spearman 0.420, Pearson 0.398, pair count 3,050.
+- median_home_value: Spearman 0.391, Pearson 0.314, pair count 3,050.
+- median_household_income: Spearman 0.282, Pearson 0.283, pair count 3,050.
+- bachelors_plus_pct: Spearman 0.277, Pearson 0.324, pair count 3,050.
+- median_age: Spearman -0.200, Pearson -0.206, pair count 3,050.
+
 
 These are exploratory associations. Population-denominator mismatch, nominal dollar units, overlapping ACS windows, changing geography, and IRS series breaks constrain interpretation. They do not establish causation.
 

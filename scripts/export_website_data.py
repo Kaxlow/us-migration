@@ -4,9 +4,12 @@ import json
 import shutil
 import hashlib
 import pandas as pd
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'website/data'
+sys.path.insert(0, str(ROOT/'src'))
+from us_migration.outcomes import OUTCOME_DEFINITIONS, COUNT_FIELDS, RATE_FIELDS, color_limits
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
@@ -16,12 +19,20 @@ def main():
     latest = int(county.year.max())
     cross = county.loc[county.year.eq(latest)]
     fields = ['county_fips','county_name','population','median_age','median_household_income','median_home_value','median_gross_rent','poverty_pct','unemployment_pct','vacancy_pct','homeownership_pct','bachelors_plus_pct','declarations','precipitation_inches','temperature_f','inflow_individuals_per_1000','outflow_individuals_per_1000','net_individuals_per_1000','education_band']
-    migration_fields = ['county_fips','county_name','inflow_individuals','outflow_individuals','net_individuals','net_individuals_per_1000','geography_level']
+    fields = list(dict.fromkeys(fields + COUNT_FIELDS))
+    migration_fields = ['county_fips','county_name','population','geography_level'] + COUNT_FIELDS + RATE_FIELDS
     migration = {str(year): json.loads(g[migration_fields].round(4).to_json(orient='values')) for year,g in data.groupby('year')}
     captions = pd.read_csv(ROOT/'reports/tables/eda_chart_catalog.csv').caption.tolist()
     matrix = pd.read_csv(ROOT/'reports/tables/validated_latest_year_spearman.csv',index_col=0)
     result = {'latest':latest,'rows':len(data),'counties':len(cross),'years':sorted(int(y) for y in data.year.unique()),'fields':fields,'cross':json.loads(cross[fields].round(5).to_json(orient='values')),'migrationFields':migration_fields,'migration':migration,'captions':captions,'trend':json.loads(pd.read_csv(ROOT/'reports/tables/chart03_balanced_trend.csv').to_json(orient='records')),'correlation':{'fields':matrix.columns.tolist(),'values':matrix.round(4).values.tolist()},'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest()}
+    result.update(outcomes=OUTCOME_DEFINITIONS, colorLimits=color_limits(data))
+    result['outcomeCaptions'] = {o['id']: [f"{o['label']} · {o['units']}. " + caption for caption in captions] for o in OUTCOME_DEFINITIONS}
+    for key, filename in [('rateRankings','chart05_county_rankings.csv'),('countRankings','migration_count_rankings.csv'),('associations','migration_correlations.csv')]:
+        table = pd.read_csv(ROOT/'reports/tables'/filename, dtype={'county_fips':str})
+        result[key] = json.loads(table.to_json(orient='records'))
+        table.to_csv(OUT/filename,index=False)
     (OUT/'analysis.json').write_text(json.dumps(result,separators=(',',':')),encoding='utf-8')
+    (OUT/'outcomes.json').write_text(json.dumps(OUTCOME_DEFINITIONS,indent=2)+'\n',encoding='utf-8')
     cross[fields].to_csv(OUT/'latest-counties.csv',index=False)
     images=ROOT/'website/assets/cleaning'
     images.mkdir(parents=True,exist_ok=True)

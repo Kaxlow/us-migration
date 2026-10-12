@@ -117,8 +117,10 @@ It executes using the Python interpreter that launched the command and stops on
 cell errors. Notebooks contain saved outputs; CSV diagnostics are written to
 `reports/tables/`, before/after PNGs to `reports/figures/cleaning/`, and ten captioned
 EDA figures to `reports/figures/eda/`.
-Edit cleaning code directly in notebook 01. `scripts/clean_data.py` executes that notebook alone.
-`scripts/build_notebooks.py` preserves notebook 01 and regenerates only notebook 02, clearing its outputs.
+Notebooks 01 and 02 are the authoritative cleaning and EDA source. Routine refreshes
+change the input data and execute the existing notebooks with the same methodology.
+Any deliberate methodology revision or bug fix is made directly in the notebook.
+`scripts/clean_data.py` executes notebook 01 alone.
 
 ## 4. Audit and document findings
 
@@ -147,3 +149,26 @@ common-dollar exports are reserved for analysis-specific preparation.
 See [the glossary](data-glossary.md#monetary-imputation-dollar-basis) for formulas,
 index selection, and provenance. Factors and fitted-statistic units are recorded
 in `reports/tables/monetary_imputation_factors.csv` and `socioeconomic_imputer.json`.
+
+## Net migration, inflows, and outflows
+
+All three rates per 1,000 ACS residents receive equal emphasis. County downloads
+retain their supporting counts. The ten EDA chart groups, cluster distributions,
+PCA associations, and score quintiles compare the same observations across
+outcomes. Findings and captions are regenerated from executed analyses.
+
+After updating the input data, execute the existing notebooks, then refresh the
+report and website exports in this order. Execution updates results while preserving
+the notebook's analysis code and methodology:
+
+```powershell
+python scripts/run_notebooks.py
+python scripts/audit_data.py
+python scripts/export_website_data.py
+python scripts/export_cleaning_evidence.py
+python -m pytest -q
+```
+
+For changes limited to clustering/PCA, `python scripts/run_phase2.py` refreshes
+those notebooks and their website outputs from the existing analysis dataset.
+The browser regression command and Playwright setup are in the website README.

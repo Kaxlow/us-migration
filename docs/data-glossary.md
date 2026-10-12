@@ -172,3 +172,5 @@ in those statistics are common-dollar values, not published-year amounts.
 
 Sources: [BLS CPI database](https://www.bls.gov/cpi/data.htm) and
 [Census comparison guidance](https://www.census.gov/programs-surveys/acs/guidance/comparing-acs-data/2024.html).
+
+Net migration, inflow, and outflow rates are coequal descriptive outcomes. Each rate uses the same ACS denominator. Counts support volume rankings. Summaries are computed independently for each outcome; the median net rate need not equal the difference of the median inflow and outflow rates.
