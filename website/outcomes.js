@@ -1,5 +1,6 @@
 // Definitions are exported from the shared Python outcome contract.
-export const outcomes = await fetch('data/outcomes.json').then(r=>{if(!r.ok)throw Error('Outcome definitions unavailable');return r.json();});
+import definitions from './outcome-definitions.js';
+export const outcomes = definitions;
 export function outcomeSelect(label='Migration outcome') {
   return `<label class="outcome-control">${label} <select class="outcome-select" aria-label="${label}">${outcomes.map(o=>`<option value="${o.id}">${o.label}</option>`).join('')}</select></label>`;
 }

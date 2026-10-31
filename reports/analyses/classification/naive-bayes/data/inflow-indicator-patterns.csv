@@ -1,0 +1,16 @@
+class,indicator,relative_log_likelihood
+High,log10_home_value_4.0,0.7484752895157092
+High,log10_rent_4.0,0.6727114832625629
+High,log10_income_4.0,0.5581623951781793
+High,bachelors_plus_pct_4.0,0.5486249701780457
+High,temperature_f_3.0,0.5343453597108052
+Low,log10_home_value_0.0,0.7821259518007624
+Low,log10_rent_0.0,0.6599403339785219
+Low,temperature_f_1.0,0.5275066420968306
+Low,log10_population_0.0,0.4533016844432094
+Low,log10_home_value_1.0,0.35908551783208864
+Medium,temperature_f_1.0,0.26967847412835066
+Medium,log10_home_value_1.0,0.20615692981380374
+Medium,precipitation_inches_4.0,0.19656004699879315
+Medium,log10_rent_2.0,0.19228989822492704
+Medium,log10_home_value_2.0,0.14788096881318946

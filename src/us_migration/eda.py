@@ -65,15 +65,16 @@ def table_profiles():
     return result
 
 
-def correlation_bundle(data,columns,label):
+def correlation_bundle(data,columns,label,directory=None):
+    directory = Path(directory or TABLES)
     columns=[c for c in columns if c in data and data[c].notna().sum()>=3]
     values=data[columns].astype(float).replace([np.inf,-np.inf],np.nan)
     support=values.notna().astype('int64').T.dot(values.notna().astype('int64'))
     pearson=values.corr(method='pearson',min_periods=30)
     spearman=values.corr(method='spearman',min_periods=30)
-    TABLES.mkdir(parents=True,exist_ok=True)
+    directory.mkdir(parents=True,exist_ok=True)
     for suffix,result in [('pearson',pearson),('spearman',spearman),('pair_counts',support)]:
-        result.to_csv(TABLES/f'{label}_{suffix}.csv')
+        result.to_csv(directory/f'{label}_{suffix}.csv')
     return pearson,spearman,support
 
 

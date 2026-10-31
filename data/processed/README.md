@@ -3,15 +3,10 @@
 This directory contains derived source tables, analysis datasets, and cleaning
 audits. Generated files are ignored by Git.
 
-The authoritative [cleaning notebook](../../notebooks/01_data_cleaning.ipynb)
-rebuilds these outputs from the active raw snapshots. Run it from the repository
-root using:
-
-```powershell
-python scripts/clean_data.py --start 2009 --end 2026
-```
-
-Alternatively, `python scripts/run_notebooks.py` executes both cleaning and EDA.
+The [cleaning notebook](../../notebooks/data_cleaning.ipynb)
+rebuilds these outputs from the active raw snapshots. Open it in Jupyter, select
+the project kernel, set `START_YEAR` and `END_YEAR` in its parameter cell, use
+**Restart Kernel and Run All**, inspect the results, and save.
 Cleaning runs offline and replaces derived outputs; acquire the raw data and
 cleaning supplements first as described in [the workflow](../../docs/workflow.md).
 

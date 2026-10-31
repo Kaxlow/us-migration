@@ -1,0 +1,21 @@
+county_fips,county_name,classification_split
+01001,"Autauga County, Alabama",test
+01029,"Cleburne County, Alabama",test
+01045,"Dale County, Alabama",test
+01059,"Franklin County, Alabama",test
+01061,"Geneva County, Alabama",test
+01065,"Hale County, Alabama",test
+01087,"Macon County, Alabama",test
+01089,"Madison County, Alabama",test
+01091,"Marengo County, Alabama",test
+01103,"Morgan County, Alabama",test
+01105,"Perry County, Alabama",test
+01113,"Russell County, Alabama",test
+01127,"Walker County, Alabama",test
+04001,"Apache County, Arizona",test
+04007,"Gila County, Arizona",test
+04012,"La Paz County, Arizona",test
+04025,"Yavapai County, Arizona",test
+05011,"Bradley County, Arkansas",test
+05013,"Calhoun County, Arkansas",test
+05023,"Cleburne County, Arkansas",test

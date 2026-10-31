@@ -1,0 +1,684 @@
+{
+  "input": "data/processed/analysis_county_year.parquet",
+  "input_sha256": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+  "year": 2023,
+  "counties": 3050,
+  "imputed_counties": 6,
+  "outlier_flagged_counties": 133,
+  "features": [
+    "log10_population",
+    "median_age",
+    "log10_income",
+    "log10_home_value",
+    "log10_rent",
+    "poverty_pct",
+    "unemployment_pct",
+    "vacancy_pct",
+    "homeownership_pct",
+    "bachelors_plus_pct",
+    "log1p_incidents",
+    "precipitation_inches",
+    "temperature_f"
+  ],
+  "feature_labels": [
+    "Log population",
+    "Median age",
+    "Log income",
+    "Log home value",
+    "Log rent",
+    "Poverty %",
+    "Unemployment %",
+    "Vacancy %",
+    "Homeownership %",
+    "Bachelor\u2019s+ %",
+    "Log1p incidents",
+    "Precipitation",
+    "Temperature"
+  ],
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.1"
+  },
+  "k_values": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "selection_rule": "Maximum full-cohort silhouette within k=2..8; ties favor smaller k",
+  "views": {
+    "characteristics": {
+      "k": 2,
+      "hierarchical_k": 2,
+      "silhouette": 0.22199136837078456,
+      "hierarchical_silhouette": 0.2551159532313763,
+      "agreement": 0.5480649149494585,
+      "same_k_agreement": 0.5480649149494585,
+      "seed_ari": [
+        0.9959953837236792,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hierarchical_sizes": [
+        860,
+        2190
+      ],
+      "profiles": [
+        {
+          "cluster": 1,
+          "counties": 964,
+          "net_median": 2.0039187669506218,
+          "net_q25": -2.4423228429844714,
+          "net_q75": 8.062491076521567,
+          "inflow_median": 51.30857748690728,
+          "outflow_median": 48.048480622485556,
+          "inflow_q25": 40.81721363565958,
+          "inflow_q75": 64.12960767017594,
+          "outflow_q25": 40.96414046792064,
+          "outflow_q75": 57.21544100479849,
+          "distinctive_features": "Log rent +1.09 SD; Log home value +1.04 SD; Bachelor\u2019s+ % +1.02 SD"
+        },
+        {
+          "cluster": 2,
+          "counties": 2086,
+          "net_median": 1.3083302450896925,
+          "net_q25": -3.0923377691972127,
+          "net_q75": 6.594805181758161,
+          "inflow_median": 41.97105790612667,
+          "outflow_median": 40.882371268227175,
+          "inflow_q25": 34.11913826291311,
+          "inflow_q75": 50.47321362841117,
+          "outflow_q25": 35.55347203708034,
+          "outflow_q75": 46.61363773578396,
+          "distinctive_features": "Log rent -0.50 SD; Log home value -0.48 SD; Bachelor\u2019s+ % -0.47 SD"
+        }
+      ]
+    },
+    "migration": {
+      "k": 2,
+      "hierarchical_k": 2,
+      "silhouette": 0.5382678756120791,
+      "hierarchical_silhouette": 0.8120709472613262,
+      "agreement": 0.44837288033532974,
+      "same_k_agreement": 0.44837288033532974,
+      "seed_ari": [
+        0.9958385461965676,
+        0.9930709894134588,
+        0.9930709894134588,
+        0.9930709894134588,
+        0.998611497534267
+      ],
+      "hierarchical_sizes": [
+        1284,
+        1766
+      ],
+      "profiles": [
+        {
+          "cluster": 1,
+          "counties": 784,
+          "net_median": 7.811235003280761,
+          "net_q25": -0.1759208944618699,
+          "net_q75": 14.497533867600241,
+          "inflow_median": 64.39112546572545,
+          "outflow_median": 56.22573188314158,
+          "inflow_q25": 57.979227063111374,
+          "inflow_q75": 73.73653062434332,
+          "outflow_q25": 52.090165353537365,
+          "outflow_q75": 64.17149308677584,
+          "distinctive_features": "Inflow rate +1.27 SD; Outflow rate +1.19 SD"
+        },
+        {
+          "cluster": 2,
+          "counties": 2266,
+          "net_median": 0.6220034432609813,
+          "net_q25": -3.4935229196048945,
+          "net_q75": 4.491221271177842,
+          "inflow_median": 40.11744046860005,
+          "outflow_median": 39.90788827160854,
+          "inflow_q25": 33.34834639889578,
+          "inflow_q75": 46.53995419364817,
+          "outflow_q25": 34.88192418287793,
+          "outflow_q75": 44.14070629318259,
+          "distinctive_features": "Inflow rate -0.44 SD; Outflow rate -0.41 SD"
+        }
+      ]
+    }
+  },
+  "projection_variance": 0.5453286518333661,
+  "interpretations": {
+    "characteristics": [
+      {
+        "cluster": 1,
+        "title": "Higher housing costs and educational attainment",
+        "text": "C1: Higher housing costs and educational attainment. The group contains 964 counties. Its strongest mean differences are Log rent +1.09 SD; Log home value +1.04 SD; Bachelor\u2019s+ % +1.02 SD. Median inflow and outflow are 51.31 and 48.05 per 1,000; median net migration is 2.00, with the middle half between -2.44 and 8.06. Inflow middle half: 40.82\u201364.13; outflow middle half: 40.96\u201357.22. Examples on the map include Santa Clara County, California; Loudoun County, Virginia; King County, Washington.",
+        "examples": [
+          "Santa Clara County, California",
+          "Loudoun County, Virginia",
+          "King County, Washington"
+        ]
+      },
+      {
+        "cluster": 2,
+        "title": "Lower housing costs and educational attainment",
+        "text": "C2: Lower housing costs and educational attainment. The group contains 2,086 counties. Its strongest mean differences are Log rent -0.50 SD; Log home value -0.48 SD; Bachelor\u2019s+ % -0.47 SD. Median inflow and outflow are 41.97 and 40.88 per 1,000; median net migration is 1.31, with the middle half between -3.09 and 6.59. Inflow middle half: 34.12\u201350.47; outflow middle half: 35.55\u201346.61. Examples on the map include Cook County, Minnesota; Bolivar County, Mississippi; Wyoming County, West Virginia.",
+        "examples": [
+          "Cook County, Minnesota",
+          "Bolivar County, Mississippi",
+          "Wyoming County, West Virginia"
+        ]
+      }
+    ],
+    "migration": [
+      {
+        "cluster": 1,
+        "title": "Higher turnover and larger typical net gains",
+        "text": "C1: Higher turnover and larger typical net gains. The group contains 784 counties. Its strongest mean differences are Inflow rate +1.27 SD; Outflow rate +1.19 SD. Median inflow and outflow are 64.39 and 56.23 per 1,000; median net migration is 7.81, with the middle half between -0.18 and 14.50. Inflow middle half: 57.98\u201373.74; outflow middle half: 52.09\u201364.17. Examples on the map include Sumter County, Florida; Wake County, North Carolina; Horry County, South Carolina.",
+        "examples": [
+          "Sumter County, Florida",
+          "Wake County, North Carolina",
+          "Horry County, South Carolina"
+        ]
+      },
+      {
+        "cluster": 2,
+        "title": "Lower turnover and near-balanced typical flows",
+        "text": "C2: Lower turnover and near-balanced typical flows. The group contains 2,266 counties. Its strongest mean differences are Inflow rate -0.44 SD; Outflow rate -0.41 SD. Median inflow and outflow are 40.12 and 39.91 per 1,000; median net migration is 0.62, with the middle half between -3.49 and 4.49. Inflow middle half: 33.35\u201346.54; outflow middle half: 34.88\u201344.14. Examples on the map include Maricopa County, Arizona; Los Angeles County, California; Cook County, Illinois.",
+        "examples": [
+          "Maricopa County, Arizona",
+          "Los Angeles County, California",
+          "Cook County, Illinois"
+        ]
+      }
+    ]
+  },
+  "rankings": {
+    "inflow_individuals": [
+      {
+        "county_name": "Los Angeles County, California",
+        "inflow_individuals": 174784.0,
+        "inflow_individuals_per_1000": 17.747440550277883
+      },
+      {
+        "county_name": "Harris County, Texas",
+        "inflow_individuals": 163262.0,
+        "inflow_individuals_per_1000": 34.308981735934196
+      },
+      {
+        "county_name": "Maricopa County, Arizona",
+        "inflow_individuals": 149222.0,
+        "inflow_individuals_per_1000": 33.2195974743471
+      },
+      {
+        "county_name": "Dallas County, Texas",
+        "inflow_individuals": 119745.0,
+        "inflow_individuals_per_1000": 45.9882725968348
+      },
+      {
+        "county_name": "Cook County, Illinois",
+        "inflow_individuals": 119132.0,
+        "inflow_individuals_per_1000": 22.972680074017337
+      }
+    ],
+    "outflow_individuals": [
+      {
+        "county_name": "Los Angeles County, California",
+        "outflow_individuals": 259326.0,
+        "outflow_individuals_per_1000": 26.33177389315591
+      },
+      {
+        "county_name": "Harris County, Texas",
+        "outflow_individuals": 183281.0,
+        "outflow_individuals_per_1000": 38.51590989663091
+      },
+      {
+        "county_name": "Cook County, Illinois",
+        "outflow_individuals": 159992.0,
+        "outflow_individuals_per_1000": 30.85187044960365
+      },
+      {
+        "county_name": "Dallas County, Texas",
+        "outflow_individuals": 148643.0,
+        "outflow_individuals_per_1000": 57.08659905308209
+      },
+      {
+        "county_name": "Maricopa County, Arizona",
+        "outflow_individuals": 144612.0,
+        "outflow_individuals_per_1000": 32.193325581752575
+      }
+    ]
+  },
+  "conclusion_table": [
+    {
+      "View": "Characteristics",
+      "Method": "K-means",
+      "Selected k": 2,
+      "Silhouette": 0.22199136837078456,
+      "Cluster": "C1",
+      "Counties": 964,
+      "Interpretation": "Higher housing costs and educational attainment. Log rent +1.09 SD relative to the cohort mean; Log home value +1.04 SD relative to the cohort mean; Bachelor\u2019s+ % +1.02 SD relative to the cohort mean",
+      "Net migration Median": 2.0039187669506218,
+      "Net migration Q1": -2.4423228429844714,
+      "Net migration Q3": 8.062491076521567,
+      "Inflow Median": 51.30857748690728,
+      "Inflow Q1": 40.81721363565958,
+      "Inflow Q3": 64.12960767017594,
+      "Outflow Median": 48.048480622485556,
+      "Outflow Q1": 40.96414046792064,
+      "Outflow Q3": 57.21544100479849
+    },
+    {
+      "View": "Characteristics",
+      "Method": "K-means",
+      "Selected k": 2,
+      "Silhouette": 0.22199136837078456,
+      "Cluster": "C2",
+      "Counties": 2086,
+      "Interpretation": "Lower housing costs and educational attainment. Log rent -0.50 SD relative to the cohort mean; Log home value -0.48 SD relative to the cohort mean; Bachelor\u2019s+ % -0.47 SD relative to the cohort mean",
+      "Net migration Median": 1.3083302450896925,
+      "Net migration Q1": -3.0923377691972127,
+      "Net migration Q3": 6.594805181758161,
+      "Inflow Median": 41.97105790612667,
+      "Inflow Q1": 34.11913826291311,
+      "Inflow Q3": 50.47321362841117,
+      "Outflow Median": 40.882371268227175,
+      "Outflow Q1": 35.55347203708034,
+      "Outflow Q3": 46.61363773578396
+    },
+    {
+      "View": "Characteristics",
+      "Method": "Hierarchical",
+      "Selected k": 2,
+      "Silhouette": 0.2551159532313763,
+      "Cluster": "C1",
+      "Counties": 860,
+      "Interpretation": "Log population +1.06 SD relative to the cohort mean; Log rent +1.04 SD relative to the cohort mean; Bachelor\u2019s+ % +0.98 SD relative to the cohort mean",
+      "Net migration Median": 1.668168774836412,
+      "Net migration Q1": -2.5253690686204404,
+      "Net migration Q3": 7.829149806809609,
+      "Inflow Median": 50.20719212785579,
+      "Inflow Q1": 39.91184344699056,
+      "Inflow Q3": 63.87576329581035,
+      "Outflow Median": 47.66864233143677,
+      "Outflow Q1": 40.40075911097053,
+      "Outflow Q3": 56.67121428660293
+    },
+    {
+      "View": "Characteristics",
+      "Method": "Hierarchical",
+      "Selected k": 2,
+      "Silhouette": 0.2551159532313763,
+      "Cluster": "C2",
+      "Counties": 2190,
+      "Interpretation": "Log population -0.42 SD relative to the cohort mean; Log rent -0.41 SD relative to the cohort mean; Bachelor\u2019s+ % -0.39 SD relative to the cohort mean",
+      "Net migration Median": 1.4746857492391556,
+      "Net migration Q1": -3.0718248335018816,
+      "Net migration Q3": 6.828771228850137,
+      "Inflow Median": 42.67680107119104,
+      "Inflow Q1": 34.45599418176924,
+      "Inflow Q3": 51.62323096323336,
+      "Outflow Median": 41.386263838964155,
+      "Outflow Q1": 35.78385702884291,
+      "Outflow Q3": 47.161843171273375
+    },
+    {
+      "View": "Migration",
+      "Method": "K-means",
+      "Selected k": 2,
+      "Silhouette": 0.5382678756120791,
+      "Cluster": "C1",
+      "Counties": 784,
+      "Interpretation": "Higher turnover and larger typical net gains. Inflow rate +1.27 SD relative to the cohort mean; Outflow rate +1.19 SD relative to the cohort mean",
+      "Net migration Median": 7.811235003280761,
+      "Net migration Q1": -0.1759208944618699,
+      "Net migration Q3": 14.497533867600241,
+      "Inflow Median": 64.39112546572545,
+      "Inflow Q1": 57.979227063111374,
+      "Inflow Q3": 73.73653062434332,
+      "Outflow Median": 56.22573188314158,
+      "Outflow Q1": 52.090165353537365,
+      "Outflow Q3": 64.17149308677584
+    },
+    {
+      "View": "Migration",
+      "Method": "K-means",
+      "Selected k": 2,
+      "Silhouette": 0.5382678756120791,
+      "Cluster": "C2",
+      "Counties": 2266,
+      "Interpretation": "Lower turnover and near-balanced typical flows. Inflow rate -0.44 SD relative to the cohort mean; Outflow rate -0.41 SD relative to the cohort mean",
+      "Net migration Median": 0.6220034432609813,
+      "Net migration Q1": -3.4935229196048945,
+      "Net migration Q3": 4.491221271177842,
+      "Inflow Median": 40.11744046860005,
+      "Inflow Q1": 33.34834639889578,
+      "Inflow Q3": 46.53995419364817,
+      "Outflow Median": 39.90788827160854,
+      "Outflow Q1": 34.88192418287793,
+      "Outflow Q3": 44.14070629318259
+    },
+    {
+      "View": "Migration",
+      "Method": "Hierarchical",
+      "Selected k": 2,
+      "Silhouette": 0.8120709472613262,
+      "Cluster": "C1",
+      "Counties": 1284,
+      "Interpretation": "Inflow rate +0.87 SD relative to the cohort mean; Outflow rate +0.76 SD relative to the cohort mean",
+      "Net migration Median": 6.264826014497624,
+      "Net migration Q1": 0.17651353631190883,
+      "Net migration Q3": 12.468214123797603,
+      "Inflow Median": 57.47639501309199,
+      "Inflow Q1": 51.21943322992654,
+      "Inflow Q3": 67.31422078360245,
+      "Outflow Median": 51.467551903905814,
+      "Outflow Q1": 46.55566082888045,
+      "Outflow Q3": 58.508433137906955
+    },
+    {
+      "View": "Migration",
+      "Method": "Hierarchical",
+      "Selected k": 2,
+      "Silhouette": 0.8120709472613262,
+      "Cluster": "C2",
+      "Counties": 1766,
+      "Interpretation": "Inflow rate -0.63 SD relative to the cohort mean; Outflow rate -0.55 SD relative to the cohort mean",
+      "Net migration Median": -0.1747348979607894,
+      "Net migration Q1": -4.24959106682757,
+      "Net migration Q3": 2.9823783425936425,
+      "Inflow Median": 37.15877058214976,
+      "Inflow Q1": 31.81369282223645,
+      "Inflow Q3": 42.251492722143084,
+      "Outflow Median": 37.98689006998579,
+      "Outflow Q1": 33.418024229480075,
+      "Outflow Q3": 41.70482001098668
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "net",
+      "label": "Net migration",
+      "count": "net_individuals",
+      "rate": "net_individuals_per_1000",
+      "units": "IRS individuals per 1,000 ACS residents"
+    },
+    {
+      "id": "inflow",
+      "label": "Inflow",
+      "count": "inflow_individuals",
+      "rate": "inflow_individuals_per_1000",
+      "units": "IRS individuals per 1,000 ACS residents"
+    },
+    {
+      "id": "outflow",
+      "label": "Outflow",
+      "count": "outflow_individuals",
+      "rate": "outflow_individuals_per_1000",
+      "units": "IRS individuals per 1,000 ACS residents"
+    }
+  ],
+  "metrics": [
+    {
+      "view": "migration",
+      "method": "kmeans",
+      "k": 2,
+      "silhouette": 0.5382678756,
+      "min_size": 784,
+      "max_size": 2266,
+      "inertia": 2908.2582027656
+    },
+    {
+      "view": "migration",
+      "method": "kmeans",
+      "k": 3,
+      "silhouette": 0.4303134013,
+      "min_size": 349,
+      "max_size": 1382,
+      "inertia": 1941.2135411986
+    },
+    {
+      "view": "migration",
+      "method": "kmeans",
+      "k": 4,
+      "silhouette": 0.4184794026,
+      "min_size": 69,
+      "max_size": 1337,
+      "inertia": 1445.1009724329
+    },
+    {
+      "view": "migration",
+      "method": "kmeans",
+      "k": 5,
+      "silhouette": 0.3957806066,
+      "min_size": 26,
+      "max_size": 1291,
+      "inertia": 1145.9220125698
+    },
+    {
+      "view": "migration",
+      "method": "kmeans",
+      "k": 6,
+      "silhouette": 0.3547945363,
+      "min_size": 25,
+      "max_size": 991,
+      "inertia": 979.6947092636
+    },
+    {
+      "view": "migration",
+      "method": "kmeans",
+      "k": 7,
+      "silhouette": 0.3547452754,
+      "min_size": 2,
+      "max_size": 987,
+      "inertia": 851.7618941384
+    },
+    {
+      "view": "migration",
+      "method": "kmeans",
+      "k": 8,
+      "silhouette": 0.326298385,
+      "min_size": 2,
+      "max_size": 818,
+      "inertia": 760.0982432155
+    },
+    {
+      "view": "characteristics",
+      "method": "kmeans",
+      "k": 2,
+      "silhouette": 0.2219913684,
+      "min_size": 964,
+      "max_size": 2086,
+      "inertia": 31056.5455395802
+    },
+    {
+      "view": "characteristics",
+      "method": "kmeans",
+      "k": 3,
+      "silhouette": 0.1788003865,
+      "min_size": 782,
+      "max_size": 1334,
+      "inertia": 26516.5701091593
+    },
+    {
+      "view": "characteristics",
+      "method": "kmeans",
+      "k": 4,
+      "silhouette": 0.1537759905,
+      "min_size": 476,
+      "max_size": 1084,
+      "inertia": 24552.7890985136
+    },
+    {
+      "view": "characteristics",
+      "method": "kmeans",
+      "k": 5,
+      "silhouette": 0.1621992906,
+      "min_size": 301,
+      "max_size": 1039,
+      "inertia": 22954.9967906831
+    },
+    {
+      "view": "characteristics",
+      "method": "kmeans",
+      "k": 6,
+      "silhouette": 0.1362978153,
+      "min_size": 304,
+      "max_size": 810,
+      "inertia": 21649.1651430977
+    },
+    {
+      "view": "characteristics",
+      "method": "kmeans",
+      "k": 7,
+      "silhouette": 0.130374944,
+      "min_size": 240,
+      "max_size": 758,
+      "inertia": 20542.9255413749
+    },
+    {
+      "view": "characteristics",
+      "method": "kmeans",
+      "k": 8,
+      "silhouette": 0.1337835836,
+      "min_size": 227,
+      "max_size": 607,
+      "inertia": 19557.7908951427
+    },
+    {
+      "view": "migration",
+      "method": "hierarchical",
+      "k": 2,
+      "silhouette": 0.8120709473,
+      "min_size": 1284,
+      "max_size": 1766,
+      "inertia": null
+    },
+    {
+      "view": "migration",
+      "method": "hierarchical",
+      "k": 3,
+      "silhouette": 0.6998054029,
+      "min_size": 144,
+      "max_size": 1766,
+      "inertia": null
+    },
+    {
+      "view": "migration",
+      "method": "hierarchical",
+      "k": 4,
+      "silhouette": 0.6552598153,
+      "min_size": 144,
+      "max_size": 1491,
+      "inertia": null
+    },
+    {
+      "view": "migration",
+      "method": "hierarchical",
+      "k": 5,
+      "silhouette": 0.6501276393,
+      "min_size": 144,
+      "max_size": 1491,
+      "inertia": null
+    },
+    {
+      "view": "migration",
+      "method": "hierarchical",
+      "k": 6,
+      "silhouette": 0.6874917868,
+      "min_size": 144,
+      "max_size": 1233,
+      "inertia": null
+    },
+    {
+      "view": "migration",
+      "method": "hierarchical",
+      "k": 7,
+      "silhouette": 0.651130765,
+      "min_size": 112,
+      "max_size": 1233,
+      "inertia": null
+    },
+    {
+      "view": "migration",
+      "method": "hierarchical",
+      "k": 8,
+      "silhouette": 0.6520739307,
+      "min_size": 112,
+      "max_size": 1233,
+      "inertia": null
+    },
+    {
+      "view": "characteristics",
+      "method": "hierarchical",
+      "k": 2,
+      "silhouette": 0.2551159532,
+      "min_size": 860,
+      "max_size": 2190,
+      "inertia": null
+    },
+    {
+      "view": "characteristics",
+      "method": "hierarchical",
+      "k": 3,
+      "silhouette": 0.2515118199,
+      "min_size": 860,
+      "max_size": 1290,
+      "inertia": null
+    },
+    {
+      "view": "characteristics",
+      "method": "hierarchical",
+      "k": 4,
+      "silhouette": 0.1901132778,
+      "min_size": 370,
+      "max_size": 920,
+      "inertia": null
+    },
+    {
+      "view": "characteristics",
+      "method": "hierarchical",
+      "k": 5,
+      "silhouette": 0.1941283378,
+      "min_size": 278,
+      "max_size": 900,
+      "inertia": null
+    },
+    {
+      "view": "characteristics",
+      "method": "hierarchical",
+      "k": 6,
+      "silhouette": 0.1849774417,
+      "min_size": 150,
+      "max_size": 860,
+      "inertia": null
+    },
+    {
+      "view": "characteristics",
+      "method": "hierarchical",
+      "k": 7,
+      "silhouette": 0.184113657,
+      "min_size": 132,
+      "max_size": 860,
+      "inertia": null
+    },
+    {
+      "view": "characteristics",
+      "method": "hierarchical",
+      "k": 8,
+      "silhouette": 0.1902217958,
+      "min_size": 132,
+      "max_size": 642,
+      "inertia": null
+    }
+  ],
+  "conclusions": [
+    "Both methods select two characteristic profiles and two migration groups among 3,050 counties. Agreement between methods is moderate (adjusted Rand index 0.548 for characteristics and 0.448 for migration), so the group boundaries depend on the chosen geometry.",
+    "The higher-income, education and housing-cost characteristic profile has higher median inflow and outflow rates (51.31 and 48.05) than the other profile (41.97 and 40.88). Median net migration differs by only 0.70 per 1,000, and the middle halves of the net-migration distributions overlap substantially. The characteristic profiles primarily distinguish two-way turnover.",
+    "Clustering inflow and outflow directly separates higher-turnover and lower-turnover counties. Their median net rates are 7.81 and 0.62 per 1,000, respectively. These outcome contrasts follow the rate-based grouping; the characteristic analysis compares migration after fitting. All reported rates describe IRS-covered individuals per 1,000 ACS residents."
+  ]
+}

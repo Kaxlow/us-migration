@@ -1,25 +1,18 @@
 # Notebooks
 
-- `01_data_cleaning.ipynb`: authoritative source-specific cleaning code, raw/clean comparisons, intermediate diagnostics, assertions and the imputed downstream export. Edit this notebook directly.
-- `02_eda_findings.ipynb`: authoritative EDA source with ten findings charts, readable titles/axes and two-sentence captions, using the same imputed dataset.
-- `03_clustering.ipynb`: independent migration and characteristic clustering, k-means k=2–8, cosine/average-linkage hierarchy, silhouettes, profiles, outcome comparisons and website exports.
-- `04_pca.ipynb`: characteristic PCA, eigenvalue checks, variance retention, coefficients and correlation loadings, migration comparisons and website exports.
+Notebook names identify topics. Reading order follows the research story; execution follows input dependencies.
 
-Inputs are original snapshots indexed by `data/raw/catalog.json`. The single cleaned downstream dataset is `data/processed/analysis_county_year.parquet` (also CSV). It retains training-only socioeconomic imputation and flags, with recalculated derived variables. Source and intermediate audit tables preserve uncertainty; the final export passes documented missingness, validity and uniqueness checks. No separate observed-only cleaned version is maintained.
+| Notebook | Question and input | Result owner |
+| --- | --- | --- |
+| [Data cleaning](data_cleaning.ipynb) | Combine verified source snapshots and supplements while retaining uncertainty | Processed analysis dataset and cleaning diagnostics |
+| [Exploration](exploration.ipynb) | Describe movement and characteristic associations in the validated panel | `exploration` |
+| [Clustering](clustering.ipynb) | Compare independent characteristic and migration groupings in 2023 | `clustering` |
+| [PCA](pca.ipynb) | Summarize characteristic variation and subsequent migration associations | `pca` |
+| [Naive Bayes](naive_bayes.ipynb) | Classify inflow intensity in the shared retrospective 2023 split | `classification/naive-bayes` |
+| [Decision trees](decision_trees.ipynb) | Classify outflow intensity and net direction in that split | `classification/decision-trees` |
 
-Execute all four with `python scripts/run_notebooks.py`, Phase 2 only with
-`python scripts/run_phase2.py`, or cleaning alone with `python scripts/clean_data.py`.
-You can also select the repo environment in the IDE. All four notebooks are
-maintained directly. Routine data refreshes execute their existing code with the
-same methodology; deliberate methodology revisions and bug fixes are made in the
-notebooks. Phase 2 exports directly to tracked website assets
-and data so static hosting needs no Python runtime. See
-[the Phase 2 guide](../docs/methodology.md#clustering-and-pca) and
-[the cleaning guide](../docs/notebook-cleaning.md) for methods and output paths.
+Read in the order shown. After cleaning creates `data/processed/analysis_county_year.parquet`, all five analytical notebooks run independently. Naive Bayes and decision trees each export their own cohort, split, and target evidence; website packaging validates and combines them.
 
-## Net migration, inflows, and outflows
+Reusable implementations live in the Python modules. Notebooks keep the reasoning, parameter choices, estimator fitting, intermediate examples, checks, and measured conclusions visible. Follow the [manual Jupyter workflow](../docs/workflow.md#3-execute-and-inspect-the-notebooks), then [package the affected topic](../docs/workflow.md#incremental-website-export).
 
-All three rates per 1,000 ACS residents receive equal emphasis. County downloads
-retain their supporting counts. The ten EDA chart groups, cluster distributions,
-PCA associations, and score quintiles compare the same observations across
-outcomes. Findings and captions are regenerated from executed analyses.
+Results are staged under ignored interim storage and finalized under `reports/analyses/<topic>/` only after the notebook reaches its export cell. Inspect and save the executed notebook. Numerical evidence is tracked; generated figures remain local and are copied into the website for publication.

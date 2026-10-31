@@ -10,12 +10,12 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from us_migration.outcomes import OUTCOME_DEFINITIONS, RATE_FIELDS, COUNT_FIELDS
 DATA=ROOT/'website/data'
-PHASE=DATA/'phase2'
+CLUSTERING=DATA/'clustering'
 
 
 def test_shared_contract_and_all_map_rates():
-    d=json.loads((DATA/'analysis.json').read_text())
-    assert d['outcomes']==OUTCOME_DEFINITIONS==json.loads((DATA/'outcomes.json').read_text())
+    d=json.loads((DATA/'exploration/analysis.json').read_text())
+    assert d['outcomes']==OUTCOME_DEFINITIONS==json.loads((DATA/'exploration/outcomes.json').read_text())
     all_rows=pd.DataFrame([dict(zip(d['migrationFields'],r)) for rows in d['migration'].values() for r in rows])
     assert np.isfinite(all_rows[COUNT_FIELDS+RATE_FIELDS]).all().all()
     assert np.allclose(all_rows.net_individuals,all_rows.inflow_individuals-all_rows.outflow_individuals)
@@ -27,8 +27,8 @@ def test_shared_contract_and_all_map_rates():
 
 
 def test_cluster_summaries_for_each_outcome():
-    rows=pd.read_csv(PHASE/'cluster-assignments.csv')
-    d=json.loads((DATA/'clustering.json').read_text())
+    rows=pd.read_csv(CLUSTERING/'cluster-assignments.csv')
+    d=json.loads((DATA/'clustering/clustering.json').read_text())
     for view,summary in d['views'].items():
         for p in summary['profiles']:
             group=rows.loc[rows[view+'_kmeans'].eq(p['cluster'])]
@@ -38,9 +38,9 @@ def test_cluster_summaries_for_each_outcome():
 
 
 def test_pca_associations_and_identical_score_bins():
-    rows=pd.read_csv(PHASE/'pca-county-scores.csv')
-    associations=pd.read_csv(PHASE/'pca-migration-associations.csv')
-    quintiles=pd.read_csv(PHASE/'pca-score-quintiles.csv')
+    rows=pd.read_csv(DATA/'pca/pca-county-scores.csv')
+    associations=pd.read_csv(DATA/'pca/pca-migration-associations.csv')
+    quintiles=pd.read_csv(DATA/'pca/pca-score-quintiles.csv')
     assert len(associations)==39
     assert not associations.duplicated(['component','outcome']).any()
     for o in OUTCOME_DEFINITIONS:
@@ -57,8 +57,8 @@ def test_pca_associations_and_identical_score_bins():
 
 
 def test_rankings_and_trends_use_shared_rows():
-    d=json.loads((DATA/'analysis.json').read_text())
-    rows=pd.read_csv(DATA/'latest-counties.csv',dtype={'county_fips':str})
+    d=json.loads((DATA/'exploration/analysis.json').read_text())
+    rows=pd.read_csv(DATA/'exploration/latest-counties.csv',dtype={'county_fips':str})
     for o in OUTCOME_DEFINITIONS:
         for kind,field,cohort in [('rateRankings',o['rate'],rows.loc[rows.population.ge(10000)]),('countRankings',o['count'],rows)]:
             selected=[r for r in d[kind] if r['outcome']==o['id']]

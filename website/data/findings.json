@@ -1,0 +1,766 @@
+{
+  "exploration": {
+    "year": 2023,
+    "counties": 3050,
+    "captions": [
+      "The median county population is 26,767, while the largest county has 9,848,406 residents in this sample. A logarithmic axis reveals smaller counties that a few very large counties would compress on a linear scale.",
+      "The median of county home-value estimates is $174,600, compared with a mean of $211,434. The upper tail motivates comparing ranks and inspecting extreme counties rather than automatically deleting high home values.",
+      "All three panels use the same 3,007 counties in every year; lines show county medians and shading shows the middle 50%. Equal-county summaries describe the fixed sample; IRS methodology changes limit comparisons over time.",
+      "County inflow and outflow rates have a Spearman correlation of 0.80, illustrating substantial two-way movement. Counties above the diagonal gain IRS individuals on net, with matching logarithmic axes fitted to the observed range to spread out the points (symmetric logarithmic axes if zeros occur).",
+      "Largest net gains and losses and highest inflow/outflow rates in 2023, among counties with population at least 10,000. Supporting count rankings use the full eligible county cohort and include population and corresponding rates.",
+      "Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.",
+      "Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.",
+      "Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.",
+      "Net migration, inflow, and outflow use the same 3,050 counties in 2023. Panels describe outcome distributions and associations; shared characteristics, source coverage, and timing limit causal interpretation.",
+      "All cells use the same 3,050 counties. Strongest absolute associations: Net migration: Homeownership % (rho 0.290); Inflow: Home value (rho 0.442); Outflow: Gross rent (rho 0.420). Correlated characteristics and different relationships across outcomes motivate multivariable analysis."
+    ],
+    "associations": [
+      {
+        "feature": "homeownership_pct",
+        "spearman": 0.2896640925,
+        "pearson": 0.2917644052,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "median_age",
+        "spearman": 0.2523022545,
+        "pearson": 0.2538348516,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "median_home_value",
+        "spearman": 0.2382046439,
+        "pearson": 0.0852567015,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "precipitation_inches",
+        "spearman": 0.2102135764,
+        "pearson": 0.2079923041,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "temperature_f",
+        "spearman": 0.1450925657,
+        "pearson": 0.1625752053,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "median_gross_rent",
+        "spearman": 0.1393285589,
+        "pearson": 0.0921206318,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "poverty_pct",
+        "spearman": -0.1139536271,
+        "pearson": -0.1588335901,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "population",
+        "spearman": 0.1049554796,
+        "pearson": -0.0794777371,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "median_household_income",
+        "spearman": 0.0717381141,
+        "pearson": 0.0918218517,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "declarations",
+        "spearman": 0.0352664543,
+        "pearson": 0.0412103762,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "unemployment_pct",
+        "spearman": -0.0218237712,
+        "pearson": -0.0414615395,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "vacancy_pct",
+        "spearman": -0.0160464837,
+        "pearson": -0.0189639208,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "bachelors_plus_pct",
+        "spearman": 0.0160213289,
+        "pearson": 0.0012602551,
+        "pair_count": 3050,
+        "outcome": "net"
+      },
+      {
+        "feature": "median_home_value",
+        "spearman": 0.4424672714,
+        "pearson": 0.2977855621,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "median_gross_rent",
+        "spearman": 0.4087227562,
+        "pearson": 0.3686679702,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "median_household_income",
+        "spearman": 0.2407950537,
+        "pearson": 0.2767521587,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "bachelors_plus_pct",
+        "spearman": 0.2293401897,
+        "pearson": 0.2582863716,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "temperature_f",
+        "spearman": 0.210201063,
+        "pearson": 0.2097292974,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "poverty_pct",
+        "spearman": -0.1805256806,
+        "pearson": -0.2129595717,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "population",
+        "spearman": 0.1715633779,
+        "pearson": -0.0401591489,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "precipitation_inches",
+        "spearman": 0.1295902183,
+        "pearson": 0.1096267431,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "vacancy_pct",
+        "spearman": -0.1204097324,
+        "pearson": -0.0695071112,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "homeownership_pct",
+        "spearman": 0.0836065235,
+        "pearson": 0.0024879886,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "unemployment_pct",
+        "spearman": -0.0442182399,
+        "pearson": -0.0492528526,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "median_age",
+        "spearman": -0.0267422124,
+        "pearson": -0.0208490806,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "declarations",
+        "spearman": -0.0210265197,
+        "pearson": -0.0238047151,
+        "pair_count": 3050,
+        "outcome": "inflow"
+      },
+      {
+        "feature": "median_gross_rent",
+        "spearman": 0.420137619,
+        "pearson": 0.398043117,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "median_home_value",
+        "spearman": 0.3913272407,
+        "pearson": 0.3138109797,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "median_household_income",
+        "spearman": 0.2815573334,
+        "pearson": 0.2827088761,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "bachelors_plus_pct",
+        "spearman": 0.2771522579,
+        "pearson": 0.323794231,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "median_age",
+        "spearman": -0.1995811886,
+        "pearson": -0.2064312342,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "poverty_pct",
+        "spearman": -0.1794366386,
+        "pearson": -0.1549377449,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "temperature_f",
+        "spearman": 0.1776435816,
+        "pearson": 0.148220465,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "vacancy_pct",
+        "spearman": -0.1440523636,
+        "pearson": -0.0739123048,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "population",
+        "spearman": 0.1228355727,
+        "pearson": 0.0059453527,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "unemployment_pct",
+        "spearman": -0.0645237113,
+        "pearson": -0.0324776447,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "homeownership_pct",
+        "spearman": -0.0556889868,
+        "pearson": -0.2040243401,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "declarations",
+        "spearman": -0.0528219258,
+        "pearson": -0.0591839095,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      },
+      {
+        "feature": "precipitation_inches",
+        "spearman": 0.004170566,
+        "pearson": -0.0098633964,
+        "pair_count": 3050,
+        "outcome": "outflow"
+      }
+    ]
+  },
+  "clustering": {
+    "year": 2023,
+    "counties": 3050,
+    "conclusions": [
+      "Both methods select two characteristic profiles and two migration groups among 3,050 counties. Agreement between methods is moderate (adjusted Rand index 0.548 for characteristics and 0.448 for migration), so the group boundaries depend on the chosen geometry.",
+      "The higher-income, education and housing-cost characteristic profile has higher median inflow and outflow rates (51.31 and 48.05) than the other profile (41.97 and 40.88). Median net migration differs by only 0.70 per 1,000, and the middle halves of the net-migration distributions overlap substantially. The characteristic profiles primarily distinguish two-way turnover.",
+      "Clustering inflow and outflow directly separates higher-turnover and lower-turnover counties. Their median net rates are 7.81 and 0.62 per 1,000, respectively. These outcome contrasts follow the rate-based grouping; the characteristic analysis compares migration after fitting. All reported rates describe IRS-covered individuals per 1,000 ACS residents."
+    ]
+  },
+  "pca": {
+    "year": 2023,
+    "counties": 3050,
+    "conclusions": [
+      "PC1\u2013PC5 retain 80.7% of variation in the 13 standardized county characteristics. PC1 and PC2 alone retain 54.5%.",
+      "PC1, the income, education and housing-cost dimension, accompanies greater two-way movement: inflow rho = 0.309 and outflow rho = 0.335, with a weaker net association (rho = 0.083).",
+      "PC3, combining rainfall, age and incident history, has the strongest net-migration association among the retained components (rho = 0.362). PC4 and PC5 show weaker negative net associations; PC2 has weak associations with all three outcomes. These are descriptive patterns within the observed county cohort."
+    ]
+  },
+  "classification": {
+    "inflow": {
+      "model": {
+        "accuracy": 0.5081967213114754,
+        "balanced_accuracy": 0.500949792211928,
+        "macro_f1": 0.49790626828026835,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            121,
+            52,
+            49
+          ],
+          [
+            65,
+            63,
+            54
+          ],
+          [
+            37,
+            43,
+            126
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.545045045045045,
+            0.23423423423423423,
+            0.22072072072072071
+          ],
+          [
+            0.35714285714285715,
+            0.34615384615384615,
+            0.2967032967032967
+          ],
+          [
+            0.1796116504854369,
+            0.2087378640776699,
+            0.6116504854368932
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.5426008968609866,
+            "recall": 0.545045045045045,
+            "f1-score": 0.5438202247191011,
+            "support": 222.0
+          },
+          "Medium": {
+            "precision": 0.3987341772151899,
+            "recall": 0.34615384615384615,
+            "f1-score": 0.37058823529411766,
+            "support": 182.0
+          },
+          "High": {
+            "precision": 0.5502183406113537,
+            "recall": 0.6116504854368932,
+            "f1-score": 0.5793103448275863,
+            "support": 206.0
+          },
+          "accuracy": 0.5081967213114754,
+          "macro avg": {
+            "precision": 0.49718447156251006,
+            "recall": 0.500949792211928,
+            "f1-score": 0.49790626828026835,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.5022491762659712,
+            "recall": 0.5081967213114754,
+            "f1-score": 0.5041198028617256,
+            "support": 610.0
+          }
+        }
+      },
+      "baseline": {
+        "accuracy": 0.3639344262295082,
+        "balanced_accuracy": 0.3333333333333333,
+        "macro_f1": 0.1778846153846154,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            222,
+            0,
+            0
+          ],
+          [
+            182,
+            0,
+            0
+          ],
+          [
+            206,
+            0,
+            0
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.3639344262295082,
+            "recall": 1.0,
+            "f1-score": 0.5336538461538461,
+            "support": 222.0
+          },
+          "Medium": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 182.0
+          },
+          "High": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 206.0
+          },
+          "accuracy": 0.3639344262295082,
+          "macro avg": {
+            "precision": 0.12131147540983607,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.1778846153846154,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.13244826659500133,
+            "recall": 0.3639344262295082,
+            "f1-score": 0.19421500630517022,
+            "support": 610.0
+          }
+        }
+      },
+      "test_count": 610,
+      "conclusions": [
+        "The selected Multinomial NB (alpha 1) correctly classifies 50.8% of 610 held-out counties by inflow-rate tertile; the majority baseline achieves 36.4%.",
+        "Macro-F1 is 0.498, compared with baseline 0.178; balanced accuracy is 50.1%. The medium class has the lowest recall (34.6%).",
+        "Selected mean training-fold macro-F1 is 0.513 and validation macro-F1 is 0.501. This gap describes how the fitted specification transfers to held-out training folds.",
+        "Rate tertiles describe relative inflow intensity among training counties. These contemporaneous associations support retrospective classification; spatial dependence, prior exploration, source coverage and binning limit claims about future migration."
+      ]
+    },
+    "outflow": {
+      "model": {
+        "accuracy": 0.5409836065573771,
+        "balanced_accuracy": 0.5367368061785918,
+        "macro_f1": 0.5247148424635402,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            139,
+            27,
+            45
+          ],
+          [
+            73,
+            60,
+            63
+          ],
+          [
+            40,
+            32,
+            131
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.6587677725118484,
+            0.12796208530805686,
+            0.2132701421800948
+          ],
+          [
+            0.37244897959183676,
+            0.30612244897959184,
+            0.32142857142857145
+          ],
+          [
+            0.19704433497536947,
+            0.15763546798029557,
+            0.645320197044335
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.5515873015873016,
+            "recall": 0.6587677725118484,
+            "f1-score": 0.6004319654427646,
+            "support": 211.0
+          },
+          "Medium": {
+            "precision": 0.5042016806722689,
+            "recall": 0.30612244897959184,
+            "f1-score": 0.38095238095238093,
+            "support": 196.0
+          },
+          "High": {
+            "precision": 0.5481171548117155,
+            "recall": 0.645320197044335,
+            "f1-score": 0.5927601809954751,
+            "support": 203.0
+          },
+          "accuracy": 0.5409836065573771,
+          "macro avg": {
+            "precision": 0.534635379023762,
+            "recall": 0.5367368061785918,
+            "f1-score": 0.5247148424635402,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.5352069384810879,
+            "recall": 0.5409836065573771,
+            "f1-score": 0.5273575870773302,
+            "support": 610.0
+          }
+        }
+      },
+      "baseline": {
+        "accuracy": 0.34590163934426227,
+        "balanced_accuracy": 0.3333333333333333,
+        "macro_f1": 0.17133576938692652,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            211,
+            0,
+            0
+          ],
+          [
+            196,
+            0,
+            0
+          ],
+          [
+            203,
+            0,
+            0
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.34590163934426227,
+            "recall": 1.0,
+            "f1-score": 0.5140073081607796,
+            "support": 211.0
+          },
+          "Medium": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 196.0
+          },
+          "High": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 203.0
+          },
+          "accuracy": 0.34590163934426227,
+          "macro avg": {
+            "precision": 0.11530054644808742,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.17133576938692652,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.1196479441010481,
+            "recall": 0.34590163934426227,
+            "f1-score": 0.17779597052774507,
+            "support": 610.0
+          }
+        }
+      },
+      "test_count": 610,
+      "conclusions": [
+        "For outflow, the selected depth-6 tree classifies 54.1% of 610 held-out counties correctly, compared with 34.6% for the majority baseline.",
+        "Macro-F1 is 0.525 versus baseline 0.171, with balanced accuracy 53.7%. The lowest-recall class is medium (30.6%).",
+        "Mean training-fold macro-F1 is 0.609, compared with validation 0.517. The selected model balances fit against validation performance under the fixed candidate grid."
+      ]
+    },
+    "net": {
+      "model": {
+        "accuracy": 0.6540983606557377,
+        "balanced_accuracy": 0.6097163495419309,
+        "macro_f1": 0.5950108712410835,
+        "classes": [
+          "Net outflow",
+          "Net inflow"
+        ],
+        "confusion": [
+          [
+            83,
+            175
+          ],
+          [
+            36,
+            316
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.32170542635658916,
+            0.6782945736434108
+          ],
+          [
+            0.10227272727272728,
+            0.8977272727272727
+          ]
+        ],
+        "classification_report": {
+          "Net outflow": {
+            "precision": 0.6974789915966386,
+            "recall": 0.32170542635658916,
+            "f1-score": 0.4403183023872679,
+            "support": 258.0
+          },
+          "Net inflow": {
+            "precision": 0.6435845213849287,
+            "recall": 0.8977272727272727,
+            "f1-score": 0.7497034400948992,
+            "support": 352.0
+          },
+          "accuracy": 0.6540983606557377,
+          "macro avg": {
+            "precision": 0.6705317564907837,
+            "recall": 0.6097163495419309,
+            "f1-score": 0.5950108712410835,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.6663792317367667,
+            "recall": 0.6540983606557377,
+            "f1-score": 0.6188487425070814,
+            "support": 610.0
+          }
+        }
+      },
+      "baseline": {
+        "accuracy": 0.5770491803278689,
+        "balanced_accuracy": 0.5,
+        "macro_f1": 0.3659043659043659,
+        "classes": [
+          "Net outflow",
+          "Net inflow"
+        ],
+        "confusion": [
+          [
+            0,
+            258
+          ],
+          [
+            0,
+            352
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "classification_report": {
+          "Net outflow": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 258.0
+          },
+          "Net inflow": {
+            "precision": 0.5770491803278689,
+            "recall": 1.0,
+            "f1-score": 0.7318087318087318,
+            "support": 352.0
+          },
+          "accuracy": 0.5770491803278689,
+          "macro avg": {
+            "precision": 0.28852459016393445,
+            "recall": 0.5,
+            "f1-score": 0.3659043659043659,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.3329857565170653,
+            "recall": 0.5770491803278689,
+            "f1-score": 0.42228962884700594,
+            "support": 610.0
+          }
+        }
+      },
+      "test_count": 610,
+      "conclusions": [
+        "For net, the selected depth-4 tree classifies 65.4% of 610 held-out counties correctly, compared with 57.7% for the majority baseline.",
+        "Macro-F1 is 0.595 versus baseline 0.366, with balanced accuracy 61.0%. The lowest-recall class is net outflow (32.2%).",
+        "Mean training-fold macro-F1 is 0.691, compared with validation 0.672. The selected model balances fit against validation performance under the fixed candidate grid."
+      ]
+    }
+  },
+  "inputHashes": {
+    "exploration": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+    "clustering": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+    "pca": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+    "naive-bayes": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+    "decision-trees": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2"
+  },
+  "consistentInput": true
+}

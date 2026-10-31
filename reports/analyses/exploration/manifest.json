@@ -1,0 +1,25 @@
+{
+  "files": {
+    "data/analysis.json": "036a8444b9d465a884a998bfe09825514f5b3f1de6d4d5b9acf7a23dc46e59f5",
+    "data/chart03_balanced_trend.csv": "c3d00982cb3d17e5ea3a4de1166c8a9a3a989c22dee4f89cac9d6d7a93500252",
+    "data/chart05_county_rankings.csv": "fad3dff09d3c1313561d38c24360230ed7d74f3ca5a8cdfd71286aa69f4ac648",
+    "data/eda_chart_catalog.csv": "445d75e091e465a3879bf8a322bf68612e60b64d30abec59255e1d794ce9586e",
+    "data/latest-counties.csv": "14f97df5775e1c4e0fdc5ecd265bdd1e1981c48c92c98f5057a286c3d6426cbc",
+    "data/migration_correlations.csv": "d0510262be35df3146cbd99ea88d20833f771b6124030361fdf49352f656962f",
+    "data/migration_count_rankings.csv": "f918fb3af79a8d7f1235498aa97c2d0ebf7721f1ea1209a6177cb99b13abe343",
+    "data/outcomes.json": "c144ce13e8c3fa3b694060d08686c990c12cb82e1a056c431811ef933ffdc7d6",
+    "data/validated_latest_year_pair_counts.csv": "ab29fedd3ef3683d5155f558cc9bfcafa6eeea308f28d9754982be9f475d215a",
+    "data/validated_latest_year_pearson.csv": "c6233832f7af72bb2f4fa8cbc282f4648be31623c7b6c579a6743b8250097fad",
+    "data/validated_latest_year_spearman.csv": "208d840cb33a070407071083c0f26f29bb0f5d4f3f15b33682898e6753df82bf",
+    "figures/01_population_distribution.png": "68c51f78819c6ccbe21638e87d3282057b8083a05528944ba5ccbde85719d6c2",
+    "figures/02_home_value_distribution.png": "06cb315afe5ca183724493f2f901bf03e3e02c2fa59a5bbd32f988deea4e9a70",
+    "figures/03_net_migration_over_time.png": "bb3ecbaf7e87285fc9a99fd2668de5800166c5738e4394a7159b9607f02a7af4",
+    "figures/04_inflow_vs_outflow.png": "c7b6e98729bcf0257e58e757949fe4a7c5e29d86b3f87a1460192a3d26857843",
+    "figures/05_county_gains_and_losses.png": "e4f6b8221f2564e3c7d73f76829a4d17952c282967c7127b5d7991d2161c5b2f",
+    "figures/06_homeownership_and_migration.png": "0b967b760e9671e0b16869bb4b021cd138da7d7e42f721954dd64a0538e9c1e4",
+    "figures/07_education_bands.png": "4024666faa054110a905170f43723a5daf644309759f4ea922f461c29a46dd95",
+    "figures/08_temperature_and_migration.png": "80c26064a6509875535631f3824a5ae14390dfbb67c59bcc3d0e772f0568ef05",
+    "figures/09_disasters_and_migration.png": "b556f35ddbeba754900e7c3f9d2e1022a100e173c746f279197f5dbcec2231f5",
+    "figures/10_correlation_matrix.png": "94960758084302e2b75a35ec84ebd3bc21ec27d2848a122c59f329907d9163e7"
+  }
+}

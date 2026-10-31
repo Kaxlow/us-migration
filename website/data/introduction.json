@@ -8,15 +8,85 @@
     "Better understanding the factors associated with migration could help communities plan for these changes more effectively. If migration patterns can be estimated from economic, demographic, housing, and environmental characteristics, local governments could incorporate migration forecasts into decisions about infrastructure capacity, housing development, transportation, schools, and public services. Communities experiencing persistent out-migration could also identify factors associated with population loss and evaluate strategies aimed at retaining residents, such as improving employment opportunities, increasing housing affordability, strengthening local industries, expanding broadband access, or investing in amenities and services. It is important to note that the relationships uncovered by this project are not necessarily causal: a characteristic associated with migration may be a consequence of migration, share a common cause with migration, or interact with other factors. The goal of this project is therefore to use county-level data and machine-learning methods to identify geographic patterns, relationships, county profiles, and predictive signals that can improve understanding of migration across the United States."
   ],
   "questions": [
-    "How do migration flows vary across the country, and which counties have the largest migration inflows and outflows?",
-    "How are a county's employment and income opportunities associated with net migration, inflows, and outflows?",
-    "How is housing affordability associated with net migration, inflows, and outflows, after adjusting for local income?",
-    "How do counties' age structure and educational attainment levels relate to net migration, inflows, and outflows?",
-    "How are environmental hazards associated with net migration, inflows, and outflows?",
-    "Does the relationship between housing affordability and each migration outcome differ across metropolitan and non-metropolitan areas?",
-    "What dimensions capture differences in counties' economic, demographic, and environmental characteristics, and how do migration rates vary along those dimensions?",
-    "Can counties be grouped into distinct profiles based on their characteristics, and do the groups have different migration outcomes?",
-    "How accurately can county characteristics classify counties as experiencing net inflows versus net outflows?",
-    "How accurately can county characteristics predict the magnitude of net migration, inflow, and outflow rates, and how much predictive information does each factor group contribute?"
+    {
+      "id": "q1",
+      "number": 1,
+      "text": "How do migration flows vary across the country, and which counties have the largest migration inflows and outflows?",
+      "status": "addressed",
+      "evidence": "#data-prep-eda/section-eda-findings",
+      "gap": "County maps and rankings describe covered domestic flows and rates."
+    },
+    {
+      "id": "q2",
+      "number": 2,
+      "text": "How are a county's employment and income opportunities associated with net migration, inflows, and outflows?",
+      "status": "partially addressed",
+      "evidence": "#data-prep-eda/section-eda-findings",
+      "gap": "Income and unemployment associations are available; employment growth remains a planned extension."
+    },
+    {
+      "id": "q3",
+      "number": 3,
+      "text": "How is housing affordability associated with net migration, inflows, and outflows, after adjusting for local income?",
+      "status": "planned",
+      "evidence": "#conclusion/section-future-work",
+      "gap": "Income-adjusted affordability measures and comparisons remain planned."
+    },
+    {
+      "id": "q4",
+      "number": 4,
+      "text": "How do counties' age structure and educational attainment levels relate to net migration, inflows, and outflows?",
+      "status": "partially addressed",
+      "evidence": "#data-prep-eda/section-eda-findings",
+      "gap": "Education and age enter the current evidence; broader demographic comparisons remain open."
+    },
+    {
+      "id": "q5",
+      "number": 5,
+      "text": "How are environmental hazards associated with net migration, inflows, and outflows?",
+      "status": "partially addressed",
+      "evidence": "#data-prep-eda/section-eda-findings",
+      "gap": "Declared incidents and annual weather are measured; drought and wider hazard exposure require additional data."
+    },
+    {
+      "id": "q6",
+      "number": 6,
+      "text": "Does the relationship between housing affordability and each migration outcome differ across metropolitan and non-metropolitan areas?",
+      "status": "planned",
+      "evidence": "#conclusion/section-future-work",
+      "gap": "Metropolitan comparisons of income-adjusted affordability remain planned."
+    },
+    {
+      "id": "q7",
+      "number": 7,
+      "text": "What dimensions capture differences in counties' economic, demographic, and environmental characteristics, and how do migration rates vary along those dimensions?",
+      "status": "addressed",
+      "evidence": "#pca",
+      "gap": "PCA summarizes the shared 2023 characteristic cohort and its migration associations."
+    },
+    {
+      "id": "q8",
+      "number": 8,
+      "text": "Can counties be grouped into distinct profiles based on their characteristics, and do the groups have different migration outcomes?",
+      "status": "addressed",
+      "evidence": "#clustering",
+      "gap": "Two independent clustering views describe characteristic profiles and movement patterns."
+    },
+    {
+      "id": "q9",
+      "number": 9,
+      "text": "How accurately can county characteristics classify counties by migration outcome in terms of net migration, inflows, and outflows?",
+      "status": "addressed",
+      "evidence": "#conclusion/section-classification",
+      "gap": "Three retrospective classification tasks use a shared 2023 split and target-specific baselines."
+    },
+    {
+      "id": "q10",
+      "number": 10,
+      "text": "How accurately can county characteristics predict the magnitude of net migration, inflow, and outflow rates, and how much predictive information does each factor group contribute?",
+      "status": "planned",
+      "evidence": "#conclusion/section-future-work",
+      "gap": "Magnitude prediction and factor-group contributions require a fresh publication-aware evaluation design."
+    }
   ]
 }

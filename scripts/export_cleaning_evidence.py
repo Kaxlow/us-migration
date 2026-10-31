@@ -1,4 +1,5 @@
 """Publish selected saved notebook outputs without executing the notebook."""
+import sys, shutil
 import hashlib
 import html
 import json
@@ -7,9 +8,11 @@ from pathlib import Path
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'src'))
+from us_migration.exports import finish_analysis
 
 def main():
-    path = ROOT / 'notebooks/01_data_cleaning.ipynb'
+    path = ROOT / 'notebooks/data_cleaning.ipynb'
     notebook = json.loads(path.read_text(encoding='utf-8'))
     selected = {'2.7.', '3.8.', '4.4.', '5.5.', '6.4.', '7.2.', '7.3.',
                 '8.5.', '9.3.', '9.4.', '9.5.', '9.6.'}
@@ -18,7 +21,7 @@ def main():
     for index, cell in enumerate(notebook['cells']):
         source = ''.join(cell['source'])
         if cell['cell_type'] == 'markdown':
-            match = re.match(r'### (\d+\.\d+\.) (.+)', source)
+            match = re.search(r'^### (\d+\.\d+\.) (.+)', source, re.M)
             if match:
                 section = match[1]
                 if section in selected:
@@ -61,8 +64,14 @@ def main():
               'exportSnapshots': export_snapshots,
               'exportHashes': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                for p in [panel_path, prepared_path]}}
-    target = ROOT / 'website/data/cleaning-evidence.json'
+    bundle = ROOT/'reports/analyses/cleaning'
+    target = bundle/'data/cleaning-evidence.json'
+    target.parent.mkdir(parents=True,exist_ok=True)
+    (bundle/'figures').mkdir(exist_ok=True)
+    for image in (ROOT/'reports/figures/cleaning').glob('0*.png'):
+        shutil.copy2(image,bundle/'figures'/image.name)
     target.write_text(json.dumps(result, ensure_ascii=False), encoding='utf-8')
+    finish_analysis(ROOT,'cleaning',bundle)
     print('Exported', sum(len(s['outputs']) for s in sections.values()), 'saved notebook outputs')
 
 if __name__ == '__main__':

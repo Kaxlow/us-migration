@@ -1,20 +1,17 @@
-# Scripts
+# Project commands
 
-- `download_data.py --start 2009 --end 2026`: acquire official data and immutable raw snapshots; supports `--sources` and `--refresh`.
-- `clean_data.py --start 2009 --end 2026`: execute the authoritative cleaning notebook, save outputs, and export source audit tables and the imputed downstream dataset.
-- `run_notebooks.py`: execute all four numbered notebooks offline and save their outputs.
-- `run_phase2.py`: execute only clustering and PCA, refreshing saved notebook outputs and tracked website images/data; requires the existing cleaned Parquet input.
-- `audit_data.py`: verify hashes/state shards, export observed coverage, and summarize EDA findings.
-- `download_cleaning_support.py`: acquire state ACS/IRS/NOAA supplements, historical five-year ACS components, annual CPI-U, and the Census tribal/county relationship file.
+Run scripts from the repository root with the project Python environment.
 
-Run with the repo Python environment. See [workflow](../docs/workflow.md) for full commands, inputs, outputs, and limitations.
+| Command | Purpose |
+| --- | --- |
+| `download_data.py --start 2009 --end 2026` | Acquire verified immutable snapshots; supports `--sources` and `--refresh` |
+| `download_cleaning_support.py` | Acquire historical ACS, state supplements, CPI-U, and geographic references |
+| `audit_data.py` | Audit source integrity and coverage and refresh the descriptive report |
+| `build_population_map.py` | Refresh the separate contextual population-change map |
+| `export_cleaning_evidence.py` | Capture saved cleaning evidence into its canonical result bundle |
+| `export_website_data.py` | Package all available completed result bundles |
+| `export_website_data.py --topics pca` | Refresh one topic and dependent findings |
 
-The notebooks are the authoritative analysis source. Data refreshes execute their
-fixed methodology and update saved outputs, reports, and website exports.
+Supported topics are `cleaning`, `exploration`, `clustering`, `pca`, and `classification`. Classification packages the independently executed Naive Bayes and tree analyses after checking provenance. These commands package results; notebook execution remains in Jupyter.
 
-## Net migration, inflows, and outflows
-
-All three rates per 1,000 ACS residents receive equal emphasis. County downloads
-retain their supporting counts. The ten EDA chart groups, cluster distributions,
-PCA associations, and score quintiles compare the same observations across
-outcomes. Findings and captions are regenerated from executed analyses.
+See the [workflow](../docs/workflow.md) for prerequisites and the [extension guide](../docs/adding-an-analysis.md) for adding a topic.

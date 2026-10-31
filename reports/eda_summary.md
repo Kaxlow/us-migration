@@ -1,6 +1,6 @@
 # Download and exploratory analysis report
 
-Generated 2026-10-11T05:21:20.433972+00:00.
+Generated 2026-10-30T15:57:21.953275+00:00.
 
 Verified SHA-256 checksums for 473 active snapshots (1.34 GB). Previous immutable versions and exploratory verification files may use additional disk space.
 
@@ -47,7 +47,7 @@ Missing historical ACS flow state shards: 0.
 
 The validated predictor-imputed cohort contains 46,026 geography-years; 3,691 input rows are excluded with recorded reasons.
 It has 0 missing values, 0 infinities, and 0 duplicate county-year keys under the documented rules.
-Raw-versus-cleaned comparison images are in `reports/figures/cleaning/`; the ten captioned findings charts are in `reports/figures/eda/` and `reports/eda_visualizations.md`.
+Raw-versus-cleaned comparison images are in `reports/figures/cleaning/`; the ten captioned findings charts are in `reports/analyses/exploration/figures/` and `reports/eda_visualizations.md`.
 Ordinary IQR outliers are retained and flagged; denominator-review cases above 1,000 per 1,000 residents are held out without claiming the original counts are erroneous.
 
 Largest absolute associations with net migration rates per 1,000 ACS residents:

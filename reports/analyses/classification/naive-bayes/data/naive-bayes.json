@@ -1,0 +1,792 @@
+{
+  "context": {
+    "input": "data/processed/analysis_county_year.parquet",
+    "input_sha256": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+    "year": 2023,
+    "counties": 3050,
+    "features": [
+      "log10_population",
+      "median_age",
+      "log10_income",
+      "log10_home_value",
+      "log10_rent",
+      "poverty_pct",
+      "unemployment_pct",
+      "vacancy_pct",
+      "homeownership_pct",
+      "bachelors_plus_pct",
+      "log1p_incidents",
+      "precipitation_inches",
+      "temperature_f"
+    ],
+    "feature_labels": [
+      "Log population",
+      "Median age",
+      "Log income",
+      "Log home value",
+      "Log rent",
+      "Poverty %",
+      "Unemployment %",
+      "Vacancy %",
+      "Homeownership %",
+      "Bachelor\u2019s+ %",
+      "Log1p incidents",
+      "Precipitation",
+      "Temperature"
+    ],
+    "thresholds": {
+      "inflow": [
+        39.00802297939778,
+        50.44741683035575
+      ],
+      "outflow": [
+        38.995501763696964,
+        47.03068951773615
+      ]
+    },
+    "seed": 42,
+    "test_size": 0.2,
+    "question": "How accurately can county characteristics classify counties by migration outcome in terms of net migration, inflows, and outflows?",
+    "split_counts": {
+      "train": 2440,
+      "test": 610
+    },
+    "balanced_counties": 8,
+    "imputed_counties": 6,
+    "outlier_flagged_counties": 133,
+    "versions": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.5",
+      "sklearn": "1.9.1"
+    },
+    "class_counts": {
+      "inflow": [
+        {
+          "classification_split": "test",
+          "inflow_class": "High",
+          "count": 206
+        },
+        {
+          "classification_split": "test",
+          "inflow_class": "Low",
+          "count": 222
+        },
+        {
+          "classification_split": "test",
+          "inflow_class": "Medium",
+          "count": 182
+        },
+        {
+          "classification_split": "train",
+          "inflow_class": "High",
+          "count": 813
+        },
+        {
+          "classification_split": "train",
+          "inflow_class": "Low",
+          "count": 814
+        },
+        {
+          "classification_split": "train",
+          "inflow_class": "Medium",
+          "count": 813
+        }
+      ],
+      "outflow": [
+        {
+          "classification_split": "test",
+          "outflow_class": "High",
+          "count": 203
+        },
+        {
+          "classification_split": "test",
+          "outflow_class": "Low",
+          "count": 211
+        },
+        {
+          "classification_split": "test",
+          "outflow_class": "Medium",
+          "count": 196
+        },
+        {
+          "classification_split": "train",
+          "outflow_class": "High",
+          "count": 813
+        },
+        {
+          "classification_split": "train",
+          "outflow_class": "Low",
+          "count": 814
+        },
+        {
+          "classification_split": "train",
+          "outflow_class": "Medium",
+          "count": 813
+        }
+      ],
+      "net": [
+        {
+          "classification_split": "test",
+          "net_class": "Net inflow",
+          "count": 352
+        },
+        {
+          "classification_split": "test",
+          "net_class": "Net outflow",
+          "count": 258
+        },
+        {
+          "classification_split": "train",
+          "net_class": "Balanced",
+          "count": 8
+        },
+        {
+          "classification_split": "train",
+          "net_class": "Net inflow",
+          "count": 1466
+        },
+        {
+          "classification_split": "train",
+          "net_class": "Net outflow",
+          "count": 966
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "inflow": {
+      "model": {
+        "accuracy": 0.5081967213114754,
+        "balanced_accuracy": 0.500949792211928,
+        "macro_f1": 0.49790626828026835,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            121,
+            52,
+            49
+          ],
+          [
+            65,
+            63,
+            54
+          ],
+          [
+            37,
+            43,
+            126
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.545045045045045,
+            0.23423423423423423,
+            0.22072072072072071
+          ],
+          [
+            0.35714285714285715,
+            0.34615384615384615,
+            0.2967032967032967
+          ],
+          [
+            0.1796116504854369,
+            0.2087378640776699,
+            0.6116504854368932
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.5426008968609866,
+            "recall": 0.545045045045045,
+            "f1-score": 0.5438202247191011,
+            "support": 222.0
+          },
+          "Medium": {
+            "precision": 0.3987341772151899,
+            "recall": 0.34615384615384615,
+            "f1-score": 0.37058823529411766,
+            "support": 182.0
+          },
+          "High": {
+            "precision": 0.5502183406113537,
+            "recall": 0.6116504854368932,
+            "f1-score": 0.5793103448275863,
+            "support": 206.0
+          },
+          "accuracy": 0.5081967213114754,
+          "macro avg": {
+            "precision": 0.49718447156251006,
+            "recall": 0.500949792211928,
+            "f1-score": 0.49790626828026835,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.5022491762659712,
+            "recall": 0.5081967213114754,
+            "f1-score": 0.5041198028617256,
+            "support": 610.0
+          }
+        }
+      },
+      "baseline": {
+        "accuracy": 0.3639344262295082,
+        "balanced_accuracy": 0.3333333333333333,
+        "macro_f1": 0.1778846153846154,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            222,
+            0,
+            0
+          ],
+          [
+            182,
+            0,
+            0
+          ],
+          [
+            206,
+            0,
+            0
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.3639344262295082,
+            "recall": 1.0,
+            "f1-score": 0.5336538461538461,
+            "support": 222.0
+          },
+          "Medium": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 182.0
+          },
+          "High": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 206.0
+          },
+          "accuracy": 0.3639344262295082,
+          "macro avg": {
+            "precision": 0.12131147540983607,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.1778846153846154,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.13244826659500133,
+            "recall": 0.3639344262295082,
+            "f1-score": 0.19421500630517022,
+            "support": 610.0
+          }
+        }
+      },
+      "outcome": "inflow",
+      "selected": {
+        "alpha": 1.0
+      },
+      "train_count": 2440,
+      "test_count": 610,
+      "samples": [
+        {
+          "name": "nb-labeled-source",
+          "columns": [
+            "county_fips",
+            "county_name",
+            "inflow_individuals_per_1000",
+            "inflow_class",
+            "classification_split"
+          ],
+          "images": [
+            "nb-labeled-source-1.png"
+          ]
+        },
+        {
+          "name": "nb-characteristics-train",
+          "columns": [
+            "log10_population",
+            "median_age",
+            "log10_income",
+            "log10_home_value",
+            "log10_rent",
+            "poverty_pct",
+            "unemployment_pct",
+            "vacancy_pct",
+            "homeownership_pct",
+            "bachelors_plus_pct",
+            "log1p_incidents",
+            "precipitation_inches",
+            "temperature_f",
+            "target"
+          ],
+          "images": [
+            "nb-characteristics-train-1.png",
+            "nb-characteristics-train-2.png",
+            "nb-characteristics-train-3.png"
+          ]
+        },
+        {
+          "name": "nb-characteristics-test",
+          "columns": [
+            "log10_population",
+            "median_age",
+            "log10_income",
+            "log10_home_value",
+            "log10_rent",
+            "poverty_pct",
+            "unemployment_pct",
+            "vacancy_pct",
+            "homeownership_pct",
+            "bachelors_plus_pct",
+            "log1p_incidents",
+            "precipitation_inches",
+            "temperature_f",
+            "target"
+          ],
+          "images": [
+            "nb-characteristics-test-1.png",
+            "nb-characteristics-test-2.png",
+            "nb-characteristics-test-3.png"
+          ]
+        },
+        {
+          "name": "nb-encoded-train",
+          "columns": [
+            "log10_population_0.0",
+            "log10_population_1.0",
+            "log10_population_2.0",
+            "log10_population_3.0",
+            "log10_population_4.0",
+            "median_age_0.0",
+            "median_age_1.0",
+            "median_age_2.0",
+            "median_age_3.0",
+            "median_age_4.0",
+            "log10_income_0.0",
+            "log10_income_1.0",
+            "log10_income_2.0",
+            "log10_income_3.0",
+            "log10_income_4.0",
+            "log10_home_value_0.0",
+            "log10_home_value_1.0",
+            "log10_home_value_2.0",
+            "log10_home_value_3.0",
+            "log10_home_value_4.0",
+            "log10_rent_0.0",
+            "log10_rent_1.0",
+            "log10_rent_2.0",
+            "log10_rent_3.0",
+            "log10_rent_4.0",
+            "poverty_pct_0.0",
+            "poverty_pct_1.0",
+            "poverty_pct_2.0",
+            "poverty_pct_3.0",
+            "poverty_pct_4.0",
+            "unemployment_pct_0.0",
+            "unemployment_pct_1.0",
+            "unemployment_pct_2.0",
+            "unemployment_pct_3.0",
+            "unemployment_pct_4.0",
+            "vacancy_pct_0.0",
+            "vacancy_pct_1.0",
+            "vacancy_pct_2.0",
+            "vacancy_pct_3.0",
+            "vacancy_pct_4.0",
+            "homeownership_pct_0.0",
+            "homeownership_pct_1.0",
+            "homeownership_pct_2.0",
+            "homeownership_pct_3.0",
+            "homeownership_pct_4.0",
+            "bachelors_plus_pct_0.0",
+            "bachelors_plus_pct_1.0",
+            "bachelors_plus_pct_2.0",
+            "bachelors_plus_pct_3.0",
+            "bachelors_plus_pct_4.0",
+            "log1p_incidents_0.0",
+            "log1p_incidents_1.0",
+            "precipitation_inches_0.0",
+            "precipitation_inches_1.0",
+            "precipitation_inches_2.0",
+            "precipitation_inches_3.0",
+            "precipitation_inches_4.0",
+            "temperature_f_0.0",
+            "temperature_f_1.0",
+            "temperature_f_2.0",
+            "temperature_f_3.0",
+            "temperature_f_4.0",
+            "target"
+          ],
+          "images": [
+            "nb-encoded-train-1.png",
+            "nb-encoded-train-2.png",
+            "nb-encoded-train-3.png",
+            "nb-encoded-train-4.png",
+            "nb-encoded-train-5.png",
+            "nb-encoded-train-6.png",
+            "nb-encoded-train-7.png",
+            "nb-encoded-train-8.png",
+            "nb-encoded-train-9.png",
+            "nb-encoded-train-10.png",
+            "nb-encoded-train-11.png"
+          ]
+        },
+        {
+          "name": "nb-encoded-test",
+          "columns": [
+            "log10_population_0.0",
+            "log10_population_1.0",
+            "log10_population_2.0",
+            "log10_population_3.0",
+            "log10_population_4.0",
+            "median_age_0.0",
+            "median_age_1.0",
+            "median_age_2.0",
+            "median_age_3.0",
+            "median_age_4.0",
+            "log10_income_0.0",
+            "log10_income_1.0",
+            "log10_income_2.0",
+            "log10_income_3.0",
+            "log10_income_4.0",
+            "log10_home_value_0.0",
+            "log10_home_value_1.0",
+            "log10_home_value_2.0",
+            "log10_home_value_3.0",
+            "log10_home_value_4.0",
+            "log10_rent_0.0",
+            "log10_rent_1.0",
+            "log10_rent_2.0",
+            "log10_rent_3.0",
+            "log10_rent_4.0",
+            "poverty_pct_0.0",
+            "poverty_pct_1.0",
+            "poverty_pct_2.0",
+            "poverty_pct_3.0",
+            "poverty_pct_4.0",
+            "unemployment_pct_0.0",
+            "unemployment_pct_1.0",
+            "unemployment_pct_2.0",
+            "unemployment_pct_3.0",
+            "unemployment_pct_4.0",
+            "vacancy_pct_0.0",
+            "vacancy_pct_1.0",
+            "vacancy_pct_2.0",
+            "vacancy_pct_3.0",
+            "vacancy_pct_4.0",
+            "homeownership_pct_0.0",
+            "homeownership_pct_1.0",
+            "homeownership_pct_2.0",
+            "homeownership_pct_3.0",
+            "homeownership_pct_4.0",
+            "bachelors_plus_pct_0.0",
+            "bachelors_plus_pct_1.0",
+            "bachelors_plus_pct_2.0",
+            "bachelors_plus_pct_3.0",
+            "bachelors_plus_pct_4.0",
+            "log1p_incidents_0.0",
+            "log1p_incidents_1.0",
+            "precipitation_inches_0.0",
+            "precipitation_inches_1.0",
+            "precipitation_inches_2.0",
+            "precipitation_inches_3.0",
+            "precipitation_inches_4.0",
+            "temperature_f_0.0",
+            "temperature_f_1.0",
+            "temperature_f_2.0",
+            "temperature_f_3.0",
+            "temperature_f_4.0",
+            "target"
+          ],
+          "images": [
+            "nb-encoded-test-1.png",
+            "nb-encoded-test-2.png",
+            "nb-encoded-test-3.png",
+            "nb-encoded-test-4.png",
+            "nb-encoded-test-5.png",
+            "nb-encoded-test-6.png",
+            "nb-encoded-test-7.png",
+            "nb-encoded-test-8.png",
+            "nb-encoded-test-9.png",
+            "nb-encoded-test-10.png",
+            "nb-encoded-test-11.png"
+          ]
+        }
+      ],
+      "tuning": [
+        {
+          "alpha": 1.0,
+          "mean_train_score": 0.513180727299596,
+          "mean_test_score": 0.500537320551349,
+          "std_test_score": 0.01565014237544
+        },
+        {
+          "alpha": 0.1,
+          "mean_train_score": 0.513318877877857,
+          "mean_test_score": 0.500375029999304,
+          "std_test_score": 0.01592017621046
+        },
+        {
+          "alpha": 10.0,
+          "mean_train_score": 0.511744443028844,
+          "mean_test_score": 0.497856759787327,
+          "std_test_score": 0.016045724564918
+        }
+      ],
+      "preprocessing": {
+        "log10_population": {
+          "edges": [
+            2.873320601815399,
+            3.9633060100225412,
+            4.279912734467099,
+            4.574163225192233,
+            4.995427207992659,
+            6.652438490724675
+          ],
+          "effective_bins": 5
+        },
+        "median_age": {
+          "edges": [
+            21.4,
+            37.9,
+            40.56,
+            42.6,
+            45.4,
+            68.4
+          ],
+          "effective_bins": 5
+        },
+        "log10_income": {
+          "edges": [
+            4.405260961594783,
+            4.718785587281338,
+            4.7784710621605235,
+            4.826251076775331,
+            4.885910526238964,
+            5.252141564267438
+          ],
+          "effective_bins": 5
+        },
+        "log10_home_value": {
+          "edges": [
+            4.6551384348113825,
+            5.079832175613958,
+            5.190891716922169,
+            5.298197867109815,
+            5.432006687269598,
+            6.1744959193753
+          ],
+          "effective_bins": 5
+        },
+        "log10_rent": {
+          "edges": [
+            2.509202522331103,
+            2.862131379313037,
+            2.90687353472207,
+            2.9556877503135057,
+            3.0362295440862948,
+            3.461348433647983
+          ],
+          "effective_bins": 5
+        },
+        "poverty_pct": {
+          "edges": [
+            1.702195354756602,
+            9.309966100504102,
+            12.042252523634028,
+            14.68467952910399,
+            18.65082454465392,
+            52.79381984549614
+          ],
+          "effective_bins": 5
+        },
+        "unemployment_pct": {
+          "edges": [
+            0.0,
+            3.0325064524145473,
+            3.998076893042087,
+            4.9097595124797735,
+            6.1504028732595994,
+            21.53960029607698
+          ],
+          "effective_bins": 5
+        },
+        "vacancy_pct": {
+          "edges": [
+            1.7065579049050124,
+            8.384766332972866,
+            12.471090333341067,
+            16.806028681225982,
+            22.714347128993104,
+            77.31601731601732
+          ],
+          "effective_bins": 5
+        },
+        "homeownership_pct": {
+          "edges": [
+            20.26894713309827,
+            67.30887033303154,
+            72.5692057403672,
+            76.39970822622564,
+            79.98688345402377,
+            97.38527214514407
+          ],
+          "effective_bins": 5
+        },
+        "bachelors_plus_pct": {
+          "edges": [
+            5.748537589369539,
+            15.943531314906535,
+            19.636164228081906,
+            23.804406011804144,
+            31.092657813305586,
+            79.72574911122398
+          ],
+          "effective_bins": 5
+        },
+        "log1p_incidents": {
+          "edges": [
+            0.0,
+            0.6931471805599453,
+            1.6094379124341003
+          ],
+          "effective_bins": 2
+        },
+        "precipitation_inches": {
+          "edges": [
+            3.5,
+            24.208000000000002,
+            32.686,
+            41.577999999999996,
+            48.512,
+            95.86
+          ],
+          "effective_bins": 5
+        },
+        "temperature_f": {
+          "edges": [
+            34.925000000000004,
+            49.05833333333334,
+            53.958333333333336,
+            58.553333333333335,
+            64.16833333333334,
+            77.70833333333333
+          ],
+          "effective_bins": 5
+        }
+      },
+      "selected_cv_macro_f1": 0.5005373205513491,
+      "selected_train_macro_f1": 0.5131807272995956,
+      "patterns": [
+        {
+          "class": "High",
+          "indicator": "log10_home_value_4.0",
+          "relative_log_likelihood": 0.7484752895157092
+        },
+        {
+          "class": "High",
+          "indicator": "log10_rent_4.0",
+          "relative_log_likelihood": 0.6727114832625629
+        },
+        {
+          "class": "High",
+          "indicator": "log10_income_4.0",
+          "relative_log_likelihood": 0.5581623951781793
+        },
+        {
+          "class": "High",
+          "indicator": "bachelors_plus_pct_4.0",
+          "relative_log_likelihood": 0.5486249701780457
+        },
+        {
+          "class": "High",
+          "indicator": "temperature_f_3.0",
+          "relative_log_likelihood": 0.5343453597108052
+        },
+        {
+          "class": "Low",
+          "indicator": "log10_home_value_0.0",
+          "relative_log_likelihood": 0.7821259518007624
+        },
+        {
+          "class": "Low",
+          "indicator": "log10_rent_0.0",
+          "relative_log_likelihood": 0.6599403339785219
+        },
+        {
+          "class": "Low",
+          "indicator": "temperature_f_1.0",
+          "relative_log_likelihood": 0.5275066420968306
+        },
+        {
+          "class": "Low",
+          "indicator": "log10_population_0.0",
+          "relative_log_likelihood": 0.4533016844432094
+        },
+        {
+          "class": "Low",
+          "indicator": "log10_home_value_1.0",
+          "relative_log_likelihood": 0.35908551783208864
+        },
+        {
+          "class": "Medium",
+          "indicator": "temperature_f_1.0",
+          "relative_log_likelihood": 0.26967847412835066
+        },
+        {
+          "class": "Medium",
+          "indicator": "log10_home_value_1.0",
+          "relative_log_likelihood": 0.20615692981380374
+        },
+        {
+          "class": "Medium",
+          "indicator": "precipitation_inches_4.0",
+          "relative_log_likelihood": 0.19656004699879315
+        },
+        {
+          "class": "Medium",
+          "indicator": "log10_rent_2.0",
+          "relative_log_likelihood": 0.19228989822492704
+        },
+        {
+          "class": "Medium",
+          "indicator": "log10_home_value_2.0",
+          "relative_log_likelihood": 0.14788096881318946
+        }
+      ],
+      "conclusions": [
+        "The selected Multinomial NB (alpha 1) correctly classifies 50.8% of 610 held-out counties by inflow-rate tertile; the majority baseline achieves 36.4%.",
+        "Macro-F1 is 0.498, compared with baseline 0.178; balanced accuracy is 50.1%. The medium class has the lowest recall (34.6%).",
+        "Selected mean training-fold macro-F1 is 0.513 and validation macro-F1 is 0.501. This gap describes how the fitted specification transfers to held-out training folds.",
+        "Rate tertiles describe relative inflow intensity among training counties. These contemporaneous associations support retrospective classification; spatial dependence, prior exploration, source coverage and binning limit claims about future migration."
+      ]
+    }
+  }
+}

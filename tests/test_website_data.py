@@ -24,7 +24,7 @@ def test_population_coverage_and_arithmetic():
     assert sum(g['population2025'] for g in data['groups']) == sum(r['population2025'] for r in rows)
 
 def test_analysis_export():
-    d = read('analysis.json')
+    d = read('exploration/analysis.json')
     assert d['counties'] == len(d['cross']) == 3050
     assert d['rows'] == sum(map(len,d['migration'].values())) == 46026
     assert len(d['captions']) == 10

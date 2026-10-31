@@ -6,7 +6,7 @@ Alaska and Connecticut use state observations; other US analysis units are count
 County-only EDA filters `geography_level == "county"`.
 Source tables preserve missing values and uncertainty. The final cohort contains
 only rows passing the explicit completeness, range, and arithmetic checks in
-`notebooks/01_data_cleaning.ipynb`; exclusions are recorded, not silently dropped.
+`notebooks/data_cleaning.ipynb`; exclusions are recorded, not silently dropped.
 
 ## Analysis fields
 

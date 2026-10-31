@@ -9,7 +9,8 @@ python -m pip install -r requirements-dev.txt
 python scripts/download_data.py --start 2009 --end 2026
 python scripts/download_cleaning_support.py
 python -m pytest -q
-python scripts/run_notebooks.py
+# In Jupyter: run the needed notebooks, inspect outputs and save; then close or return here.
+python -m jupyterlab
 python scripts/audit_data.py
 ```
 
@@ -18,6 +19,19 @@ working directory. The key is sent only to the Census API. NOAA downloads here
 use public county bulk files, so `NOAA_CDO_TOKEN` is not needed. Census uses several
 hundred small historical state queries; three independent state requests run
 concurrently. Retries handle transient HTTP errors and rate limits.
+
+Request and activate a [Census API key](https://api.census.gov/data/key_signup.html).
+Create the local configuration from `.env.example` when it is absent, then set
+`CENSUS_API_KEY` in that file. Keep existing values when refreshing configuration:
+
+```powershell
+if (-not (Test-Path -LiteralPath .env)) { Copy-Item .env.example .env }
+notepad .env
+git check-ignore .env
+```
+
+The public NOAA bulk workflow can leave `NOAA_CDO_TOKEN` blank. Download scripts
+load `.env` explicitly and redact credentials from recorded URLs and errors.
 
 ## 1. Coverage and acquisition
 
@@ -62,7 +76,8 @@ allow several GB of available RAM. A remote database is not required.
 
 ## 2. Clean source tables
 
-`scripts/clean_data.py` reads only the active snapshots; it needs no network.
+The data-cleaning notebook reads the active local snapshots. Set its year parameters, restart
+the project kernel, run all cells in Jupyter, inspect the results and save.
 It verifies the inputs against their recorded hashes and writes Parquet files
 under `data/processed/`. This directory is ignored by Git. Rerunning cleaning
 replaces derived outputs, not raw snapshots. Use a consistent year range for the
@@ -97,30 +112,24 @@ before using a partial download for analysis.
 
 ## 3. Execute and inspect the notebooks
 
-Open these notebooks in the IDE and select the repo's Python environment, or run
-`python scripts/run_notebooks.py` to execute both offline:
+Launch `python -m jupyterlab` from the active project environment and repository
+root. Open a notebook, select the project's Python kernel, choose **Restart Kernel
+and Run All Cells**, inspect each output for errors, and save with Ctrl+S.
+JupyterLab is included in the development requirements. Check `sys.executable`
+when selecting among kernels; an older saved kernel name can be replaced with the
+Python kernel supplied by the current environment.
 
-1. `01_data_cleaning.ipynb`: original raw responses, visible
-   source cleaning, before/after table images, NOAA annual-completeness summaries, a full
-   offline rebuild, and a final missing-free cohort with summaries/exclusion audits.
-2. `02_eda_findings.ipynb`: exactly ten findings charts from that cohort, including
-   distributions, a balanced-county trend, rankings, hexbin associations, grouped
-   boxplots, and an annotated correlation matrix with pair counts.
+1. **Data cleaning:** set `START_YEAR` / `END_YEAR` in the parameter cell;
+   rebuild from acquired raw snapshots and cleaning supplements.
+2. **Exploration:** consume the processed outputs and regenerate charts and diagnostics.
+3. **Clustering / PCA:** independently consume the cleaned analysis Parquet.
+4. **Naive Bayes:** classify inflow tertiles and export evaluation evidence.
+5. **Decision trees:** classify outflow tertiles and net direction; runs independently; export combines matching classification evidence.
 
-Notebook 01 can start directly from existing raw snapshots and rebuilds the source
-tables itself; a separate `clean_data.py` run is optional when using that notebook.
-See [the cleaned-data glossary](data-glossary.md) for exact inclusion rules,
-derived variables, selection limitations, and the complete list of ten charts.
-
-The runner registers its kernel and runtime files locally under `data/interim/`.
-It executes using the Python interpreter that launched the command and stops on
-cell errors. Notebooks contain saved outputs; CSV diagnostics are written to
-`reports/tables/`, before/after PNGs to `reports/figures/cleaning/`, and ten captioned
-EDA figures to `reports/figures/eda/`.
-Notebooks 01 and 02 are the authoritative cleaning and EDA source. Routine refreshes
-change the input data and execute the existing notebooks with the same methodology.
-Any deliberate methodology revision or bug fix is made directly in the notebook.
-`scripts/clean_data.py` executes notebook 01 alone.
+The existing processed dataset permits independent analysis refreshes. All notebooks are maintained directly; reusable implementations live in the Python package. Execution generates
+figures, tables and website exports; saving preserves cell counts and results.
+Cleaning diagnostics use `reports/tables/` and `reports/figures/cleaning/`. Analytical results use owned topic bundles under `reports/analyses/`; website packaging copies those results. After changing a helper, restart the
+kernel before rerunning so the imported implementation is refreshed.
 
 ## 4. Audit and document findings
 
@@ -133,8 +142,8 @@ versions; the lock provides the exact resolved versions for reproduction.
 
 Raw/cleaned data and credentials are excluded from Git. The notebooks, code,
 manifest, compact report, and diagnostic CSVs are reviewable project artifacts.
-Review notebook outputs before committing. No modeling, geographic reallocation,
-inflation adjustment, causal analysis, or deployment occurs in this pipeline.
+Review saved notebook outputs and generated artifacts before committing.
+Classification is retrospective; deployment is a separately authorized action.
 
 Historical ACS reconstruction and event deduplication are audited in `reports/tables/acs_historical_reconstruction.csv` and `reports/tables/fema_event_deduplication.csv`. See [the data glossary](data-glossary.md) for cleaned fields.
 
@@ -150,25 +159,20 @@ See [the glossary](data-glossary.md#monetary-imputation-dollar-basis) for formul
 index selection, and provenance. Factors and fitted-statistic units are recorded
 in `reports/tables/monetary_imputation_factors.csv` and `socioeconomic_imputer.json`.
 
-## Net migration, inflows, and outflows
+## Incremental website export
 
-All three rates per 1,000 ACS residents receive equal emphasis. County downloads
-retain their supporting counts. The ten EDA chart groups, cluster distributions,
-PCA associations, and score quintiles compare the same observations across
-outcomes. Findings and captions are regenerated from executed analyses.
-
-After updating the input data, execute the existing notebooks, then refresh the
-report and website exports in this order. Execution updates results while preserving
-the notebook's analysis code and methodology:
+Python modules own reusable implementation. Notebooks own analysis choices, execution, evidence, and interpretation. After cleaning, exploration, clustering, PCA, Naive Bayes, and decision trees each consume the processed dataset independently. Their owned bundles live under `reports/analyses/`. The default exporter packages all available completed topics; select topics to avoid unrelated refreshes:
 
 ```powershell
-python scripts/run_notebooks.py
-python scripts/audit_data.py
-python scripts/export_website_data.py
 python scripts/export_cleaning_evidence.py
+python scripts/export_website_data.py
+python scripts/export_website_data.py --topics pca
+python scripts/export_website_data.py --topics classification
 python -m pytest -q
 ```
 
-For changes limited to clustering/PCA, `python scripts/run_phase2.py` refreshes
-those notebooks and their website outputs from the existing analysis dataset.
-The browser regression command and Playwright setup are in the website README.
+Run the cleaning-evidence command after saving the cleaning notebook. Run the packaging command after saving an analytical notebook. Classification packaging requires both independently generated bundles, with matching input, county membership, split, and target context. A failed validation leaves existing publication artifacts intact. Packaging updates the compact Findings payload after selected topics.
+
+For a fresh checkout, regenerate ignored canonical figures by executing the corresponding notebooks before packaging. Existing committed website artifacts remain available for local preview. Source and cleaning audit tables remain in `reports/tables/`; numerical analytical evidence belongs to topic bundles.
+
+Follow [Adding an analysis](adding-an-analysis.md) for incremental extensions and [website verification](../website/README.md#browser-verification) for interactive checks.

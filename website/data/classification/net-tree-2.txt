@@ -1,0 +1,10 @@
+|--- homeownership_pct <= 63.691
+|   |--- homeownership_pct <= 55.066
+|   |   |--- class: Net outflow
+|   |--- homeownership_pct >  55.066
+|   |   |--- class: Net outflow
+|--- homeownership_pct >  63.691
+|   |--- log10_home_value <= 5.079
+|   |   |--- class: Net outflow
+|   |--- log10_home_value >  5.079
+|   |   |--- class: Net inflow

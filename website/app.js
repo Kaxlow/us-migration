@@ -1,10 +1,17 @@
 import {Plotly} from './vendor.js';
-import {chapters} from './chapters/index.js';
+import {chapters,datasets} from './chapters/index.js';
 import {esc} from './shared.js';
 
 const main=document.getElementById('main');
 const nav=document.getElementById('navigation');
-let data, activeChapter, cleanup;
+const data={};
+let activeChapter, cleanup, routeVersion=0;
+const requests=new Map();
+async function loadDataset(key){
+  if(Object.hasOwn(data,key))return data[key];
+  if(!requests.has(key))requests.set(key,fetch('data/'+datasets[key]).then(r=>{if(!r.ok)throw Error(datasets[key]+' could not be loaded');return r.json();}).then(value=>data[key]=value).catch(error=>{requests.delete(key);throw error;}));
+  return requests.get(key);
+}
 const chapterViews=new Map();
 history.scrollRestoration='manual';
 let restoring=false;
@@ -30,12 +37,14 @@ document.addEventListener('click',event=>{
 });
 window.addEventListener('popstate',()=>{
   const position=history.state?.scrollY;
-  restoring=true;route(position);
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{restoring=false;}));
+  restoring=true;route(position).finally(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{restoring=false;})));
 });
-nav.innerHTML=chapters.map(chapter=>`<a href="#${chapter.slug}">${chapter.title}</a>`).join('');
+nav.innerHTML=[...new Set(chapters.map(c=>c.group))].map(group=>{
+  const links=chapters.filter(c=>c.group===group).map(c=>`<a href="#${c.slug}" data-status="${c.status}">${c.title}</a>`).join('');
+  return group==='Future work'?`<details class="nav-group future-nav"><summary>Future work</summary>${links}</details>`:`<div class="nav-group"><span class="nav-group-label">${group}</span>${links}</div>`;
+}).join('');
 
-function render(chapter) {
+async function render(chapter) {
   // Keep mounted chapter nodes and control state for history traversal. Rebuilding
   // async charts here changes page height underneath a restored scroll position.
   if(activeChapter)chapterViews.set(activeChapter,{nodes:[...main.childNodes],cleanup});
@@ -46,12 +55,13 @@ function render(chapter) {
   });
   document.title=`Do County Characteristics Explain Migration Flows? | ${chapter.title}`;
   const previous=chapterViews.get(chapter);
-  const pending=previous?.nodes.some(node=>node.querySelector?.('[data-phase-chart] .interactive-body:empty')||node.querySelector?.('#cluster-map')&&!node.querySelector('#cluster-map .county'));
+  const pending=previous?.nodes.some(node=>node.querySelector?.('[data-analysis-chart] .interactive-body:empty')||node.querySelector?.('#cluster-map')&&!node.querySelector('#cluster-map .county'));
   if(previous&&!pending){main.replaceChildren(...previous.nodes);cleanup=previous.cleanup;updateStickyOffsets();return;}
   main.innerHTML=`<h1 class="chapter-title">${chapter.heading}</h1><div class="chapter-layout"><nav class="section-nav" aria-label="${esc(chapter.title)} sections"></nav><div class="chapter-content">${chapter.render(data)}</div></div>`;
+  arrangeSections(chapter);
   const headings=[...main.querySelectorAll('.chapter-content > .section > h2')];
   headings.forEach(heading=>{
-    heading.id='section-'+heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    if(!heading.id)throw Error('Chapter section needs an explicit stable ID');
     heading.classList.add('section-title');
   });
   main.querySelector('.section-nav').innerHTML='<span>On this page</span>'+headings.map(h=>`<a href="#${chapter.slug}/${h.id}">${esc(h.textContent)}</a>`).join('');
@@ -59,7 +69,7 @@ function render(chapter) {
   main.querySelectorAll('a[href]').forEach(link=>{
     if(!link.getAttribute('href').startsWith('#')){link.target='_blank';link.rel='noopener noreferrer';}
   });
-  cleanup=chapter.init(data);
+  cleanup=await chapter.init(data);
   updateStickyOffsets();
 }
 
@@ -91,20 +101,68 @@ function scrollToSection(){
   requestAnimationFrame(()=>{
     updateStickyOffsets();
     const target=document.getElementById(id);
-    if(target){target.scrollIntoView({block:'start'});if(location.hash.includes('/')){target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}}
+    if(target){const detail=target.parentElement.querySelector(':scope > details.supporting-detail');if(detail)detail.open=true;for(let node=target.parentElement;node&&node!==main;node=node.parentElement)if(node.tagName==='DETAILS')node.open=true;target.scrollIntoView({block:'start'});if(location.hash.includes('/')){target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}}
   });
 }
-function route(position){
-  if(!data)return;
+const aliases={conclusion:{'section-overview':'section-findings','section-data':'section-limitations','section-code':'section-limitations','section-results':'section-findings'},regression:{'section-data':'section-overview','section-code':'section-overview','section-results':'section-overview'}};
+async function route(position){
+  const version=++routeVersion;
   if(location.hash==='#main')return;
   const slug=location.hash.slice(1).split('/')[0];
   const chapter=chapters.find(c=>c.slug===slug)||chapters[0];
-  if(chapter!==activeChapter)render(chapter);
-  const section=location.hash.split('/')[1]||main.querySelector('.section-nav a')?.hash.split('/')[1];
-  main.querySelectorAll('.section-nav a').forEach(link=>{if(link.hash.split('/')[1]===section)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
-  if(typeof position==='number')requestAnimationFrame(()=>{updateStickyOffsets();window.scrollTo(0,position);});
-  else scrollToSection();
+  const requested=location.hash.split('/')[1];
+  const alias=(aliases[chapter.slug]||(chapter.status==='planned'?aliases.regression:{}))[requested];
+  if(alias)history.replaceState(history.state,'','#'+chapter.slug+'/'+alias);
+  main.setAttribute('aria-busy','true');
+  try{
+    await Promise.all(chapter.datasets.map(loadDataset));
+    if(version!==routeVersion)return;
+    if(chapter.status==='planned')nav.querySelector('.future-nav').open=true;
+    if(chapter!==activeChapter)await render(chapter);
+    if(version!==routeVersion)return;
+    if(typeof position==='number')requestAnimationFrame(()=>{updateStickyOffsets();window.scrollTo(0,position);});
+    else scrollToSection();
+  }catch(error){
+    if(version!==routeVersion)return;
+    if(activeChapter===chapter){cleanup?.();chapterViews.delete(chapter);}
+    else if(activeChapter)chapterViews.set(activeChapter,{nodes:[...main.childNodes],cleanup});
+    activeChapter=null;cleanup=null;
+    main.innerHTML=`<h1 class="chapter-title">${esc(chapter.title)}</h1><section class="loading" role="alert"><h2>This chapter could not load</h2><p>${esc(error.message)}</p><button id="retry-chapter">Try again</button><p><a href="#introduction">Return to Overview</a></p></section>`;
+    main.querySelector('#retry-chapter').addEventListener('click',()=>route(position));
+  }finally{if(version===routeVersion)main.removeAttribute('aria-busy');}
 }
+
+function arrangeSections(chapter){
+  const content=main.querySelector('.chapter-content');
+  const sections=[...content.children];
+  const byId=id=>sections.find(s=>s.querySelector(':scope > h2')?.id===id);
+  if(chapter.group==='Analyses'){
+    const overview=byId('section-overview');
+    const details=document.createElement('details');details.className='method-details';
+    details.innerHTML='<summary>How the method works</summary>';
+    while(overview.children.length>1)details.append(overview.children[1]);
+    const bundle=chapter.slug==='clustering'?data.clusteringResults:chapter.slug==='pca'?data.pcaResults:chapter.slug==='naivebayes'?data.naiveBayesResults:data.decisionTreeResults;
+    const sentences=bundle.conclusions||Object.values(bundle.tasks).map(t=>t.conclusions[0]);
+    const question={clustering:'Can county profiles reveal different migration patterns?',pca:'Which dimensions summarize county characteristics?',naivebayes:'How accurately do characteristics classify inflow intensity?',dectrees:'How accurately do characteristics classify outflow intensity and net direction?'}[chapter.slug];
+    overview.insertAdjacentHTML('beforeend',`<div class="prose chapter-answer"><p class="study-question">${question}</p>${sentences.slice(0,chapter.slug==='clustering'?2:1).map(t=>`<p>${esc(t)}</p>`).join('')}</div>`);
+    overview.append(details);
+    for(const id of ['section-overview','section-results','section-conclusions','section-data-prep','section-code']){
+      const section=byId(id);if(!section)continue;
+      if(['section-data-prep','section-code'].includes(id)){
+        const extra=document.createElement('details');extra.className='supporting-detail';
+        extra.innerHTML='<summary>'+ (id==='section-code'?'Execution and code references':'Cohort, transformations and sample tables')+'</summary>';
+        while(section.children.length>1)extra.append(section.children[1]);section.append(extra);
+      }
+      content.append(section);
+    }
+  }else if(chapter.slug==='data-prep-eda'){
+    for(const id of ['section-eda-findings','section-data-sources','section-data-cleaning'])content.append(byId(id));
+    const cleaning=byId('section-data-cleaning'),details=document.createElement('details');
+    details.innerHTML='<summary>Inspect the source-by-source cleaning evidence</summary>';
+    while(cleaning.children.length>1)details.append(cleaning.children[1]);cleaning.append(details);
+  }
+}
+main.addEventListener('toggle',()=>{updateStickyOffsets();window.dispatchEvent(new Event('resize'));},true);
 window.addEventListener('pagehide',()=>{cleanup?.();for(const [chapter,view] of chapterViews)if(chapter!==activeChapter)view.cleanup?.();});
 function updateStickyOffsets(){
   document.documentElement.style.setProperty('--masthead-height',document.querySelector('.site-masthead').getBoundingClientRect().height+'px');
@@ -126,12 +184,5 @@ new ResizeObserver(fitFigures).observe(main);
 new ResizeObserver(updateStickyOffsets).observe(document.querySelector('.site-masthead'));
 window.addEventListener('resize',updateStickyOffsets);
 document.fonts.ready.then(updateStickyOffsets);
-const files={population:'population.json',analysis:'analysis.json',geo:'county.geojson',states:'state.geojson',intro:'introduction.json',cleaningEvidence:'cleaning-evidence.json',clusteringResults:'clustering.json',pcaResults:'pca.json'};
-Promise.all(Object.entries(files).map(async([key,file])=>{
-  const response=await fetch('data/'+file,{cache:'no-cache'});
-  if(!response.ok)throw Error(file+' could not be loaded');
-  return [key,await response.json()];
-})).then(entries=>{data=Object.fromEntries(entries);route();window.addEventListener('hashchange',()=>{if(!restoring)route();});}).catch(error=>{
-  window.portfolioTelemetry?.reportError(error,{component:'atlas-bootstrap'});
-  main.innerHTML=`<div class="loading"><h2>The atlas could not load.</h2><p>${esc(error.message)}. Serve the website through a local HTTP server, then reload.</p><button onclick="location.reload()">Try again</button></div>`;
-});
+window.addEventListener('hashchange',()=>{if(!restoring)route();});
+route();

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "net",
+    "label": "Net migration",
+    "count": "net_individuals",
+    "rate": "net_individuals_per_1000",
+    "units": "IRS individuals per 1,000 ACS residents"
+  },
+  {
+    "id": "inflow",
+    "label": "Inflow",
+    "count": "inflow_individuals",
+    "rate": "inflow_individuals_per_1000",
+    "units": "IRS individuals per 1,000 ACS residents"
+  },
+  {
+    "id": "outflow",
+    "label": "Outflow",
+    "count": "outflow_individuals",
+    "rate": "outflow_individuals_per_1000",
+    "units": "IRS individuals per 1,000 ACS residents"
+  }
+]

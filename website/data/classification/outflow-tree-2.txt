@@ -1,0 +1,10 @@
+|--- log10_rent <= 2.945
+|   |--- temperature_f <= 58.567
+|   |   |--- class: Low
+|   |--- temperature_f >  58.567
+|   |   |--- class: Medium
+|--- log10_rent >  2.945
+|   |--- temperature_f <= 56.033
+|   |   |--- class: High
+|   |--- temperature_f >  56.033
+|   |   |--- class: High

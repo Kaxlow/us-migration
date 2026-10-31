@@ -1,0 +1,15 @@
+{
+  "files": {
+    "analysis.json": "036a8444b9d465a884a998bfe09825514f5b3f1de6d4d5b9acf7a23dc46e59f5",
+    "chart03_balanced_trend.csv": "c3d00982cb3d17e5ea3a4de1166c8a9a3a989c22dee4f89cac9d6d7a93500252",
+    "chart05_county_rankings.csv": "fad3dff09d3c1313561d38c24360230ed7d74f3ca5a8cdfd71286aa69f4ac648",
+    "eda_chart_catalog.csv": "445d75e091e465a3879bf8a322bf68612e60b64d30abec59255e1d794ce9586e",
+    "latest-counties.csv": "14f97df5775e1c4e0fdc5ecd265bdd1e1981c48c92c98f5057a286c3d6426cbc",
+    "migration_correlations.csv": "d0510262be35df3146cbd99ea88d20833f771b6124030361fdf49352f656962f",
+    "migration_count_rankings.csv": "f918fb3af79a8d7f1235498aa97c2d0ebf7721f1ea1209a6177cb99b13abe343",
+    "outcomes.json": "c144ce13e8c3fa3b694060d08686c990c12cb82e1a056c431811ef933ffdc7d6",
+    "validated_latest_year_pair_counts.csv": "ab29fedd3ef3683d5155f558cc9bfcafa6eeea308f28d9754982be9f475d215a",
+    "validated_latest_year_pearson.csv": "c6233832f7af72bb2f4fa8cbc282f4648be31623c7b6c579a6743b8250097fad",
+    "validated_latest_year_spearman.csv": "208d840cb33a070407071083c0f26f29bb0f5d4f3f15b33682898e6753df82bf"
+  }
+}

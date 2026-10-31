@@ -26,7 +26,7 @@ const server=require('node:http').createServer((req,res)=>{
       await page.setViewportSize({width,height:900});await page.goto(url+'#introduction');
       await page.waitForSelector('#population-map .county');
       await checkMapColumns(page,'#population-map');
-      assert.equal(await page.locator('.questions .question span').first().textContent(),'How do migration flows vary across the country, and which counties have the largest migration inflows and outflows?');
+      assert.equal(await page.locator('.questions .question h3').first().textContent(),'How do migration flows vary across the country, and which counties have the largest migration inflows and outflows?');
       assert(await page.locator('#population-map').evaluate(el=>{const controls=el.querySelector('.map-controls').getBoundingClientRect(),top=el.querySelector('.map-top').getBoundingClientRect(),guide=el.querySelector('.map-guide').getBoundingClientRect();return Math.abs(controls.right-top.right)<15&&guide.top>=top.bottom-1;}),'Population controls align right above the embedded guide');
       await page.locator('#population-map').screenshot({path:path.resolve(__dirname,`../data/interim/revised-population-map-${width}.png`)});
     }
@@ -35,14 +35,15 @@ const server=require('node:http').createServer((req,res)=>{
       for(const chapter of ['clustering','pca']){
         await page.goto(url+'#'+chapter);
         await page.waitForSelector(chapter==='clustering'?'#clustering-cross-view rect':'#pca-quintiles circle');
-        assert.equal(await page.locator('.phase-samples h3').count(),0);
-        const empty=await page.locator('[data-phase-chart] .interactive-body').evaluateAll(els=>els.filter(el=>!el.querySelector('svg,ol')).map(el=>el.parentElement.id));assert.deepEqual(empty,[]);
+        await page.locator('.method-details > summary').click();
+        assert.equal(await page.locator('.analysis-samples h3').count(),0);
+        const empty=await page.locator('[data-analysis-chart] .interactive-body').evaluateAll(els=>els.filter(el=>!el.querySelector('svg,ol')).map(el=>el.parentElement.id));assert.deepEqual(empty,[]);
         const headers=await page.locator('.card-header').evaluateAll(els=>els.map(el=>{const title=el.querySelector('h3').getBoundingClientRect();return [...el.querySelectorAll('select')].every(s=>{const r=s.getBoundingClientRect();return Math.abs(r.top-title.top)<2&&r.height<=title.height+1;});}));
         assert(headers.every(Boolean),'Outcome controls share the title row and fit its height');
-        assert.equal(await page.locator('.phase-samples h3').count(),0);
+        assert.equal(await page.locator('.analysis-samples h3').count(),0);
         const mapRows=await page.locator('.map-controls').evaluateAll(els=>els.map(el=>{const rects=[...el.querySelectorAll('input,select,button')].filter(e=>!e.closest('.county-suggestions')).map(e=>e.getBoundingClientRect());return rects.every(r=>Math.abs(r.top-rects[0].top)<2);}));
         assert(mapRows.every(Boolean),'Map controls occupy one row');
-        assert.equal(await page.locator('.phase-figure img').evaluateAll(els=>els.filter(el=>!el.src.includes('sample')).length),0);
+        assert.equal(await page.locator('.analysis-figure img').evaluateAll(els=>els.filter(el=>!el.src.includes('sample')).length),0);
         const bounds=await page.evaluate(()=>{const content=document.querySelector('.chapter-content').getBoundingClientRect(),chrome=document.querySelector('.chapter-title').getBoundingClientRect().bottom;return {overflow:document.documentElement.scrollWidth>innerWidth,oversized:[...document.querySelectorAll('.interactive-body svg')].filter(el=>{const r=el.getBoundingClientRect();return r.width>content.width+1||r.height>innerHeight-chrome;}).map(el=>el.closest('figure')?.id)};});assert(!bounds.overflow);assert.deepEqual(bounds.oversized,[]);
         if(chapter==='clustering'){
           await checkMapColumns(page,'#cluster-map');
@@ -70,6 +71,7 @@ const server=require('node:http').createServer((req,res)=>{
         }else{
           await page.locator('#pca-scores .outcome-select').selectOption('net');
           const point=page.locator('#pca-scores circle').first();
+          await page.mouse.move(0,0);
           await point.focus();
           assert.match(await page.locator('#pca-score-tooltip').textContent(),/Autauga County, Alabama.*PC1:.*PC2:.*Net migration:/);
           assert(await page.locator('#pca-score-tooltip').isVisible());
@@ -147,7 +149,7 @@ const server=require('node:http').createServer((req,res)=>{
         for(const unit of ['count','rate']){
           await card.locator('.migration-unit').selectOption(unit);
           const actual=await page.locator('#chart-4').evaluate(el=>el.data[0].x);
-          const data=JSON.parse(fs.readFileSync(path.join(root,'data/analysis.json')));
+          const data=JSON.parse(fs.readFileSync(path.join(root,'data/exploration/analysis.json')));
           const field=outcome+'_individuals'+(unit==='rate'?'_per_1000':'');
           assert.deepEqual(actual,(unit==='rate'?data.rateRankings:data.countRankings).filter(r=>r.outcome===outcome).map(r=>r[field]));
         }

@@ -1,0 +1,18 @@
+{
+  "files": {
+    "characteristics-cluster-summary.csv": "b05263f92edefb04ed838a1774655704ad7a080353a3527309b913f8ad52185d",
+    "characteristics-method-crosstab.csv": "59e7d7670d2b000264bf5982ce7a3884639ed2a4f1e1b166617b30663e3bf7ed",
+    "characteristics-standardized-sample.csv": "11a882d42f0b01655d96d6dce76ded745a68fcfe95391f82f04a438646479bb7",
+    "characteristics-transformed-sample.csv": "65b329d5d425d66b47d8904aada913395e6090d769765c61c235011e2d5c9717",
+    "cluster-assignments.csv": "3818b1641cfbf25057ded104dc4f74db0a17224a45a6fd51f0cc6848e9c52d31",
+    "clustering-charts.json": "a452434126760887d470eab8420a7cfcfaf37674c8480ee1fe0320edd567756e",
+    "clustering-conclusion-summary.csv": "5a8946302406bb41d307afa72039aa4b0bbfd2fe2eaead022529ef9bc16b0fe9",
+    "clustering-metrics.csv": "bc844a60582668f0ed9b8ce7497f1084ba2b7ba247b5e1f56ef1c4a67a2bf7fc",
+    "clustering.json": "0155b30ed8da32e2a7bb12c41926cb3dc0bd7d4cf5c92585e57c369028487f49",
+    "migration-characteristics-crosstab.csv": "6610ae0070a86b9de6ed1a8af55b402b952b2f230821be1210b6c005e9088b12",
+    "migration-cluster-summary.csv": "ccfeba6f06a357f85e65d3abb95dfe380448e12bf52172519331d3ad435623e5",
+    "migration-method-crosstab.csv": "43543fb0caa00b3d0a92eabcb0df7fa19f5dafe79d585080cdad9fcb38d84fe8",
+    "migration-standardized-sample.csv": "ecbbe20d9e8815f3f3f596fb61ee95f9527c70de9b13e27326f68a02aebb158b",
+    "sample-row-keys.csv": "19dbefa896834fb146625ac06ec12e355e5cbca9ed31c3875081eec80ba10fe8"
+  }
+}

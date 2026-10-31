@@ -1,0 +1,643 @@
+{
+  "input": "data/processed/analysis_county_year.parquet",
+  "input_sha256": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+  "year": 2023,
+  "counties": 3050,
+  "imputed_counties": 6,
+  "outlier_flagged_counties": 133,
+  "features": [
+    "log10_population",
+    "median_age",
+    "log10_income",
+    "log10_home_value",
+    "log10_rent",
+    "poverty_pct",
+    "unemployment_pct",
+    "vacancy_pct",
+    "homeownership_pct",
+    "bachelors_plus_pct",
+    "log1p_incidents",
+    "precipitation_inches",
+    "temperature_f"
+  ],
+  "feature_labels": [
+    "Log population",
+    "Median age",
+    "Log income",
+    "Log home value",
+    "Log rent",
+    "Poverty %",
+    "Unemployment %",
+    "Vacancy %",
+    "Homeownership %",
+    "Bachelor\u2019s+ %",
+    "Log1p incidents",
+    "Precipitation",
+    "Temperature"
+  ],
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.1"
+  },
+  "retained": 5,
+  "retained90": 8,
+  "retained_variance": 0.8068390670701745,
+  "two_component_variance": 0.5453286518333658,
+  "variance": [
+    {
+      "component": "PC1",
+      "eigenvalue": 4.448799903686561,
+      "variance_ratio": 0.34210317544363994,
+      "cumulative": 0.34210317544363994
+    },
+    {
+      "component": "PC2",
+      "eigenvalue": 2.6427976841104073,
+      "variance_ratio": 0.20322547638972588,
+      "cumulative": 0.5453286518333658
+    },
+    {
+      "component": "PC3",
+      "eigenvalue": 1.4721786812531705,
+      "variance_ratio": 0.11320738459371794,
+      "cumulative": 0.6585360364270837
+    },
+    {
+      "component": "PC4",
+      "eigenvalue": 1.0171309634981598,
+      "variance_ratio": 0.078215190610489,
+      "cumulative": 0.7367512270375727
+    },
+    {
+      "component": "PC5",
+      "eigenvalue": 0.9114407534577438,
+      "variance_ratio": 0.07008784003260178,
+      "cumulative": 0.8068390670701745
+    },
+    {
+      "component": "PC6",
+      "eigenvalue": 0.610645300956984,
+      "variance_ratio": 0.04695731456791536,
+      "cumulative": 0.8537963816380899
+    },
+    {
+      "component": "PC7",
+      "eigenvalue": 0.5734342821562382,
+      "variance_ratio": 0.044095866993552835,
+      "cumulative": 0.8978922486316427
+    },
+    {
+      "component": "PC8",
+      "eigenvalue": 0.35478386763965075,
+      "variance_ratio": 0.027282118850776672,
+      "cumulative": 0.9251743674824194
+    },
+    {
+      "component": "PC9",
+      "eigenvalue": 0.28012514756946394,
+      "variance_ratio": 0.021541023327598875,
+      "cumulative": 0.9467153908100183
+    },
+    {
+      "component": "PC10",
+      "eigenvalue": 0.25353754895124736,
+      "variance_ratio": 0.019496493991232107,
+      "cumulative": 0.9662118848012504
+    },
+    {
+      "component": "PC11",
+      "eigenvalue": 0.2278798753706325,
+      "variance_ratio": 0.017523473896722784,
+      "cumulative": 0.9837353586979732
+    },
+    {
+      "component": "PC12",
+      "eigenvalue": 0.1264560603550041,
+      "variance_ratio": 0.009724199950123769,
+      "cumulative": 0.993459558648097
+    },
+    {
+      "component": "PC13",
+      "eigenvalue": 0.08505362400884056,
+      "variance_ratio": 0.0065404413519030225,
+      "cumulative": 1.0
+    }
+  ],
+  "interpretations": [
+    {
+      "component": "PC1",
+      "title": "Income, education and housing costs",
+      "variance_ratio": 0.34210317544363994,
+      "positive": "Log income (+0.899), Log home value (+0.882), Log rent (+0.873)",
+      "negative": "Poverty % (-0.679), Vacancy % (-0.500), Unemployment % (-0.312)",
+      "interpretation": "Higher scores describe counties with higher incomes, home values, rents and educational attainment, often with larger populations and less poverty. In everyday terms, this is an affluence and housing-cost dimension. Lower scores describe lower incomes, housing costs and educational attainment, with more poverty.",
+      "features": "Log income (+0.899), Log home value (+0.882), Log rent (+0.873)"
+    },
+    {
+      "component": "PC2",
+      "title": "Older, owner-occupied communities in cooler climates",
+      "variance_ratio": 0.20322547638972588,
+      "positive": "Homeownership % (+0.732), Median age (+0.594), Vacancy % (+0.350)",
+      "negative": "Temperature (-0.589), Poverty % (-0.581), Unemployment % (-0.563)",
+      "interpretation": "Higher scores describe older populations and more homeownership, alongside cooler temperatures, smaller populations, less poverty and less unemployment. This combines settled household patterns with climate and economic differences. Lower scores describe younger populations, less homeownership and warmer climates, with larger populations and more poverty and unemployment.",
+      "features": "Homeownership % (+0.732), Median age (+0.594), Temperature (-0.589)"
+    },
+    {
+      "component": "PC3",
+      "title": "Wetter, older communities with more recorded incidents",
+      "variance_ratio": 0.11320738459371794,
+      "positive": "Precipitation (+0.662), Median age (+0.601), Log1p incidents (+0.438)",
+      "negative": "Poverty % (-0.040)",
+      "interpretation": "Higher scores describe wetter counties with older populations and more FEMA-recorded incidents, alongside more housing vacancy. This is a combined age, rainfall and incident-history dimension. Lower scores describe drier counties, younger populations and fewer recorded incidents, with less housing vacancy.",
+      "features": "Precipitation (+0.662), Median age (+0.601), Log1p incidents (+0.438)"
+    },
+    {
+      "component": "PC4",
+      "title": "Housing vacancy and unemployment in cooler climates",
+      "variance_ratio": 0.078215190610489,
+      "positive": "Vacancy % (+0.492), Unemployment % (+0.436), Bachelor\u2019s+ % (+0.277)",
+      "negative": "Temperature (-0.439), Homeownership % (-0.314), Precipitation (-0.287)",
+      "interpretation": "Higher scores describe more vacant housing and unemployment, together with cooler temperatures and less homeownership. This captures a housing and labor-market contrast with a climate element. Lower scores describe less vacancy and unemployment, warmer temperatures and more homeownership.",
+      "features": "Vacancy % (+0.492), Temperature (-0.439), Unemployment % (+0.436)"
+    },
+    {
+      "component": "PC5",
+      "title": "Recorded disaster-incident history",
+      "variance_ratio": 0.07008784003260178,
+      "positive": "Log1p incidents (+0.871), Poverty % (+0.013)",
+      "negative": "Temperature (-0.225), Unemployment % (-0.167), Precipitation (-0.155)",
+      "interpretation": "Higher scores chiefly describe more distinct FEMA-recorded incidents; cooler temperatures and lower unemployment have much smaller contributions. This largely isolates incident history after the earlier components capture other shared patterns. Lower scores chiefly describe fewer recorded incidents; temperature and unemployment provide weaker contrasts.",
+      "features": "Log1p incidents (+0.871), Temperature (-0.225), Unemployment % (-0.167)"
+    }
+  ],
+  "associations": [
+    {
+      "component": "PC1",
+      "outcome": "net",
+      "spearman_rho": 0.08289547888032675,
+      "retained": true
+    },
+    {
+      "component": "PC1",
+      "outcome": "inflow",
+      "spearman_rho": 0.30864686183597284,
+      "retained": true
+    },
+    {
+      "component": "PC1",
+      "outcome": "outflow",
+      "spearman_rho": 0.33523679002169665,
+      "retained": true
+    },
+    {
+      "component": "PC2",
+      "outcome": "net",
+      "spearman_rho": 0.09461999111068468,
+      "retained": true
+    },
+    {
+      "component": "PC2",
+      "outcome": "inflow",
+      "spearman_rho": -0.02475663015254993,
+      "retained": true
+    },
+    {
+      "component": "PC2",
+      "outcome": "outflow",
+      "spearman_rho": -0.0650723765268952,
+      "retained": true
+    },
+    {
+      "component": "PC3",
+      "outcome": "net",
+      "spearman_rho": 0.36166848613705493,
+      "retained": true
+    },
+    {
+      "component": "PC3",
+      "outcome": "inflow",
+      "spearman_rho": 0.21900142107441023,
+      "retained": true
+    },
+    {
+      "component": "PC3",
+      "outcome": "outflow",
+      "spearman_rho": 0.03272661842570879,
+      "retained": true
+    },
+    {
+      "component": "PC4",
+      "outcome": "net",
+      "spearman_rho": -0.23629793148792017,
+      "retained": true
+    },
+    {
+      "component": "PC4",
+      "outcome": "inflow",
+      "spearman_rho": -0.12076599999818834,
+      "retained": true
+    },
+    {
+      "component": "PC4",
+      "outcome": "outflow",
+      "spearman_rho": -0.022895747856889973,
+      "retained": true
+    },
+    {
+      "component": "PC5",
+      "outcome": "net",
+      "spearman_rho": -0.15919813126578922,
+      "retained": true
+    },
+    {
+      "component": "PC5",
+      "outcome": "inflow",
+      "spearman_rho": -0.1632204649485932,
+      "retained": true
+    },
+    {
+      "component": "PC5",
+      "outcome": "outflow",
+      "spearman_rho": -0.10314169934965335,
+      "retained": true
+    },
+    {
+      "component": "PC6",
+      "outcome": "net",
+      "spearman_rho": 0.06607098450569976,
+      "retained": false
+    },
+    {
+      "component": "PC6",
+      "outcome": "inflow",
+      "spearman_rho": -0.1572559608461483,
+      "retained": false
+    },
+    {
+      "component": "PC6",
+      "outcome": "outflow",
+      "spearman_rho": -0.24138936148523646,
+      "retained": false
+    },
+    {
+      "component": "PC7",
+      "outcome": "net",
+      "spearman_rho": -0.07566007538994046,
+      "retained": false
+    },
+    {
+      "component": "PC7",
+      "outcome": "inflow",
+      "spearman_rho": -0.2045721582179583,
+      "retained": false
+    },
+    {
+      "component": "PC7",
+      "outcome": "outflow",
+      "spearman_rho": -0.2483953310573596,
+      "retained": false
+    },
+    {
+      "component": "PC8",
+      "outcome": "net",
+      "spearman_rho": 0.0648916965157932,
+      "retained": false
+    },
+    {
+      "component": "PC8",
+      "outcome": "inflow",
+      "spearman_rho": -0.06191682993843826,
+      "retained": false
+    },
+    {
+      "component": "PC8",
+      "outcome": "outflow",
+      "spearman_rho": -0.1285353185751949,
+      "retained": false
+    },
+    {
+      "component": "PC9",
+      "outcome": "net",
+      "spearman_rho": -0.051270280129381667,
+      "retained": false
+    },
+    {
+      "component": "PC9",
+      "outcome": "inflow",
+      "spearman_rho": 0.0441579568620895,
+      "retained": false
+    },
+    {
+      "component": "PC9",
+      "outcome": "outflow",
+      "spearman_rho": 0.10219523447743108,
+      "retained": false
+    },
+    {
+      "component": "PC10",
+      "outcome": "net",
+      "spearman_rho": -0.07262811334769635,
+      "retained": false
+    },
+    {
+      "component": "PC10",
+      "outcome": "inflow",
+      "spearman_rho": -0.15109630537523475,
+      "retained": false
+    },
+    {
+      "component": "PC10",
+      "outcome": "outflow",
+      "spearman_rho": -0.138041542376466,
+      "retained": false
+    },
+    {
+      "component": "PC11",
+      "outcome": "net",
+      "spearman_rho": 0.1585222671806795,
+      "retained": false
+    },
+    {
+      "component": "PC11",
+      "outcome": "inflow",
+      "spearman_rho": 0.20687869252847238,
+      "retained": false
+    },
+    {
+      "component": "PC11",
+      "outcome": "outflow",
+      "spearman_rho": 0.16303190348847146,
+      "retained": false
+    },
+    {
+      "component": "PC12",
+      "outcome": "net",
+      "spearman_rho": -0.18829778610382258,
+      "retained": false
+    },
+    {
+      "component": "PC12",
+      "outcome": "inflow",
+      "spearman_rho": -0.12320002178612895,
+      "retained": false
+    },
+    {
+      "component": "PC12",
+      "outcome": "outflow",
+      "spearman_rho": -0.02248207329327696,
+      "retained": false
+    },
+    {
+      "component": "PC13",
+      "outcome": "net",
+      "spearman_rho": -0.08253646715022817,
+      "retained": false
+    },
+    {
+      "component": "PC13",
+      "outcome": "inflow",
+      "spearman_rho": -0.15618912578040983,
+      "retained": false
+    },
+    {
+      "component": "PC13",
+      "outcome": "outflow",
+      "spearman_rho": -0.12690117851946042,
+      "retained": false
+    }
+  ],
+  "color_limits": {
+    "net": 19.518812302529273,
+    "inflow": 77.149377305921,
+    "outflow": 67.01045028016706
+  },
+  "outcomes": [
+    {
+      "id": "net",
+      "label": "Net migration",
+      "count": "net_individuals",
+      "rate": "net_individuals_per_1000",
+      "units": "IRS individuals per 1,000 ACS residents"
+    },
+    {
+      "id": "inflow",
+      "label": "Inflow",
+      "count": "inflow_individuals",
+      "rate": "inflow_individuals_per_1000",
+      "units": "IRS individuals per 1,000 ACS residents"
+    },
+    {
+      "id": "outflow",
+      "label": "Outflow",
+      "count": "outflow_individuals",
+      "rate": "outflow_individuals_per_1000",
+      "units": "IRS individuals per 1,000 ACS residents"
+    }
+  ],
+  "strongest_associations": {
+    "net": {
+      "component": "PC3",
+      "spearman_rho": 0.36166848613705493
+    },
+    "inflow": {
+      "component": "PC1",
+      "spearman_rho": 0.30864686183597284
+    },
+    "outflow": {
+      "component": "PC1",
+      "spearman_rho": 0.33523679002169665
+    }
+  },
+  "coefficients": {
+    "log10_population": {
+      "PC1": 0.32403880404956764,
+      "PC2": -0.3215509134942263,
+      "PC3": 0.11243432154579325,
+      "PC4": -0.02962495563913206,
+      "PC5": -0.07997477535193641
+    },
+    "median_age": {
+      "PC1": -0.11441468556590029,
+      "PC2": 0.3654881559196624,
+      "PC3": 0.4955367015006735,
+      "PC4": 0.11919906804278586,
+      "PC5": -0.15380976045934153
+    },
+    "log10_income": {
+      "PC1": 0.4264961868717861,
+      "PC2": 0.1685395465262787,
+      "PC3": 0.02154701673273321,
+      "PC4": -0.09254786976887809,
+      "PC5": -0.009609038199018767
+    },
+    "log10_home_value": {
+      "PC1": 0.4181350390094806,
+      "PC2": 0.019425493435207025,
+      "PC3": 0.16762138847580926,
+      "PC4": 0.21476850108982773,
+      "PC5": -0.02070949300566155
+    },
+    "log10_rent": {
+      "PC1": 0.41384139381999285,
+      "PC2": -0.12743867910709109,
+      "PC3": 0.16476619919457505,
+      "PC4": 0.10335580259279464,
+      "PC5": -0.09300328999381835
+    },
+    "poverty_pct": {
+      "PC1": -0.3220155956861718,
+      "PC2": -0.3572677992657933,
+      "PC3": -0.032963464781772145,
+      "PC4": 0.22661421932948617,
+      "PC5": 0.0134251427438235
+    },
+    "unemployment_pct": {
+      "PC1": -0.1480973386589179,
+      "PC2": -0.3465099794319833,
+      "PC3": 0.17561539603592574,
+      "PC4": 0.4326985475698631,
+      "PC5": -0.17452937887492403
+    },
+    "vacancy_pct": {
+      "PC1": -0.23713246658484852,
+      "PC2": 0.215092964684153,
+      "PC3": 0.31311575991841645,
+      "PC4": 0.4877990680064025,
+      "PC5": -0.09971112151607794
+    },
+    "homeownership_pct": {
+      "PC1": -0.08431487149655728,
+      "PC2": 0.4504617836652244,
+      "PC3": 0.27517760359836985,
+      "PC4": -0.3110260169750994,
+      "PC5": -0.07859405387837116
+    },
+    "bachelors_plus_pct": {
+      "PC1": 0.39342604753192456,
+      "PC2": -0.0029336189954802805,
+      "PC3": 0.05799482657725333,
+      "PC4": 0.2746427905222778,
+      "PC5": -0.017230699033909294
+    },
+    "log1p_incidents": {
+      "PC1": -0.012924564687165414,
+      "PC2": -0.11870548354713067,
+      "PC3": 0.36139041334328076,
+      "PC4": -0.01999392008673139,
+      "PC5": 0.9120475536916225
+    },
+    "precipitation_inches": {
+      "PC1": -0.02007143525544619,
+      "PC2": -0.27532340294922986,
+      "PC3": 0.5459015978072316,
+      "PC4": -0.28459213678944595,
+      "PC5": -0.16226992790637734
+    },
+    "temperature_f": {
+      "PC1": -0.09790757930439892,
+      "PC2": -0.36222513724017824,
+      "PC3": 0.22005967686370553,
+      "PC4": -0.43526158800083475,
+      "PC5": -0.23570431887326984
+    }
+  },
+  "variable_correlations": {
+    "log10_population": {
+      "PC1": 0.6833563737100923,
+      "PC2": -0.5226494515502881,
+      "PC3": 0.1363979861772435,
+      "PC4": -0.029872731738240555,
+      "PC5": -0.07633892554242479
+    },
+    "median_age": {
+      "PC1": -0.2412859313464633,
+      "PC2": 0.5940651269304127,
+      "PC3": 0.6011528084338283,
+      "PC4": 0.12019602076253937,
+      "PC5": -0.14681719079214103
+    },
+    "log10_income": {
+      "PC1": 0.8994258836275152,
+      "PC2": 0.27394449171134294,
+      "PC3": 0.02613943545054585,
+      "PC4": -0.09332191819046774,
+      "PC5": -0.009172187710202154
+    },
+    "log10_home_value": {
+      "PC1": 0.8817932926790405,
+      "PC2": 0.03157423308078076,
+      "PC3": 0.20334733659616439,
+      "PC4": 0.21656477386942724,
+      "PC5": -0.019767988564187763
+    },
+    "log10_rent": {
+      "PC1": 0.8727385443895815,
+      "PC2": -0.20713906553031847,
+      "PC3": 0.19988360716941117,
+      "PC4": 0.10422024599985388,
+      "PC5": -0.08877513189371822
+    },
+    "poverty_pct": {
+      "PC1": -0.6790896861615892,
+      "PC2": -0.5807037439692986,
+      "PC3": -0.03998912566770795,
+      "PC4": 0.22850956688551113,
+      "PC5": 0.012814802765086505
+    },
+    "unemployment_pct": {
+      "PC1": -0.3123183366847407,
+      "PC2": -0.5632179636463062,
+      "PC3": 0.21304514521629692,
+      "PC4": 0.4363175355444866,
+      "PC5": -0.16659484444023356
+    },
+    "vacancy_pct": {
+      "PC1": -0.5000820285386679,
+      "PC2": 0.3496125039822554,
+      "PC3": 0.37985161920361327,
+      "PC4": 0.491878903658873,
+      "PC5": -0.09517800891182174
+    },
+    "homeownership_pct": {
+      "PC1": -0.17780927504875688,
+      "PC2": 0.7321814191680766,
+      "PC3": 0.33382752220024203,
+      "PC4": -0.31362736477612524,
+      "PC5": -0.07502097505989465
+    },
+    "bachelors_plus_pct": {
+      "PC1": 0.8296851914173367,
+      "PC2": -0.004768309759669851,
+      "PC3": 0.07035554130696671,
+      "PC4": 0.2769398376508141,
+      "PC5": -0.01644734911483166
+    },
+    "log1p_incidents": {
+      "PC1": -0.027256253096934163,
+      "PC2": -0.19294411325948102,
+      "PC3": 0.43841528037067107,
+      "PC4": -0.02016114448987728,
+      "PC5": 0.8705836307263807
+    },
+    "precipitation_inches": {
+      "PC1": -0.04232808861132726,
+      "PC2": -0.4475111701181895,
+      "PC3": 0.6622522159438587,
+      "PC4": -0.28697239788922957,
+      "PC5": -0.15489273823786542
+    },
+    "temperature_f": {
+      "PC1": -0.20647455649155178,
+      "PC2": -0.58876141031304,
+      "PC3": 0.2669620481571485,
+      "PC4": -0.4389020126374259,
+      "PC5": -0.22498862134107672
+    }
+  },
+  "conclusions": [
+    "PC1\u2013PC5 retain 80.7% of variation in the 13 standardized county characteristics. PC1 and PC2 alone retain 54.5%.",
+    "PC1, the income, education and housing-cost dimension, accompanies greater two-way movement: inflow rho = 0.309 and outflow rho = 0.335, with a weaker net association (rho = 0.083).",
+    "PC3, combining rainfall, age and incident history, has the strongest net-migration association among the retained components (rho = 0.362). PC4 and PC5 show weaker negative net associations; PC2 has weak associations with all three outcomes. These are descriptive patterns within the observed county cohort."
+  ]
+}

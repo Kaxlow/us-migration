@@ -17,18 +17,8 @@ from .snapshot_style import PAPER, INK, style_cell
 from .eda import FEATURES, OUTCOMES
 from .cleaning import US_STATES
 
-MEASURES = FEATURES + ['inflow_individuals', 'outflow_individuals', 'net_individuals'] + OUTCOMES
-KEYS = ['county_fips', 'year']
-IDENTIFIERS = ['county_fips', 'county_name', 'year']
-POSITIVE = ['population', 'median_household_income', 'median_home_value', 'median_gross_rent']
-PERCENTAGES = ['poverty_pct', 'unemployment_pct', 'vacancy_pct', 'homeownership_pct', 'bachelors_plus_pct']
-
-
-
-from .notebook_api import definitions
-cohort_reasons = definitions()['cohort_reasons']
-build_analysis_cohort = definitions()['build_analysis_cohort']
-assert_clean_cohort = definitions()['assert_clean_cohort']
+from .conventions import MEASURES, KEYS, IDENTIFIERS, POSITIVE, PERCENTAGES
+from .validation import cohort_reasons, build_analysis_cohort, assert_clean_cohort
 
 
 def raw_snapshot(logical_id):
@@ -80,16 +70,16 @@ def comparison_image(raw, clean, title, filename, note=None):
     return table_image([raw,clean],['RAW EXCERPT','CLEANED EXCERPT'],title,filename)
 
 
-def finish_chart(fig, filename, sentence_one, sentence_two):
+def finish_chart(fig, filename, sentence_one, sentence_two, directory=None):
     """Save a captioned PNG and put exactly two explanatory sentences below notebook output."""
     caption=sentence_one+' '+sentence_two
     fig.tight_layout(rect=(0,.20,1,1))
     artist=fig.text(.04,.035,textwrap.fill(caption,115),fontsize=10,va='bottom')
-    path=ROOT/'reports/figures/eda'/filename
+    path=Path(directory or ROOT/'reports/analyses/exploration/figures')/filename
     path.parent.mkdir(parents=True,exist_ok=True)
     fig.savefig(path,dpi=160,bbox_inches='tight')
     artist.remove()
     fig.tight_layout()
     plt.show()
     display(Markdown(sentence_one+' '+sentence_two))
-    return {'image':path.relative_to(ROOT).as_posix(),'caption':caption}
+    return {'image':'reports/analyses/exploration/figures/'+filename,'caption':caption}

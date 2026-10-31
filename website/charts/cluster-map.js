@@ -1,7 +1,7 @@
 import {d3} from '../vendor.js';
 import {fmt,esc} from '../shared.js';
 import {mapMarkup,arrangeMap} from './maps.js';
-import {clusterColors} from './phase-details.js';
+import {clusterColors} from './analysis-details.js';
 
 export async function drawClusterMap({clusteringResults,geo,states}){
   const host=document.querySelector('#cluster-geography .interactive-body');
@@ -14,7 +14,7 @@ export async function drawClusterMap({clusteringResults,geo,states}){
   root.querySelector('.map-bottom').prepend(context);
   root.insertAdjacentHTML('beforeend','<details class="map-notes"><summary>Coverage and boundary notes · gray counties</summary><p>Gray = outside the eligible cohort or unmatched boundary. Alaska and Connecticut state substitutes are excluded. Census 2025 display boundaries retain source-year geography limitations. Cluster numbers identify groups within each view.</p></details>');
   arrangeMap(root);
-  const rows=await d3.csv('data/phase2/cluster-assignments.csv');if(!root.isConnected)return;
+  const rows=await d3.csv('data/clustering/cluster-assignments.csv');if(!root.isConnected)return;
   const records=new Map(rows.map(r=>[r.county_fips,r])),features=new Map(geo.features.map(f=>[f.id,f]));
   const svg=d3.select(root.querySelector('svg')).attr('aria-label','US county cluster membership'),layer=svg.append('g'),path=d3.geoPath(d3.geoAlbersUsa().fitExtent([[15,15],[985,595]],geo));
   const tip=root.querySelector('.tooltip'),detail=root.querySelector('.map-detail'),input=root.querySelector('input'),suggestions=root.querySelector('.county-suggestions');

@@ -1,0 +1,3920 @@
+{
+  "context": {
+    "input": "data/processed/analysis_county_year.parquet",
+    "input_sha256": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+    "year": 2023,
+    "counties": 3050,
+    "features": [
+      "log10_population",
+      "median_age",
+      "log10_income",
+      "log10_home_value",
+      "log10_rent",
+      "poverty_pct",
+      "unemployment_pct",
+      "vacancy_pct",
+      "homeownership_pct",
+      "bachelors_plus_pct",
+      "log1p_incidents",
+      "precipitation_inches",
+      "temperature_f"
+    ],
+    "feature_labels": [
+      "Log population",
+      "Median age",
+      "Log income",
+      "Log home value",
+      "Log rent",
+      "Poverty %",
+      "Unemployment %",
+      "Vacancy %",
+      "Homeownership %",
+      "Bachelor\u2019s+ %",
+      "Log1p incidents",
+      "Precipitation",
+      "Temperature"
+    ],
+    "thresholds": {
+      "inflow": [
+        39.00802297939778,
+        50.44741683035575
+      ],
+      "outflow": [
+        38.995501763696964,
+        47.03068951773615
+      ]
+    },
+    "seed": 42,
+    "test_size": 0.2,
+    "question": "How accurately can county characteristics classify counties by migration outcome in terms of net migration, inflows, and outflows?",
+    "split_counts": {
+      "train": 2440,
+      "test": 610
+    },
+    "balanced_counties": 8,
+    "imputed_counties": 6,
+    "outlier_flagged_counties": 133,
+    "versions": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.5",
+      "sklearn": "1.9.1"
+    },
+    "class_counts": {
+      "inflow": [
+        {
+          "classification_split": "test",
+          "inflow_class": "High",
+          "count": 206
+        },
+        {
+          "classification_split": "test",
+          "inflow_class": "Low",
+          "count": 222
+        },
+        {
+          "classification_split": "test",
+          "inflow_class": "Medium",
+          "count": 182
+        },
+        {
+          "classification_split": "train",
+          "inflow_class": "High",
+          "count": 813
+        },
+        {
+          "classification_split": "train",
+          "inflow_class": "Low",
+          "count": 814
+        },
+        {
+          "classification_split": "train",
+          "inflow_class": "Medium",
+          "count": 813
+        }
+      ],
+      "outflow": [
+        {
+          "classification_split": "test",
+          "outflow_class": "High",
+          "count": 203
+        },
+        {
+          "classification_split": "test",
+          "outflow_class": "Low",
+          "count": 211
+        },
+        {
+          "classification_split": "test",
+          "outflow_class": "Medium",
+          "count": 196
+        },
+        {
+          "classification_split": "train",
+          "outflow_class": "High",
+          "count": 813
+        },
+        {
+          "classification_split": "train",
+          "outflow_class": "Low",
+          "count": 814
+        },
+        {
+          "classification_split": "train",
+          "outflow_class": "Medium",
+          "count": 813
+        }
+      ],
+      "net": [
+        {
+          "classification_split": "test",
+          "net_class": "Net inflow",
+          "count": 352
+        },
+        {
+          "classification_split": "test",
+          "net_class": "Net outflow",
+          "count": 258
+        },
+        {
+          "classification_split": "train",
+          "net_class": "Balanced",
+          "count": 8
+        },
+        {
+          "classification_split": "train",
+          "net_class": "Net inflow",
+          "count": 1466
+        },
+        {
+          "classification_split": "train",
+          "net_class": "Net outflow",
+          "count": 966
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "outflow": {
+      "outcome": "outflow",
+      "selected": {
+        "criterion": "entropy",
+        "max_depth": 6,
+        "min_samples_leaf": 10
+      },
+      "train_count": 2440,
+      "test_count": 610,
+      "tuning": [
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 10,
+          "criterion": "entropy",
+          "mean_train_score": 0.608724177664518,
+          "mean_test_score": 0.517194281221132,
+          "std_test_score": 0.022303966976535
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 10,
+          "criterion": "entropy",
+          "mean_train_score": 0.557182018803327,
+          "mean_test_score": 0.516354301477577,
+          "std_test_score": 0.016763548575434
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 50,
+          "criterion": "entropy",
+          "mean_train_score": 0.571186137775065,
+          "mean_test_score": 0.511032320037684,
+          "std_test_score": 0.008303724151116
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 25,
+          "criterion": "entropy",
+          "mean_train_score": 0.555248616744243,
+          "mean_test_score": 0.510896859892814,
+          "std_test_score": 0.014897403054564
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 50,
+          "criterion": "entropy",
+          "mean_train_score": 0.54889982771391,
+          "mean_test_score": 0.510782456047363,
+          "std_test_score": 0.013860249746045
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 25,
+          "criterion": "gini",
+          "mean_train_score": 0.565661415248728,
+          "mean_test_score": 0.507999827141987,
+          "std_test_score": 0.013800755754313
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 10,
+          "criterion": "gini",
+          "mean_train_score": 0.570142216283611,
+          "mean_test_score": 0.506851002614651,
+          "std_test_score": 0.012850105893117
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 50,
+          "criterion": "gini",
+          "mean_train_score": 0.560882207636498,
+          "mean_test_score": 0.505362494094667,
+          "std_test_score": 0.013096604362656
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 25,
+          "criterion": "entropy",
+          "mean_train_score": 0.59561080267815,
+          "mean_test_score": 0.50284220143694,
+          "std_test_score": 0.008108016918979
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 50,
+          "criterion": "gini",
+          "mean_train_score": 0.580906232155513,
+          "mean_test_score": 0.501061587181304,
+          "std_test_score": 0.011400833515107
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 25,
+          "criterion": "gini",
+          "mean_train_score": 0.608082780443844,
+          "mean_test_score": 0.495137374810986,
+          "std_test_score": 0.014004514274937
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 10,
+          "criterion": "gini",
+          "mean_train_score": 0.623496898230967,
+          "mean_test_score": 0.492799295800969,
+          "std_test_score": 0.020483490905368
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 50,
+          "criterion": "gini",
+          "mean_train_score": 0.501699202242978,
+          "mean_test_score": 0.49173614948598,
+          "std_test_score": 0.013712607972642
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 25,
+          "criterion": "gini",
+          "mean_train_score": 0.501699202242978,
+          "mean_test_score": 0.49173614948598,
+          "std_test_score": 0.013712607972642
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 10,
+          "criterion": "gini",
+          "mean_train_score": 0.501699202242978,
+          "mean_test_score": 0.49173614948598,
+          "std_test_score": 0.013712607972642
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 50,
+          "criterion": "entropy",
+          "mean_train_score": 0.497358821258898,
+          "mean_test_score": 0.488212792627592,
+          "std_test_score": 0.012572916509811
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 25,
+          "criterion": "entropy",
+          "mean_train_score": 0.497358821258898,
+          "mean_test_score": 0.488212792627592,
+          "std_test_score": 0.012572916509811
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 10,
+          "criterion": "entropy",
+          "mean_train_score": 0.497358821258898,
+          "mean_test_score": 0.488212792627592,
+          "std_test_score": 0.012572916509811
+        }
+      ],
+      "trees": [
+        {
+          "depth": 2,
+          "params": {
+            "criterion": "gini",
+            "max_depth": 2,
+            "min_samples_leaf": 50
+          },
+          "cv_macro_f1": 0.4917361494859803,
+          "train_macro_f1": 0.5016992022429777,
+          "node_count": 7,
+          "leaf_count": 4,
+          "root": {
+            "id": 0,
+            "samples": 2440,
+            "impurity": 0.6666665546895996,
+            "prediction": "Low",
+            "proportions": {
+              "High": 0.33319672131147543,
+              "Low": 0.3336065573770492,
+              "Medium": 0.33319672131147543
+            },
+            "feature": "log10_rent",
+            "threshold": 2.944729208946228,
+            "children": [
+              {
+                "id": 1,
+                "samples": 1369,
+                "impurity": 0.6317536220207336,
+                "prediction": "Low",
+                "proportions": {
+                  "High": 0.1877282688093499,
+                  "Low": 0.44558071585098613,
+                  "Medium": 0.366691015339664
+                },
+                "feature": "temperature_f",
+                "threshold": 58.56666564941406,
+                "children": [
+                  {
+                    "id": 2,
+                    "samples": 832,
+                    "impurity": 0.5905631703032544,
+                    "prediction": "Low",
+                    "proportions": {
+                      "High": 0.14543269230769232,
+                      "Low": 0.5348557692307693,
+                      "Medium": 0.31971153846153844
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "samples": 537,
+                    "impurity": 0.6483082439513262,
+                    "prediction": "Medium",
+                    "proportions": {
+                      "High": 0.2532588454376164,
+                      "Low": 0.30726256983240224,
+                      "Medium": 0.43947858472998136
+                    }
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "samples": 1071,
+                "impurity": 0.6098892716127846,
+                "prediction": "High",
+                "proportions": {
+                  "High": 0.5191409897292251,
+                  "Low": 0.19047619047619047,
+                  "Medium": 0.2903828197945845
+                },
+                "feature": "temperature_f",
+                "threshold": 56.03333282470703,
+                "children": [
+                  {
+                    "id": 5,
+                    "samples": 512,
+                    "impurity": 0.6573486328125,
+                    "prediction": "High",
+                    "proportions": {
+                      "High": 0.390625,
+                      "Low": 0.2578125,
+                      "Medium": 0.3515625
+                    }
+                  },
+                  {
+                    "id": 6,
+                    "samples": 559,
+                    "impurity": 0.5229117930370166,
+                    "prediction": "High",
+                    "proportions": {
+                      "High": 0.6368515205724509,
+                      "Low": 0.12880143112701256,
+                      "Medium": 0.2343470483005367
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "depth": 4,
+          "params": {
+            "criterion": "entropy",
+            "max_depth": 4,
+            "min_samples_leaf": 10
+          },
+          "cv_macro_f1": 0.5163543014775765,
+          "train_macro_f1": 0.5571820188033272,
+          "node_count": 31,
+          "leaf_count": 16,
+          "root": {
+            "id": 0,
+            "samples": 2440,
+            "impurity": 1.5849622584311012,
+            "prediction": "Low",
+            "proportions": {
+              "High": 0.33319672131147543,
+              "Low": 0.3336065573770492,
+              "Medium": 0.33319672131147543
+            },
+            "feature": "log10_rent",
+            "threshold": 2.944729208946228,
+            "children": [
+              {
+                "id": 1,
+                "samples": 1369,
+                "impurity": 1.5034309920170188,
+                "prediction": "Low",
+                "proportions": {
+                  "High": 0.1877282688093499,
+                  "Low": 0.44558071585098613,
+                  "Medium": 0.366691015339664
+                },
+                "feature": "temperature_f",
+                "threshold": 59.19583320617676,
+                "children": [
+                  {
+                    "id": 2,
+                    "samples": 871,
+                    "impurity": 1.4191481314296515,
+                    "prediction": "Low",
+                    "proportions": {
+                      "High": 0.14695752009184845,
+                      "Low": 0.529276693455798,
+                      "Medium": 0.3237657864523536
+                    },
+                    "feature": "log10_home_value",
+                    "threshold": 5.261619567871094,
+                    "children": [
+                      {
+                        "id": 3,
+                        "samples": 658,
+                        "impurity": 1.3086540008729557,
+                        "prediction": "Low",
+                        "proportions": {
+                          "High": 0.10790273556231003,
+                          "Low": 0.5987841945288754,
+                          "Medium": 0.2933130699088146
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.767828702926636,
+                        "children": [
+                          {
+                            "id": 4,
+                            "samples": 606,
+                            "impurity": 1.3511673378340368,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.11716171617161716,
+                              "Low": 0.5676567656765676,
+                              "Medium": 0.31518151815181517
+                            }
+                          },
+                          {
+                            "id": 5,
+                            "samples": 52,
+                            "impurity": 0.2351933818192415,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.0,
+                              "Low": 0.9615384615384616,
+                              "Medium": 0.038461538461538464
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 6,
+                        "samples": 213,
+                        "impurity": 1.5598599398311415,
+                        "prediction": "Medium",
+                        "proportions": {
+                          "High": 0.2676056338028169,
+                          "Low": 0.3145539906103286,
+                          "Medium": 0.41784037558685444
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.334100008010864,
+                        "children": [
+                          {
+                            "id": 7,
+                            "samples": 124,
+                            "impurity": 1.5831857463142125,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.3548387096774194,
+                              "Low": 0.33064516129032256,
+                              "Medium": 0.31451612903225806
+                            }
+                          },
+                          {
+                            "id": 8,
+                            "samples": 89,
+                            "impurity": 1.391351874828883,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.14606741573033707,
+                              "Low": 0.29213483146067415,
+                              "Medium": 0.5617977528089888
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 9,
+                    "samples": 498,
+                    "impurity": 1.5463401600321633,
+                    "prediction": "Medium",
+                    "proportions": {
+                      "High": 0.25903614457831325,
+                      "Low": 0.2991967871485944,
+                      "Medium": 0.44176706827309237
+                    },
+                    "feature": "log10_home_value",
+                    "threshold": 5.199480772018433,
+                    "children": [
+                      {
+                        "id": 10,
+                        "samples": 395,
+                        "impurity": 1.5367088881096331,
+                        "prediction": "Medium",
+                        "proportions": {
+                          "High": 0.22278481012658227,
+                          "Low": 0.3493670886075949,
+                          "Medium": 0.4278481012658228
+                        },
+                        "feature": "precipitation_inches",
+                        "threshold": 41.47500038146973,
+                        "children": [
+                          {
+                            "id": 11,
+                            "samples": 97,
+                            "impurity": 1.578216141020135,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.3608247422680413,
+                              "Low": 0.3505154639175258,
+                              "Medium": 0.288659793814433
+                            }
+                          },
+                          {
+                            "id": 12,
+                            "samples": 298,
+                            "impurity": 1.4839260524529232,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.17785234899328858,
+                              "Low": 0.348993288590604,
+                              "Medium": 0.47315436241610737
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 13,
+                        "samples": 103,
+                        "impurity": 1.3757522511162477,
+                        "prediction": "Medium",
+                        "proportions": {
+                          "High": 0.39805825242718446,
+                          "Low": 0.10679611650485436,
+                          "Medium": 0.49514563106796117
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.793504953384399,
+                        "children": [
+                          {
+                            "id": 14,
+                            "samples": 88,
+                            "impurity": 1.2150555335295832,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.4318181818181818,
+                              "Low": 0.045454545454545456,
+                              "Medium": 0.5227272727272727
+                            }
+                          },
+                          {
+                            "id": 15,
+                            "samples": 15,
+                            "impurity": 1.5058231002082845,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.2,
+                              "Low": 0.4666666666666667,
+                              "Medium": 0.3333333333333333
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 16,
+                "samples": 1071,
+                "impurity": 1.4647187538192823,
+                "prediction": "High",
+                "proportions": {
+                  "High": 0.5191409897292251,
+                  "Low": 0.19047619047619047,
+                  "Medium": 0.2903828197945845
+                },
+                "feature": "temperature_f",
+                "threshold": 55.60416603088379,
+                "children": [
+                  {
+                    "id": 17,
+                    "samples": 502,
+                    "impurity": 1.5658308263357434,
+                    "prediction": "High",
+                    "proportions": {
+                      "High": 0.3884462151394422,
+                      "Low": 0.26095617529880477,
+                      "Medium": 0.350597609561753
+                    },
+                    "feature": "log10_home_value",
+                    "threshold": 5.371160268783569,
+                    "children": [
+                      {
+                        "id": 18,
+                        "samples": 170,
+                        "impurity": 1.4893305059886974,
+                        "prediction": "Low",
+                        "proportions": {
+                          "High": 0.18235294117647058,
+                          "Low": 0.47058823529411764,
+                          "Medium": 0.34705882352941175
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.350363731384277,
+                        "children": [
+                          {
+                            "id": 19,
+                            "samples": 43,
+                            "impurity": 1.5306401102506704,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.46511627906976744,
+                              "Low": 0.27906976744186046,
+                              "Medium": 0.2558139534883721
+                            }
+                          },
+                          {
+                            "id": 20,
+                            "samples": 127,
+                            "impurity": 1.3187679856331984,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.08661417322834646,
+                              "Low": 0.5354330708661418,
+                              "Medium": 0.3779527559055118
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 21,
+                        "samples": 332,
+                        "impurity": 1.4480367404156889,
+                        "prediction": "High",
+                        "proportions": {
+                          "High": 0.4939759036144578,
+                          "Low": 0.1536144578313253,
+                          "Medium": 0.35240963855421686
+                        },
+                        "feature": "precipitation_inches",
+                        "threshold": 28.925000190734863,
+                        "children": [
+                          {
+                            "id": 22,
+                            "samples": 157,
+                            "impurity": 1.1040562650390329,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.7006369426751592,
+                              "Low": 0.06369426751592357,
+                              "Medium": 0.2356687898089172
+                            }
+                          },
+                          {
+                            "id": 23,
+                            "samples": 175,
+                            "impurity": 1.5301950838485705,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.30857142857142855,
+                              "Low": 0.2342857142857143,
+                              "Medium": 0.45714285714285713
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 24,
+                    "samples": 569,
+                    "impurity": 1.2889615328050492,
+                    "prediction": "High",
+                    "proportions": {
+                      "High": 0.6344463971880492,
+                      "Low": 0.1282952548330404,
+                      "Medium": 0.23725834797891038
+                    },
+                    "feature": "homeownership_pct",
+                    "threshold": 54.32271766662598,
+                    "children": [
+                      {
+                        "id": 25,
+                        "samples": 49,
+                        "impurity": 0.2460225782203316,
+                        "prediction": "High",
+                        "proportions": {
+                          "High": 0.9591836734693877,
+                          "Low": 0.04081632653061224,
+                          "Medium": 0.0
+                        },
+                        "feature": "log1p_incidents",
+                        "threshold": 0.3465735912322998,
+                        "children": [
+                          {
+                            "id": 26,
+                            "samples": 39,
+                            "impurity": 0.0,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 1.0,
+                              "Low": 0.0,
+                              "Medium": 0.0
+                            }
+                          },
+                          {
+                            "id": 27,
+                            "samples": 10,
+                            "impurity": 0.7219280948873623,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.8,
+                              "Low": 0.2,
+                              "Medium": 0.0
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 28,
+                        "samples": 520,
+                        "impurity": 1.3367657625694824,
+                        "prediction": "High",
+                        "proportions": {
+                          "High": 0.6038461538461538,
+                          "Low": 0.13653846153846153,
+                          "Medium": 0.25961538461538464
+                        },
+                        "feature": "unemployment_pct",
+                        "threshold": 4.7285521030426025,
+                        "children": [
+                          {
+                            "id": 29,
+                            "samples": 271,
+                            "impurity": 1.071107641373139,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.7195571955719557,
+                              "Low": 0.06273062730627306,
+                              "Medium": 0.2177121771217712
+                            }
+                          },
+                          {
+                            "id": 30,
+                            "samples": 249,
+                            "impurity": 1.5098423739468558,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.4779116465863454,
+                              "Low": 0.21686746987951808,
+                              "Medium": 0.30522088353413657
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "depth": 6,
+          "params": {
+            "criterion": "entropy",
+            "max_depth": 6,
+            "min_samples_leaf": 10
+          },
+          "cv_macro_f1": 0.517194281221132,
+          "train_macro_f1": 0.608724177664518,
+          "node_count": 103,
+          "leaf_count": 52,
+          "root": {
+            "id": 0,
+            "samples": 2440,
+            "impurity": 1.5849622584311012,
+            "prediction": "Low",
+            "proportions": {
+              "High": 0.33319672131147543,
+              "Low": 0.3336065573770492,
+              "Medium": 0.33319672131147543
+            },
+            "feature": "log10_rent",
+            "threshold": 2.944729208946228,
+            "children": [
+              {
+                "id": 1,
+                "samples": 1369,
+                "impurity": 1.5034309920170188,
+                "prediction": "Low",
+                "proportions": {
+                  "High": 0.1877282688093499,
+                  "Low": 0.44558071585098613,
+                  "Medium": 0.366691015339664
+                },
+                "feature": "temperature_f",
+                "threshold": 59.19583320617676,
+                "children": [
+                  {
+                    "id": 2,
+                    "samples": 871,
+                    "impurity": 1.4191481314296515,
+                    "prediction": "Low",
+                    "proportions": {
+                      "High": 0.14695752009184845,
+                      "Low": 0.529276693455798,
+                      "Medium": 0.3237657864523536
+                    },
+                    "feature": "log10_home_value",
+                    "threshold": 5.261619567871094,
+                    "children": [
+                      {
+                        "id": 3,
+                        "samples": 658,
+                        "impurity": 1.3086540008729557,
+                        "prediction": "Low",
+                        "proportions": {
+                          "High": 0.10790273556231003,
+                          "Low": 0.5987841945288754,
+                          "Medium": 0.2933130699088146
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.767828702926636,
+                        "children": [
+                          {
+                            "id": 4,
+                            "samples": 606,
+                            "impurity": 1.3511673378340368,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.11716171617161716,
+                              "Low": 0.5676567656765676,
+                              "Medium": 0.31518151815181517
+                            },
+                            "feature": "log10_home_value",
+                            "threshold": 4.9642555713653564,
+                            "children": [
+                              {
+                                "id": 5,
+                                "samples": 47,
+                                "impurity": 0.6786440177697997,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.06382978723404255,
+                                  "Low": 0.8723404255319149,
+                                  "Medium": 0.06382978723404255
+                                },
+                                "feature": "unemployment_pct",
+                                "threshold": 3.037602663040161,
+                                "children": [
+                                  {
+                                    "id": 6,
+                                    "samples": 16,
+                                    "impurity": 1.1994602933016414,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.1875,
+                                      "Low": 0.6875,
+                                      "Medium": 0.125
+                                    }
+                                  },
+                                  {
+                                    "id": 7,
+                                    "samples": 31,
+                                    "impurity": 0.20559250818508304,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.0,
+                                      "Low": 0.967741935483871,
+                                      "Medium": 0.03225806451612903
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 8,
+                                "samples": 559,
+                                "impurity": 1.3773450912461902,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.12164579606440072,
+                                  "Low": 0.5420393559928444,
+                                  "Medium": 0.3363148479427549
+                                },
+                                "feature": "log10_population",
+                                "threshold": 4.427137136459351,
+                                "children": [
+                                  {
+                                    "id": 9,
+                                    "samples": 437,
+                                    "impurity": 1.4344654948841205,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.14645308924485126,
+                                      "Low": 0.5034324942791762,
+                                      "Medium": 0.3501144164759725
+                                    }
+                                  },
+                                  {
+                                    "id": 10,
+                                    "samples": 122,
+                                    "impurity": 1.0565309572770785,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.03278688524590164,
+                                      "Low": 0.680327868852459,
+                                      "Medium": 0.28688524590163933
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 11,
+                            "samples": 52,
+                            "impurity": 0.2351933818192415,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.0,
+                              "Low": 0.9615384615384616,
+                              "Medium": 0.038461538461538464
+                            },
+                            "feature": "median_age",
+                            "threshold": 40.64999961853027,
+                            "children": [
+                              {
+                                "id": 12,
+                                "samples": 10,
+                                "impurity": 0.7219280948873623,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.0,
+                                  "Low": 0.8,
+                                  "Medium": 0.2
+                                }
+                              },
+                              {
+                                "id": 13,
+                                "samples": 42,
+                                "impurity": 0.0,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.0,
+                                  "Low": 1.0,
+                                  "Medium": 0.0
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": 14,
+                        "samples": 213,
+                        "impurity": 1.5598599398311415,
+                        "prediction": "Medium",
+                        "proportions": {
+                          "High": 0.2676056338028169,
+                          "Low": 0.3145539906103286,
+                          "Medium": 0.41784037558685444
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.334100008010864,
+                        "children": [
+                          {
+                            "id": 15,
+                            "samples": 124,
+                            "impurity": 1.5831857463142125,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.3548387096774194,
+                              "Low": 0.33064516129032256,
+                              "Medium": 0.31451612903225806
+                            },
+                            "feature": "median_age",
+                            "threshold": 38.60000038146973,
+                            "children": [
+                              {
+                                "id": 16,
+                                "samples": 12,
+                                "impurity": 0.8112781244591328,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.75,
+                                  "Low": 0.0,
+                                  "Medium": 0.25
+                                }
+                              },
+                              {
+                                "id": 17,
+                                "samples": 112,
+                                "impurity": 1.5814456556795817,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.3125,
+                                  "Low": 0.36607142857142855,
+                                  "Medium": 0.32142857142857145
+                                },
+                                "feature": "unemployment_pct",
+                                "threshold": 1.7861425876617432,
+                                "children": [
+                                  {
+                                    "id": 18,
+                                    "samples": 17,
+                                    "impurity": 0.9975025463691153,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.0,
+                                      "Low": 0.5294117647058824,
+                                      "Medium": 0.47058823529411764
+                                    }
+                                  },
+                                  {
+                                    "id": 19,
+                                    "samples": 95,
+                                    "impurity": 1.579004625060561,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.3684210526315789,
+                                      "Low": 0.3368421052631579,
+                                      "Medium": 0.29473684210526313
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 20,
+                            "samples": 89,
+                            "impurity": 1.391351874828883,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.14606741573033707,
+                              "Low": 0.29213483146067415,
+                              "Medium": 0.5617977528089888
+                            },
+                            "feature": "median_age",
+                            "threshold": 41.0,
+                            "children": [
+                              {
+                                "id": 21,
+                                "samples": 41,
+                                "impurity": 1.5109278423831778,
+                                "prediction": "Medium",
+                                "proportions": {
+                                  "High": 0.2682926829268293,
+                                  "Low": 0.24390243902439024,
+                                  "Medium": 0.4878048780487805
+                                },
+                                "feature": "log10_population",
+                                "threshold": 4.5212321281433105,
+                                "children": [
+                                  {
+                                    "id": 22,
+                                    "samples": 15,
+                                    "impurity": 0.9967916319816366,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.4666666666666667,
+                                      "Low": 0.0,
+                                      "Medium": 0.5333333333333333
+                                    }
+                                  },
+                                  {
+                                    "id": 23,
+                                    "samples": 26,
+                                    "impurity": 1.4604846813131116,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.15384615384615385,
+                                      "Low": 0.38461538461538464,
+                                      "Medium": 0.46153846153846156
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 24,
+                                "samples": 48,
+                                "impurity": 1.1431558784658322,
+                                "prediction": "Medium",
+                                "proportions": {
+                                  "High": 0.041666666666666664,
+                                  "Low": 0.3333333333333333,
+                                  "Medium": 0.625
+                                },
+                                "feature": "unemployment_pct",
+                                "threshold": 4.58479642868042,
+                                "children": [
+                                  {
+                                    "id": 25,
+                                    "samples": 31,
+                                    "impurity": 0.7706290693639405,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.0,
+                                      "Low": 0.22580645161290322,
+                                      "Medium": 0.7741935483870968
+                                    }
+                                  },
+                                  {
+                                    "id": 26,
+                                    "samples": 17,
+                                    "impurity": 1.3792804872910602,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.11764705882352941,
+                                      "Low": 0.5294117647058824,
+                                      "Medium": 0.35294117647058826
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 27,
+                    "samples": 498,
+                    "impurity": 1.5463401600321633,
+                    "prediction": "Medium",
+                    "proportions": {
+                      "High": 0.25903614457831325,
+                      "Low": 0.2991967871485944,
+                      "Medium": 0.44176706827309237
+                    },
+                    "feature": "log10_home_value",
+                    "threshold": 5.199480772018433,
+                    "children": [
+                      {
+                        "id": 28,
+                        "samples": 395,
+                        "impurity": 1.5367088881096331,
+                        "prediction": "Medium",
+                        "proportions": {
+                          "High": 0.22278481012658227,
+                          "Low": 0.3493670886075949,
+                          "Medium": 0.4278481012658228
+                        },
+                        "feature": "precipitation_inches",
+                        "threshold": 41.47500038146973,
+                        "children": [
+                          {
+                            "id": 29,
+                            "samples": 97,
+                            "impurity": 1.578216141020135,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.3608247422680413,
+                              "Low": 0.3505154639175258,
+                              "Medium": 0.288659793814433
+                            },
+                            "feature": "log10_rent",
+                            "threshold": 2.861832857131958,
+                            "children": [
+                              {
+                                "id": 30,
+                                "samples": 42,
+                                "impurity": 1.4449238287033856,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.21428571428571427,
+                                  "Low": 0.5476190476190477,
+                                  "Medium": 0.23809523809523808
+                                },
+                                "feature": "log10_population",
+                                "threshold": 3.733308792114258,
+                                "children": [
+                                  {
+                                    "id": 31,
+                                    "samples": 23,
+                                    "impurity": 1.491013870758994,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.391304347826087,
+                                      "Low": 0.43478260869565216,
+                                      "Medium": 0.17391304347826086
+                                    }
+                                  },
+                                  {
+                                    "id": 32,
+                                    "samples": 19,
+                                    "impurity": 0.8997437586982626,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.0,
+                                      "Low": 0.6842105263157895,
+                                      "Medium": 0.3157894736842105
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 33,
+                                "samples": 55,
+                                "impurity": 1.5027446134766544,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.4727272727272727,
+                                  "Low": 0.2,
+                                  "Medium": 0.32727272727272727
+                                },
+                                "feature": "median_age",
+                                "threshold": 41.05000114440918,
+                                "children": [
+                                  {
+                                    "id": 34,
+                                    "samples": 32,
+                                    "impurity": 1.5794340029249652,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.3125,
+                                      "Low": 0.3125,
+                                      "Medium": 0.375
+                                    }
+                                  },
+                                  {
+                                    "id": 35,
+                                    "samples": 23,
+                                    "impurity": 1.0666152167384504,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.6956521739130435,
+                                      "Low": 0.043478260869565216,
+                                      "Medium": 0.2608695652173913
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 36,
+                            "samples": 298,
+                            "impurity": 1.4839260524529232,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.17785234899328858,
+                              "Low": 0.348993288590604,
+                              "Medium": 0.47315436241610737
+                            },
+                            "feature": "log10_population",
+                            "threshold": 4.39078426361084,
+                            "children": [
+                              {
+                                "id": 37,
+                                "samples": 210,
+                                "impurity": 1.5088557799658915,
+                                "prediction": "Medium",
+                                "proportions": {
+                                  "High": 0.21904761904761905,
+                                  "Low": 0.3,
+                                  "Medium": 0.48095238095238096
+                                },
+                                "feature": "vacancy_pct",
+                                "threshold": 15.82210922241211,
+                                "children": [
+                                  {
+                                    "id": 38,
+                                    "samples": 38,
+                                    "impurity": 1.3712437847710617,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.39473684210526316,
+                                      "Low": 0.10526315789473684,
+                                      "Medium": 0.5
+                                    }
+                                  },
+                                  {
+                                    "id": 39,
+                                    "samples": 172,
+                                    "impurity": 1.4845479528821874,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.18023255813953487,
+                                      "Low": 0.3430232558139535,
+                                      "Medium": 0.47674418604651164
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 40,
+                                "samples": 88,
+                                "impurity": 1.320928886373216,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.07954545454545454,
+                                  "Low": 0.4659090909090909,
+                                  "Medium": 0.45454545454545453
+                                },
+                                "feature": "log10_rent",
+                                "threshold": 2.9066022634506226,
+                                "children": [
+                                  {
+                                    "id": 41,
+                                    "samples": 60,
+                                    "impurity": 1.0,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.0,
+                                      "Low": 0.5,
+                                      "Medium": 0.5
+                                    }
+                                  },
+                                  {
+                                    "id": 42,
+                                    "samples": 28,
+                                    "impurity": 1.5600508789044925,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.25,
+                                      "Low": 0.39285714285714285,
+                                      "Medium": 0.35714285714285715
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": 43,
+                        "samples": 103,
+                        "impurity": 1.3757522511162477,
+                        "prediction": "Medium",
+                        "proportions": {
+                          "High": 0.39805825242718446,
+                          "Low": 0.10679611650485436,
+                          "Medium": 0.49514563106796117
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.793504953384399,
+                        "children": [
+                          {
+                            "id": 44,
+                            "samples": 88,
+                            "impurity": 1.2150555335295832,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.4318181818181818,
+                              "Low": 0.045454545454545456,
+                              "Medium": 0.5227272727272727
+                            },
+                            "feature": "log10_population",
+                            "threshold": 4.1669323444366455,
+                            "children": [
+                              {
+                                "id": 45,
+                                "samples": 24,
+                                "impurity": 0.9737837298712213,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.75,
+                                  "Low": 0.041666666666666664,
+                                  "Medium": 0.20833333333333334
+                                },
+                                "feature": "temperature_f",
+                                "threshold": 66.80833053588867,
+                                "children": [
+                                  {
+                                    "id": 46,
+                                    "samples": 14,
+                                    "impurity": 0.9402859586706309,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.6428571428571429,
+                                      "Low": 0.0,
+                                      "Medium": 0.35714285714285715
+                                    }
+                                  },
+                                  {
+                                    "id": 47,
+                                    "samples": 10,
+                                    "impurity": 0.4689955935892812,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.9,
+                                      "Low": 0.1,
+                                      "Medium": 0.0
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 48,
+                                "samples": 64,
+                                "impurity": 1.1429206001679353,
+                                "prediction": "Medium",
+                                "proportions": {
+                                  "High": 0.3125,
+                                  "Low": 0.046875,
+                                  "Medium": 0.640625
+                                },
+                                "feature": "unemployment_pct",
+                                "threshold": 3.9373488426208496,
+                                "children": [
+                                  {
+                                    "id": 49,
+                                    "samples": 24,
+                                    "impurity": 0.5435644431995964,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.125,
+                                      "Low": 0.0,
+                                      "Medium": 0.875
+                                    }
+                                  },
+                                  {
+                                    "id": 50,
+                                    "samples": 40,
+                                    "impurity": 1.3049201523582001,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.425,
+                                      "Low": 0.075,
+                                      "Medium": 0.5
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 51,
+                            "samples": 15,
+                            "impurity": 1.5058231002082845,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.2,
+                              "Low": 0.4666666666666667,
+                              "Medium": 0.3333333333333333
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 52,
+                "samples": 1071,
+                "impurity": 1.4647187538192823,
+                "prediction": "High",
+                "proportions": {
+                  "High": 0.5191409897292251,
+                  "Low": 0.19047619047619047,
+                  "Medium": 0.2903828197945845
+                },
+                "feature": "temperature_f",
+                "threshold": 55.60416603088379,
+                "children": [
+                  {
+                    "id": 53,
+                    "samples": 502,
+                    "impurity": 1.5658308263357434,
+                    "prediction": "High",
+                    "proportions": {
+                      "High": 0.3884462151394422,
+                      "Low": 0.26095617529880477,
+                      "Medium": 0.350597609561753
+                    },
+                    "feature": "log10_home_value",
+                    "threshold": 5.371160268783569,
+                    "children": [
+                      {
+                        "id": 54,
+                        "samples": 170,
+                        "impurity": 1.4893305059886974,
+                        "prediction": "Low",
+                        "proportions": {
+                          "High": 0.18235294117647058,
+                          "Low": 0.47058823529411764,
+                          "Medium": 0.34705882352941175
+                        },
+                        "feature": "log10_population",
+                        "threshold": 4.350363731384277,
+                        "children": [
+                          {
+                            "id": 55,
+                            "samples": 43,
+                            "impurity": 1.5306401102506704,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.46511627906976744,
+                              "Low": 0.27906976744186046,
+                              "Medium": 0.2558139534883721
+                            },
+                            "feature": "log10_population",
+                            "threshold": 3.9936026334762573,
+                            "children": [
+                              {
+                                "id": 56,
+                                "samples": 22,
+                                "impurity": 1.5285040787412218,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.22727272727272727,
+                                  "Low": 0.45454545454545453,
+                                  "Medium": 0.3181818181818182
+                                },
+                                "feature": "precipitation_inches",
+                                "threshold": 19.380000114440918,
+                                "children": [
+                                  {
+                                    "id": 57,
+                                    "samples": 10,
+                                    "impurity": 1.3609640474436813,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.4,
+                                      "Low": 0.5,
+                                      "Medium": 0.1
+                                    }
+                                  },
+                                  {
+                                    "id": 58,
+                                    "samples": 12,
+                                    "impurity": 1.3250112108241772,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.08333333333333333,
+                                      "Low": 0.4166666666666667,
+                                      "Medium": 0.5
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 59,
+                                "samples": 21,
+                                "impurity": 1.1254908068679137,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.7142857142857143,
+                                  "Low": 0.09523809523809523,
+                                  "Medium": 0.19047619047619047
+                                },
+                                "feature": "unemployment_pct",
+                                "threshold": 3.6804944276809692,
+                                "children": [
+                                  {
+                                    "id": 60,
+                                    "samples": 11,
+                                    "impurity": 1.3221793455166668,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.5454545454545454,
+                                      "Low": 0.09090909090909091,
+                                      "Medium": 0.36363636363636365
+                                    }
+                                  },
+                                  {
+                                    "id": 61,
+                                    "samples": 10,
+                                    "impurity": 0.4689955935892812,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.9,
+                                      "Low": 0.1,
+                                      "Medium": 0.0
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 62,
+                            "samples": 127,
+                            "impurity": 1.3187679856331984,
+                            "prediction": "Low",
+                            "proportions": {
+                              "High": 0.08661417322834646,
+                              "Low": 0.5354330708661418,
+                              "Medium": 0.3779527559055118
+                            },
+                            "feature": "bachelors_plus_pct",
+                            "threshold": 20.72023868560791,
+                            "children": [
+                              {
+                                "id": 63,
+                                "samples": 28,
+                                "impurity": 1.1358159979737639,
+                                "prediction": "Medium",
+                                "proportions": {
+                                  "High": 0.10714285714285714,
+                                  "Low": 0.17857142857142858,
+                                  "Medium": 0.7142857142857143
+                                },
+                                "feature": "log10_population",
+                                "threshold": 4.8363683223724365,
+                                "children": [
+                                  {
+                                    "id": 64,
+                                    "samples": 18,
+                                    "impurity": 0.5032583347756457,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.1111111111111111,
+                                      "Low": 0.0,
+                                      "Medium": 0.8888888888888888
+                                    }
+                                  },
+                                  {
+                                    "id": 65,
+                                    "samples": 10,
+                                    "impurity": 1.360964047443681,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.1,
+                                      "Low": 0.5,
+                                      "Medium": 0.4
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 66,
+                                "samples": 99,
+                                "impurity": 1.2235528524219568,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.08080808080808081,
+                                  "Low": 0.6363636363636364,
+                                  "Medium": 0.2828282828282828
+                                },
+                                "feature": "homeownership_pct",
+                                "threshold": 65.22803115844727,
+                                "children": [
+                                  {
+                                    "id": 67,
+                                    "samples": 17,
+                                    "impurity": 1.5798634010685344,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.35294117647058826,
+                                      "Low": 0.29411764705882354,
+                                      "Medium": 0.35294117647058826
+                                    }
+                                  },
+                                  {
+                                    "id": 68,
+                                    "samples": 82,
+                                    "impurity": 0.9932789152593067,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.024390243902439025,
+                                      "Low": 0.7073170731707317,
+                                      "Medium": 0.2682926829268293
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": 69,
+                        "samples": 332,
+                        "impurity": 1.4480367404156889,
+                        "prediction": "High",
+                        "proportions": {
+                          "High": 0.4939759036144578,
+                          "Low": 0.1536144578313253,
+                          "Medium": 0.35240963855421686
+                        },
+                        "feature": "precipitation_inches",
+                        "threshold": 28.925000190734863,
+                        "children": [
+                          {
+                            "id": 70,
+                            "samples": 157,
+                            "impurity": 1.1040562650390329,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.7006369426751592,
+                              "Low": 0.06369426751592357,
+                              "Medium": 0.2356687898089172
+                            },
+                            "feature": "log10_income",
+                            "threshold": 4.874301195144653,
+                            "children": [
+                              {
+                                "id": 71,
+                                "samples": 73,
+                                "impurity": 1.3849421439077347,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.5342465753424658,
+                                  "Low": 0.1232876712328767,
+                                  "Medium": 0.3424657534246575
+                                },
+                                "feature": "log10_population",
+                                "threshold": 5.119085073471069,
+                                "children": [
+                                  {
+                                    "id": 72,
+                                    "samples": 63,
+                                    "impurity": 1.2009102795095283,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.5714285714285714,
+                                      "Low": 0.047619047619047616,
+                                      "Medium": 0.38095238095238093
+                                    }
+                                  },
+                                  {
+                                    "id": 73,
+                                    "samples": 10,
+                                    "impurity": 1.295461844238322,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.30000000000000004,
+                                      "Low": 0.6000000000000001,
+                                      "Medium": 0.10000000000000002
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 74,
+                                "samples": 84,
+                                "impurity": 0.6821793811896377,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.8452380952380952,
+                                  "Low": 0.011904761904761904,
+                                  "Medium": 0.14285714285714285
+                                },
+                                "feature": "log10_rent",
+                                "threshold": 3.1746407747268677,
+                                "children": [
+                                  {
+                                    "id": 75,
+                                    "samples": 65,
+                                    "impurity": 0.6900703653284017,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.8153846153846154,
+                                      "Low": 0.0,
+                                      "Medium": 0.18461538461538463
+                                    }
+                                  },
+                                  {
+                                    "id": 76,
+                                    "samples": 19,
+                                    "impurity": 0.2974722489192897,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.9473684210526315,
+                                      "Low": 0.05263157894736842,
+                                      "Medium": 0.0
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 77,
+                            "samples": 175,
+                            "impurity": 1.5301950838485705,
+                            "prediction": "Medium",
+                            "proportions": {
+                              "High": 0.30857142857142855,
+                              "Low": 0.2342857142857143,
+                              "Medium": 0.45714285714285713
+                            },
+                            "feature": "log10_income",
+                            "threshold": 4.862351894378662,
+                            "children": [
+                              {
+                                "id": 78,
+                                "samples": 38,
+                                "impurity": 1.5205137543921987,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.23684210526315788,
+                                  "Low": 0.47368421052631576,
+                                  "Medium": 0.2894736842105263
+                                },
+                                "feature": "homeownership_pct",
+                                "threshold": 74.93211364746094,
+                                "children": [
+                                  {
+                                    "id": 79,
+                                    "samples": 26,
+                                    "impurity": 1.3405071628991212,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.3076923076923077,
+                                      "Low": 0.5769230769230769,
+                                      "Medium": 0.11538461538461539
+                                    }
+                                  },
+                                  {
+                                    "id": 80,
+                                    "samples": 12,
+                                    "impurity": 1.188721875540867,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.08333333333333333,
+                                      "Low": 0.25,
+                                      "Medium": 0.6666666666666666
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 81,
+                                "samples": 137,
+                                "impurity": 1.4581525074726411,
+                                "prediction": "Medium",
+                                "proportions": {
+                                  "High": 0.3284671532846715,
+                                  "Low": 0.1678832116788321,
+                                  "Medium": 0.5036496350364964
+                                },
+                                "feature": "log10_population",
+                                "threshold": 5.017136096954346,
+                                "children": [
+                                  {
+                                    "id": 82,
+                                    "samples": 51,
+                                    "impurity": 1.3033954506742234,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.5294117647058824,
+                                      "Low": 0.0784313725490196,
+                                      "Medium": 0.39215686274509803
+                                    }
+                                  },
+                                  {
+                                    "id": 83,
+                                    "samples": 86,
+                                    "impurity": 1.415915276294715,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.20930232558139536,
+                                      "Low": 0.22093023255813954,
+                                      "Medium": 0.5697674418604651
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 84,
+                    "samples": 569,
+                    "impurity": 1.2889615328050492,
+                    "prediction": "High",
+                    "proportions": {
+                      "High": 0.6344463971880492,
+                      "Low": 0.1282952548330404,
+                      "Medium": 0.23725834797891038
+                    },
+                    "feature": "homeownership_pct",
+                    "threshold": 54.32271766662598,
+                    "children": [
+                      {
+                        "id": 85,
+                        "samples": 49,
+                        "impurity": 0.2460225782203316,
+                        "prediction": "High",
+                        "proportions": {
+                          "High": 0.9591836734693877,
+                          "Low": 0.04081632653061224,
+                          "Medium": 0.0
+                        },
+                        "feature": "vacancy_pct",
+                        "threshold": 6.895795583724976,
+                        "children": [
+                          {
+                            "id": 86,
+                            "samples": 10,
+                            "impurity": 0.7219280948873623,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.8,
+                              "Low": 0.2,
+                              "Medium": 0.0
+                            }
+                          },
+                          {
+                            "id": 87,
+                            "samples": 39,
+                            "impurity": 0.0,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 1.0,
+                              "Low": 0.0,
+                              "Medium": 0.0
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 88,
+                        "samples": 520,
+                        "impurity": 1.3367657625694824,
+                        "prediction": "High",
+                        "proportions": {
+                          "High": 0.6038461538461538,
+                          "Low": 0.13653846153846153,
+                          "Medium": 0.25961538461538464
+                        },
+                        "feature": "unemployment_pct",
+                        "threshold": 4.7285521030426025,
+                        "children": [
+                          {
+                            "id": 89,
+                            "samples": 271,
+                            "impurity": 1.071107641373139,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.7195571955719557,
+                              "Low": 0.06273062730627306,
+                              "Medium": 0.2177121771217712
+                            },
+                            "feature": "log10_home_value",
+                            "threshold": 5.354390859603882,
+                            "children": [
+                              {
+                                "id": 90,
+                                "samples": 102,
+                                "impurity": 1.3998488666812308,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.5196078431372549,
+                                  "Low": 0.12745098039215685,
+                                  "Medium": 0.35294117647058826
+                                },
+                                "feature": "log10_population",
+                                "threshold": 3.948010563850403,
+                                "children": [
+                                  {
+                                    "id": 91,
+                                    "samples": 21,
+                                    "impurity": 1.0488412604661608,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.7142857142857143,
+                                      "Low": 0.23809523809523808,
+                                      "Medium": 0.047619047619047616
+                                    }
+                                  },
+                                  {
+                                    "id": 92,
+                                    "samples": 81,
+                                    "impurity": 1.3652061620953648,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.4691358024691358,
+                                      "Low": 0.09876543209876543,
+                                      "Medium": 0.43209876543209874
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 93,
+                                "samples": 169,
+                                "impurity": 0.7304296377083611,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.8402366863905325,
+                                  "Low": 0.023668639053254437,
+                                  "Medium": 0.13609467455621302
+                                },
+                                "feature": "poverty_pct",
+                                "threshold": 5.0784454345703125,
+                                "children": [
+                                  {
+                                    "id": 94,
+                                    "samples": 10,
+                                    "impurity": 0.8812908992306927,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.7,
+                                      "Low": 0.3,
+                                      "Medium": 0.0
+                                    }
+                                  },
+                                  {
+                                    "id": 95,
+                                    "samples": 159,
+                                    "impurity": 0.6499142094279184,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.8490566037735849,
+                                      "Low": 0.006289308176100629,
+                                      "Medium": 0.14465408805031446
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 96,
+                            "samples": 249,
+                            "impurity": 1.5098423739468558,
+                            "prediction": "High",
+                            "proportions": {
+                              "High": 0.4779116465863454,
+                              "Low": 0.21686746987951808,
+                              "Medium": 0.30522088353413657
+                            },
+                            "feature": "log10_population",
+                            "threshold": 5.676522731781006,
+                            "children": [
+                              {
+                                "id": 97,
+                                "samples": 212,
+                                "impurity": 1.4359262944488824,
+                                "prediction": "High",
+                                "proportions": {
+                                  "High": 0.5188679245283019,
+                                  "Low": 0.15566037735849056,
+                                  "Medium": 0.32547169811320753
+                                },
+                                "feature": "log10_income",
+                                "threshold": 4.746968507766724,
+                                "children": [
+                                  {
+                                    "id": 98,
+                                    "samples": 34,
+                                    "impurity": 1.327218536756493,
+                                    "prediction": "Medium",
+                                    "proportions": {
+                                      "High": 0.23529411764705882,
+                                      "Low": 0.14705882352941177,
+                                      "Medium": 0.6176470588235294
+                                    }
+                                  },
+                                  {
+                                    "id": 99,
+                                    "samples": 178,
+                                    "impurity": 1.3899383594308867,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.5730337078651685,
+                                      "Low": 0.15730337078651685,
+                                      "Medium": 0.2696629213483146
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 100,
+                                "samples": 37,
+                                "impurity": 1.4143324103387336,
+                                "prediction": "Low",
+                                "proportions": {
+                                  "High": 0.24324324324324326,
+                                  "Low": 0.5675675675675675,
+                                  "Medium": 0.1891891891891892
+                                },
+                                "feature": "precipitation_inches",
+                                "threshold": 22.910000801086426,
+                                "children": [
+                                  {
+                                    "id": 101,
+                                    "samples": 12,
+                                    "impurity": 0.0,
+                                    "prediction": "Low",
+                                    "proportions": {
+                                      "High": 0.0,
+                                      "Low": 1.0,
+                                      "Medium": 0.0
+                                    }
+                                  },
+                                  {
+                                    "id": 102,
+                                    "samples": 25,
+                                    "impurity": 1.5754508105601306,
+                                    "prediction": "High",
+                                    "proportions": {
+                                      "High": 0.36,
+                                      "Low": 0.36,
+                                      "Medium": 0.28
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "samples": [
+        {
+          "name": "outflow-labeled-source",
+          "columns": [
+            "county_fips",
+            "county_name",
+            "outflow_individuals_per_1000",
+            "outflow_class",
+            "classification_split"
+          ],
+          "images": [
+            "outflow-labeled-source-1.png"
+          ]
+        },
+        {
+          "name": "outflow-characteristics-train",
+          "columns": [
+            "log10_population",
+            "median_age",
+            "log10_income",
+            "log10_home_value",
+            "log10_rent",
+            "poverty_pct",
+            "unemployment_pct",
+            "vacancy_pct",
+            "homeownership_pct",
+            "bachelors_plus_pct",
+            "log1p_incidents",
+            "precipitation_inches",
+            "temperature_f",
+            "target"
+          ],
+          "images": [
+            "nb-characteristics-train-1.png",
+            "nb-characteristics-train-2.png",
+            "outflow-characteristics-train-3.png"
+          ]
+        },
+        {
+          "name": "outflow-characteristics-test",
+          "columns": [
+            "log10_population",
+            "median_age",
+            "log10_income",
+            "log10_home_value",
+            "log10_rent",
+            "poverty_pct",
+            "unemployment_pct",
+            "vacancy_pct",
+            "homeownership_pct",
+            "bachelors_plus_pct",
+            "log1p_incidents",
+            "precipitation_inches",
+            "temperature_f",
+            "target"
+          ],
+          "images": [
+            "nb-characteristics-test-1.png",
+            "nb-characteristics-test-2.png",
+            "outflow-characteristics-test-3.png"
+          ]
+        }
+      ],
+      "selected_cv_macro_f1": 0.517194281221132,
+      "selected_train_macro_f1": 0.608724177664518,
+      "model": {
+        "accuracy": 0.5409836065573771,
+        "balanced_accuracy": 0.5367368061785918,
+        "macro_f1": 0.5247148424635402,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            139,
+            27,
+            45
+          ],
+          [
+            73,
+            60,
+            63
+          ],
+          [
+            40,
+            32,
+            131
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.6587677725118484,
+            0.12796208530805686,
+            0.2132701421800948
+          ],
+          [
+            0.37244897959183676,
+            0.30612244897959184,
+            0.32142857142857145
+          ],
+          [
+            0.19704433497536947,
+            0.15763546798029557,
+            0.645320197044335
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.5515873015873016,
+            "recall": 0.6587677725118484,
+            "f1-score": 0.6004319654427646,
+            "support": 211.0
+          },
+          "Medium": {
+            "precision": 0.5042016806722689,
+            "recall": 0.30612244897959184,
+            "f1-score": 0.38095238095238093,
+            "support": 196.0
+          },
+          "High": {
+            "precision": 0.5481171548117155,
+            "recall": 0.645320197044335,
+            "f1-score": 0.5927601809954751,
+            "support": 203.0
+          },
+          "accuracy": 0.5409836065573771,
+          "macro avg": {
+            "precision": 0.534635379023762,
+            "recall": 0.5367368061785918,
+            "f1-score": 0.5247148424635402,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.5352069384810879,
+            "recall": 0.5409836065573771,
+            "f1-score": 0.5273575870773302,
+            "support": 610.0
+          }
+        }
+      },
+      "baseline": {
+        "accuracy": 0.34590163934426227,
+        "balanced_accuracy": 0.3333333333333333,
+        "macro_f1": 0.17133576938692652,
+        "classes": [
+          "Low",
+          "Medium",
+          "High"
+        ],
+        "confusion": [
+          [
+            211,
+            0,
+            0
+          ],
+          [
+            196,
+            0,
+            0
+          ],
+          [
+            203,
+            0,
+            0
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "classification_report": {
+          "Low": {
+            "precision": 0.34590163934426227,
+            "recall": 1.0,
+            "f1-score": 0.5140073081607796,
+            "support": 211.0
+          },
+          "Medium": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 196.0
+          },
+          "High": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 203.0
+          },
+          "accuracy": 0.34590163934426227,
+          "macro avg": {
+            "precision": 0.11530054644808742,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.17133576938692652,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.1196479441010481,
+            "recall": 0.34590163934426227,
+            "f1-score": 0.17779597052774507,
+            "support": 610.0
+          }
+        }
+      },
+      "example_path": {
+        "county": "Autauga County, Alabama",
+        "county_fips": "01001",
+        "actual": "High",
+        "predicted": "High",
+        "steps": [
+          "log10_rent: 3.079 > 2.945",
+          "temperature_f: 66.292 > 55.604",
+          "homeownership_pct: 74.910 > 54.323",
+          "unemployment_pct: 2.542 <= 4.729",
+          "log10_home_value: 5.296 <= 5.354",
+          "log10_population: 4.773 > 3.948"
+        ]
+      },
+      "conclusions": [
+        "For outflow, the selected depth-6 tree classifies 54.1% of 610 held-out counties correctly, compared with 34.6% for the majority baseline.",
+        "Macro-F1 is 0.525 versus baseline 0.171, with balanced accuracy 53.7%. The lowest-recall class is medium (30.6%).",
+        "Mean training-fold macro-F1 is 0.609, compared with validation 0.517. The selected model balances fit against validation performance under the fixed candidate grid."
+      ]
+    },
+    "net": {
+      "outcome": "net",
+      "selected": {
+        "criterion": "entropy",
+        "max_depth": 4,
+        "min_samples_leaf": 50
+      },
+      "train_count": 2432,
+      "test_count": 610,
+      "tuning": [
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 50,
+          "criterion": "entropy",
+          "mean_train_score": 0.691129329552182,
+          "mean_test_score": 0.67240530417105,
+          "std_test_score": 0.013165838512754
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 25,
+          "criterion": "entropy",
+          "mean_train_score": 0.73635647529028,
+          "mean_test_score": 0.67151369784879,
+          "std_test_score": 0.022229269770797
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 10,
+          "criterion": "gini",
+          "mean_train_score": 0.756785553968787,
+          "mean_test_score": 0.671393443321466,
+          "std_test_score": 0.018449298972724
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 50,
+          "criterion": "entropy",
+          "mean_train_score": 0.719550010203764,
+          "mean_test_score": 0.67138132376065,
+          "std_test_score": 0.016093066171662
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 50,
+          "criterion": "gini",
+          "mean_train_score": 0.719446584641249,
+          "mean_test_score": 0.67118903348939,
+          "std_test_score": 0.017219260935762
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 10,
+          "criterion": "entropy",
+          "mean_train_score": 0.744267756425923,
+          "mean_test_score": 0.670775106222936,
+          "std_test_score": 0.01546503721004
+        },
+        {
+          "max_depth": 6,
+          "min_samples_leaf": 25,
+          "criterion": "gini",
+          "mean_train_score": 0.740392915645637,
+          "mean_test_score": 0.667237763071535,
+          "std_test_score": 0.015763229481639
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 50,
+          "criterion": "gini",
+          "mean_train_score": 0.695727738648482,
+          "mean_test_score": 0.666012550690121,
+          "std_test_score": 0.01449563599249
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 10,
+          "criterion": "gini",
+          "mean_train_score": 0.698851759598101,
+          "mean_test_score": 0.66565780151431,
+          "std_test_score": 0.020442300171474
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 25,
+          "criterion": "entropy",
+          "mean_train_score": 0.689826389155051,
+          "mean_test_score": 0.665526571913406,
+          "std_test_score": 0.010938674638349
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 25,
+          "criterion": "gini",
+          "mean_train_score": 0.699546787897903,
+          "mean_test_score": 0.665124525836241,
+          "std_test_score": 0.022204215944223
+        },
+        {
+          "max_depth": 4,
+          "min_samples_leaf": 10,
+          "criterion": "entropy",
+          "mean_train_score": 0.689829084913351,
+          "mean_test_score": 0.664187930239234,
+          "std_test_score": 0.012157092623335
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 50,
+          "criterion": "gini",
+          "mean_train_score": 0.665936615067028,
+          "mean_test_score": 0.655727371673009,
+          "std_test_score": 0.019238828795064
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 25,
+          "criterion": "gini",
+          "mean_train_score": 0.665936615067028,
+          "mean_test_score": 0.655727371673009,
+          "std_test_score": 0.019238828795064
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 10,
+          "criterion": "gini",
+          "mean_train_score": 0.665936615067028,
+          "mean_test_score": 0.655727371673009,
+          "std_test_score": 0.019238828795064
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 50,
+          "criterion": "entropy",
+          "mean_train_score": 0.636430809562447,
+          "mean_test_score": 0.614956545002159,
+          "std_test_score": 0.027837213944463
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 25,
+          "criterion": "entropy",
+          "mean_train_score": 0.636430809562447,
+          "mean_test_score": 0.614956545002159,
+          "std_test_score": 0.027837213944463
+        },
+        {
+          "max_depth": 2,
+          "min_samples_leaf": 10,
+          "criterion": "entropy",
+          "mean_train_score": 0.636430809562447,
+          "mean_test_score": 0.614956545002159,
+          "std_test_score": 0.027837213944463
+        }
+      ],
+      "trees": [
+        {
+          "depth": 2,
+          "params": {
+            "criterion": "gini",
+            "max_depth": 2,
+            "min_samples_leaf": 50
+          },
+          "cv_macro_f1": 0.6557273716730092,
+          "train_macro_f1": 0.6659366150670283,
+          "node_count": 7,
+          "leaf_count": 4,
+          "root": {
+            "id": 0,
+            "samples": 2432,
+            "impurity": 0.47886594312673125,
+            "prediction": "Net inflow",
+            "proportions": {
+              "Net inflow": 0.602796052631579,
+              "Net outflow": 0.3972039473684211
+            },
+            "feature": "homeownership_pct",
+            "threshold": 63.691328048706055,
+            "children": [
+              {
+                "id": 1,
+                "samples": 296,
+                "impurity": 0.3849296932067202,
+                "prediction": "Net outflow",
+                "proportions": {
+                  "Net inflow": 0.26013513513513514,
+                  "Net outflow": 0.7398648648648649
+                },
+                "feature": "homeownership_pct",
+                "threshold": 55.0657844543457,
+                "children": [
+                  {
+                    "id": 2,
+                    "samples": 86,
+                    "impurity": 0.1873985938345052,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.10465116279069768,
+                      "Net outflow": 0.8953488372093024
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "samples": 210,
+                    "impurity": 0.4379138321995465,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.3238095238095238,
+                      "Net outflow": 0.6761904761904762
+                    }
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "samples": 2136,
+                "impurity": 0.45483130286579976,
+                "prediction": "Net inflow",
+                "proportions": {
+                  "Net inflow": 0.6502808988764045,
+                  "Net outflow": 0.3497191011235955
+                },
+                "feature": "log10_home_value",
+                "threshold": 5.079000234603882,
+                "children": [
+                  {
+                    "id": 5,
+                    "samples": 429,
+                    "impurity": 0.48552224776000996,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.4149184149184149,
+                      "Net outflow": 0.585081585081585
+                    }
+                  },
+                  {
+                    "id": 6,
+                    "samples": 1707,
+                    "impurity": 0.41227668283428553,
+                    "prediction": "Net inflow",
+                    "proportions": {
+                      "Net inflow": 0.7094317516110135,
+                      "Net outflow": 0.29056824838898654
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "depth": 4,
+          "params": {
+            "criterion": "entropy",
+            "max_depth": 4,
+            "min_samples_leaf": 50
+          },
+          "cv_macro_f1": 0.6724053041710504,
+          "train_macro_f1": 0.6911293295521825,
+          "node_count": 23,
+          "leaf_count": 12,
+          "root": {
+            "id": 0,
+            "samples": 2432,
+            "impurity": 0.9692914924898335,
+            "prediction": "Net inflow",
+            "proportions": {
+              "Net inflow": 0.602796052631579,
+              "Net outflow": 0.3972039473684211
+            },
+            "feature": "homeownership_pct",
+            "threshold": 63.691328048706055,
+            "children": [
+              {
+                "id": 1,
+                "samples": 296,
+                "impurity": 0.8269502247973133,
+                "prediction": "Net outflow",
+                "proportions": {
+                  "Net inflow": 0.26013513513513514,
+                  "Net outflow": 0.7398648648648649
+                },
+                "feature": "homeownership_pct",
+                "threshold": 55.0657844543457,
+                "children": [
+                  {
+                    "id": 2,
+                    "samples": 86,
+                    "impurity": 0.4835683750917698,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.10465116279069768,
+                      "Net outflow": 0.8953488372093024
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "samples": 210,
+                    "impurity": 0.908476164453323,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.3238095238095238,
+                      "Net outflow": 0.6761904761904762
+                    },
+                    "feature": "log10_home_value",
+                    "threshold": 5.199617862701416,
+                    "children": [
+                      {
+                        "id": 4,
+                        "samples": 73,
+                        "impurity": 0.5762914612174369,
+                        "prediction": "Net outflow",
+                        "proportions": {
+                          "Net inflow": 0.136986301369863,
+                          "Net outflow": 0.863013698630137
+                        }
+                      },
+                      {
+                        "id": 5,
+                        "samples": 137,
+                        "impurity": 0.9829840769503784,
+                        "prediction": "Net outflow",
+                        "proportions": {
+                          "Net inflow": 0.4233576642335766,
+                          "Net outflow": 0.5766423357664233
+                        },
+                        "feature": "vacancy_pct",
+                        "threshold": 8.010190963745117,
+                        "children": [
+                          {
+                            "id": 6,
+                            "samples": 54,
+                            "impurity": 0.7962699368824384,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.24074074074074073,
+                              "Net outflow": 0.7592592592592593
+                            }
+                          },
+                          {
+                            "id": 7,
+                            "samples": 83,
+                            "impurity": 0.9948631079048571,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.5421686746987951,
+                              "Net outflow": 0.4578313253012048
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 8,
+                "samples": 2136,
+                "impurity": 0.933816938642744,
+                "prediction": "Net inflow",
+                "proportions": {
+                  "Net inflow": 0.6502808988764045,
+                  "Net outflow": 0.3497191011235955
+                },
+                "feature": "log10_home_value",
+                "threshold": 5.079000234603882,
+                "children": [
+                  {
+                    "id": 9,
+                    "samples": 429,
+                    "impurity": 0.9790110338779545,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.4149184149184149,
+                      "Net outflow": 0.585081585081585
+                    },
+                    "feature": "precipitation_inches",
+                    "threshold": 40.489999771118164,
+                    "children": [
+                      {
+                        "id": 10,
+                        "samples": 229,
+                        "impurity": 0.9123630498689705,
+                        "prediction": "Net outflow",
+                        "proportions": {
+                          "Net inflow": 0.32751091703056767,
+                          "Net outflow": 0.6724890829694323
+                        },
+                        "feature": "bachelors_plus_pct",
+                        "threshold": 21.419108390808105,
+                        "children": [
+                          {
+                            "id": 11,
+                            "samples": 167,
+                            "impurity": 0.8406902534470614,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.2694610778443114,
+                              "Net outflow": 0.7305389221556886
+                            }
+                          },
+                          {
+                            "id": 12,
+                            "samples": 62,
+                            "impurity": 0.9992492479956565,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.4838709677419355,
+                              "Net outflow": 0.5161290322580645
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 13,
+                        "samples": 200,
+                        "impurity": 0.9993506898146105,
+                        "prediction": "Net inflow",
+                        "proportions": {
+                          "Net inflow": 0.515,
+                          "Net outflow": 0.485
+                        },
+                        "feature": "log10_home_value",
+                        "threshold": 4.95975661277771,
+                        "children": [
+                          {
+                            "id": 14,
+                            "samples": 53,
+                            "impurity": 0.7367680100024784,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.20754716981132076,
+                              "Net outflow": 0.7924528301886793
+                            }
+                          },
+                          {
+                            "id": 15,
+                            "samples": 147,
+                            "impurity": 0.9538051053730892,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.6258503401360545,
+                              "Net outflow": 0.3741496598639456
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 16,
+                    "samples": 1707,
+                    "impurity": 0.8694541595293654,
+                    "prediction": "Net inflow",
+                    "proportions": {
+                      "Net inflow": 0.7094317516110135,
+                      "Net outflow": 0.29056824838898654
+                    },
+                    "feature": "temperature_f",
+                    "threshold": 56.875,
+                    "children": [
+                      {
+                        "id": 17,
+                        "samples": 990,
+                        "impurity": 0.9578992166961824,
+                        "prediction": "Net inflow",
+                        "proportions": {
+                          "Net inflow": 0.6202020202020202,
+                          "Net outflow": 0.3797979797979798
+                        },
+                        "feature": "median_age",
+                        "threshold": 45.54999923706055,
+                        "children": [
+                          {
+                            "id": 18,
+                            "samples": 744,
+                            "impurity": 0.9858587262978802,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.5698924731182796,
+                              "Net outflow": 0.43010752688172044
+                            }
+                          },
+                          {
+                            "id": 19,
+                            "samples": 246,
+                            "impurity": 0.7738785654282403,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.7723577235772358,
+                              "Net outflow": 0.22764227642276422
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 20,
+                        "samples": 717,
+                        "impurity": 0.6516390954967293,
+                        "prediction": "Net inflow",
+                        "proportions": {
+                          "Net inflow": 0.8326359832635983,
+                          "Net outflow": 0.16736401673640167
+                        },
+                        "feature": "homeownership_pct",
+                        "threshold": 69.94556427001953,
+                        "children": [
+                          {
+                            "id": 21,
+                            "samples": 168,
+                            "impurity": 0.9351267602011794,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.6488095238095238,
+                              "Net outflow": 0.35119047619047616
+                            }
+                          },
+                          {
+                            "id": 22,
+                            "samples": 549,
+                            "impurity": 0.5032583347756457,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.8888888888888888,
+                              "Net outflow": 0.1111111111111111
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "depth": 6,
+          "params": {
+            "criterion": "entropy",
+            "max_depth": 6,
+            "min_samples_leaf": 25
+          },
+          "cv_macro_f1": 0.6715136978487901,
+          "train_macro_f1": 0.7363564752902796,
+          "node_count": 63,
+          "leaf_count": 32,
+          "root": {
+            "id": 0,
+            "samples": 2432,
+            "impurity": 0.9692914924898335,
+            "prediction": "Net inflow",
+            "proportions": {
+              "Net inflow": 0.602796052631579,
+              "Net outflow": 0.3972039473684211
+            },
+            "feature": "homeownership_pct",
+            "threshold": 63.691328048706055,
+            "children": [
+              {
+                "id": 1,
+                "samples": 296,
+                "impurity": 0.8269502247973133,
+                "prediction": "Net outflow",
+                "proportions": {
+                  "Net inflow": 0.26013513513513514,
+                  "Net outflow": 0.7398648648648649
+                },
+                "feature": "log10_home_value",
+                "threshold": 5.026532411575317,
+                "children": [
+                  {
+                    "id": 2,
+                    "samples": 37,
+                    "impurity": 0.0,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.0,
+                      "Net outflow": 1.0
+                    }
+                  },
+                  {
+                    "id": 3,
+                    "samples": 259,
+                    "impurity": 0.8779620013943912,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.2972972972972973,
+                      "Net outflow": 0.7027027027027027
+                    },
+                    "feature": "homeownership_pct",
+                    "threshold": 55.0657844543457,
+                    "children": [
+                      {
+                        "id": 4,
+                        "samples": 79,
+                        "impurity": 0.511639783631173,
+                        "prediction": "Net outflow",
+                        "proportions": {
+                          "Net inflow": 0.11392405063291139,
+                          "Net outflow": 0.8860759493670886
+                        },
+                        "feature": "log10_population",
+                        "threshold": 5.293781757354736,
+                        "children": [
+                          {
+                            "id": 5,
+                            "samples": 44,
+                            "impurity": 0.730926377590601,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.20454545454545456,
+                              "Net outflow": 0.7954545454545454
+                            }
+                          },
+                          {
+                            "id": 6,
+                            "samples": 35,
+                            "impurity": 0.0,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.0,
+                              "Net outflow": 1.0
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 7,
+                        "samples": 180,
+                        "impurity": 0.9564574047992596,
+                        "prediction": "Net outflow",
+                        "proportions": {
+                          "Net inflow": 0.37777777777777777,
+                          "Net outflow": 0.6222222222222222
+                        },
+                        "feature": "unemployment_pct",
+                        "threshold": 3.4267842769622803,
+                        "children": [
+                          {
+                            "id": 8,
+                            "samples": 27,
+                            "impurity": 0.9509560484549725,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.6296296296296297,
+                              "Net outflow": 0.37037037037037035
+                            }
+                          },
+                          {
+                            "id": 9,
+                            "samples": 153,
+                            "impurity": 0.9182958340544896,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.3333333333333333,
+                              "Net outflow": 0.6666666666666666
+                            },
+                            "feature": "temperature_f",
+                            "threshold": 56.37916564941406,
+                            "children": [
+                              {
+                                "id": 10,
+                                "samples": 50,
+                                "impurity": 0.6343095546405662,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.16,
+                                  "Net outflow": 0.84
+                                },
+                                "feature": "median_age",
+                                "threshold": 37.10000038146973,
+                                "children": [
+                                  {
+                                    "id": 11,
+                                    "samples": 25,
+                                    "impurity": 0.4021791902022729,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.08,
+                                      "Net outflow": 0.92
+                                    }
+                                  },
+                                  {
+                                    "id": 12,
+                                    "samples": 25,
+                                    "impurity": 0.7950402793845223,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.24,
+                                      "Net outflow": 0.76
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 13,
+                                "samples": 103,
+                                "impurity": 0.9802595544773804,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.4174757281553398,
+                                  "Net outflow": 0.5825242718446602
+                                },
+                                "feature": "log10_home_value",
+                                "threshold": 5.199617862701416,
+                                "children": [
+                                  {
+                                    "id": 14,
+                                    "samples": 30,
+                                    "impurity": 0.7219280948873623,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.2,
+                                      "Net outflow": 0.8
+                                    }
+                                  },
+                                  {
+                                    "id": 15,
+                                    "samples": 73,
+                                    "impurity": 0.9998646331239298,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.5068493150684932,
+                                      "Net outflow": 0.4931506849315068
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 16,
+                "samples": 2136,
+                "impurity": 0.933816938642744,
+                "prediction": "Net inflow",
+                "proportions": {
+                  "Net inflow": 0.6502808988764045,
+                  "Net outflow": 0.3497191011235955
+                },
+                "feature": "log10_home_value",
+                "threshold": 5.079000234603882,
+                "children": [
+                  {
+                    "id": 17,
+                    "samples": 429,
+                    "impurity": 0.9790110338779545,
+                    "prediction": "Net outflow",
+                    "proportions": {
+                      "Net inflow": 0.4149184149184149,
+                      "Net outflow": 0.585081585081585
+                    },
+                    "feature": "precipitation_inches",
+                    "threshold": 40.489999771118164,
+                    "children": [
+                      {
+                        "id": 18,
+                        "samples": 229,
+                        "impurity": 0.9123630498689705,
+                        "prediction": "Net outflow",
+                        "proportions": {
+                          "Net inflow": 0.32751091703056767,
+                          "Net outflow": 0.6724890829694323
+                        },
+                        "feature": "poverty_pct",
+                        "threshold": 21.903077125549316,
+                        "children": [
+                          {
+                            "id": 19,
+                            "samples": 199,
+                            "impurity": 0.9482102328088211,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.36683417085427134,
+                              "Net outflow": 0.6331658291457286
+                            },
+                            "feature": "temperature_f",
+                            "threshold": 57.370832443237305,
+                            "children": [
+                              {
+                                "id": 20,
+                                "samples": 126,
+                                "impurity": 0.8524051786494786,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.2777777777777778,
+                                  "Net outflow": 0.7222222222222222
+                                },
+                                "feature": "bachelors_plus_pct",
+                                "threshold": 21.347561836242676,
+                                "children": [
+                                  {
+                                    "id": 21,
+                                    "samples": 83,
+                                    "impurity": 0.7072324944713735,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.1927710843373494,
+                                      "Net outflow": 0.8072289156626506
+                                    }
+                                  },
+                                  {
+                                    "id": 22,
+                                    "samples": 43,
+                                    "impurity": 0.9902246902198684,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.4418604651162791,
+                                      "Net outflow": 0.5581395348837209
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 23,
+                                "samples": 73,
+                                "impurity": 0.998781393072756,
+                                "prediction": "Net inflow",
+                                "proportions": {
+                                  "Net inflow": 0.5205479452054794,
+                                  "Net outflow": 0.4794520547945205
+                                },
+                                "feature": "homeownership_pct",
+                                "threshold": 75.50349426269531,
+                                "children": [
+                                  {
+                                    "id": 24,
+                                    "samples": 38,
+                                    "impurity": 0.9494520153879484,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.3684210526315789,
+                                      "Net outflow": 0.631578947368421
+                                    }
+                                  },
+                                  {
+                                    "id": 25,
+                                    "samples": 35,
+                                    "impurity": 0.898058793450166,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.6857142857142857,
+                                      "Net outflow": 0.3142857142857143
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 26,
+                            "samples": 30,
+                            "impurity": 0.35335933502142136,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.06666666666666667,
+                              "Net outflow": 0.9333333333333333
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": 27,
+                        "samples": 200,
+                        "impurity": 0.9993506898146105,
+                        "prediction": "Net inflow",
+                        "proportions": {
+                          "Net inflow": 0.515,
+                          "Net outflow": 0.485
+                        },
+                        "feature": "log10_home_value",
+                        "threshold": 4.95975661277771,
+                        "children": [
+                          {
+                            "id": 28,
+                            "samples": 53,
+                            "impurity": 0.7367680100024784,
+                            "prediction": "Net outflow",
+                            "proportions": {
+                              "Net inflow": 0.20754716981132076,
+                              "Net outflow": 0.7924528301886793
+                            },
+                            "feature": "temperature_f",
+                            "threshold": 65.25833129882812,
+                            "children": [
+                              {
+                                "id": 29,
+                                "samples": 28,
+                                "impurity": 0.863120568566631,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.2857142857142857,
+                                  "Net outflow": 0.7142857142857143
+                                }
+                              },
+                              {
+                                "id": 30,
+                                "samples": 25,
+                                "impurity": 0.5293608652873644,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.12,
+                                  "Net outflow": 0.88
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "id": 31,
+                            "samples": 147,
+                            "impurity": 0.9538051053730892,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.6258503401360545,
+                              "Net outflow": 0.3741496598639456
+                            },
+                            "feature": "temperature_f",
+                            "threshold": 63.98749923706055,
+                            "children": [
+                              {
+                                "id": 32,
+                                "samples": 68,
+                                "impurity": 0.7335379291086666,
+                                "prediction": "Net inflow",
+                                "proportions": {
+                                  "Net inflow": 0.7941176470588235,
+                                  "Net outflow": 0.20588235294117646
+                                },
+                                "feature": "log10_population",
+                                "threshold": 4.100045919418335,
+                                "children": [
+                                  {
+                                    "id": 33,
+                                    "samples": 33,
+                                    "impurity": 0.9182958340544896,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.6666666666666666,
+                                      "Net outflow": 0.3333333333333333
+                                    }
+                                  },
+                                  {
+                                    "id": 34,
+                                    "samples": 35,
+                                    "impurity": 0.4220005168831531,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.9142857142857143,
+                                      "Net outflow": 0.08571428571428572
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 35,
+                                "samples": 79,
+                                "impurity": 0.9989595114657399,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.4810126582278481,
+                                  "Net outflow": 0.5189873417721519
+                                },
+                                "feature": "precipitation_inches",
+                                "threshold": 51.30999946594238,
+                                "children": [
+                                  {
+                                    "id": 36,
+                                    "samples": 49,
+                                    "impurity": 0.9313043685793763,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.3469387755102041,
+                                      "Net outflow": 0.6530612244897959
+                                    }
+                                  },
+                                  {
+                                    "id": 37,
+                                    "samples": 30,
+                                    "impurity": 0.8812908992306927,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.7,
+                                      "Net outflow": 0.3
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": 38,
+                    "samples": 1707,
+                    "impurity": 0.8694541595293654,
+                    "prediction": "Net inflow",
+                    "proportions": {
+                      "Net inflow": 0.7094317516110135,
+                      "Net outflow": 0.29056824838898654
+                    },
+                    "feature": "temperature_f",
+                    "threshold": 56.875,
+                    "children": [
+                      {
+                        "id": 39,
+                        "samples": 990,
+                        "impurity": 0.9578992166961824,
+                        "prediction": "Net inflow",
+                        "proportions": {
+                          "Net inflow": 0.6202020202020202,
+                          "Net outflow": 0.3797979797979798
+                        },
+                        "feature": "median_age",
+                        "threshold": 45.54999923706055,
+                        "children": [
+                          {
+                            "id": 40,
+                            "samples": 744,
+                            "impurity": 0.9858587262978802,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.5698924731182796,
+                              "Net outflow": 0.43010752688172044
+                            },
+                            "feature": "log10_population",
+                            "threshold": 4.427599668502808,
+                            "children": [
+                              {
+                                "id": 41,
+                                "samples": 312,
+                                "impurity": 0.9941825069613696,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.4551282051282051,
+                                  "Net outflow": 0.5448717948717948
+                                },
+                                "feature": "log10_income",
+                                "threshold": 4.791409730911255,
+                                "children": [
+                                  {
+                                    "id": 42,
+                                    "samples": 73,
+                                    "impurity": 0.9271587399898308,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.6575342465753424,
+                                      "Net outflow": 0.3424657534246575
+                                    }
+                                  },
+                                  {
+                                    "id": 43,
+                                    "samples": 239,
+                                    "impurity": 0.9668995690273452,
+                                    "prediction": "Net outflow",
+                                    "proportions": {
+                                      "Net inflow": 0.39330543933054396,
+                                      "Net outflow": 0.606694560669456
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 44,
+                                "samples": 432,
+                                "impurity": 0.931562768480964,
+                                "prediction": "Net inflow",
+                                "proportions": {
+                                  "Net inflow": 0.6527777777777778,
+                                  "Net outflow": 0.3472222222222222
+                                },
+                                "feature": "homeownership_pct",
+                                "threshold": 75.06326293945312,
+                                "children": [
+                                  {
+                                    "id": 45,
+                                    "samples": 263,
+                                    "impurity": 0.9886130806547064,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.5627376425855514,
+                                      "Net outflow": 0.4372623574144487
+                                    }
+                                  },
+                                  {
+                                    "id": 46,
+                                    "samples": 169,
+                                    "impurity": 0.73590395039807,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.7928994082840237,
+                                      "Net outflow": 0.20710059171597633
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": 47,
+                            "samples": 246,
+                            "impurity": 0.7738785654282403,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.7723577235772358,
+                              "Net outflow": 0.22764227642276422
+                            },
+                            "feature": "precipitation_inches",
+                            "threshold": 19.285000801086426,
+                            "children": [
+                              {
+                                "id": 48,
+                                "samples": 37,
+                                "impurity": 0.9994730201859836,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.4864864864864865,
+                                  "Net outflow": 0.5135135135135135
+                                }
+                              },
+                              {
+                                "id": 49,
+                                "samples": 209,
+                                "impurity": 0.6735442405161365,
+                                "prediction": "Net inflow",
+                                "proportions": {
+                                  "Net inflow": 0.8229665071770335,
+                                  "Net outflow": 0.17703349282296652
+                                },
+                                "feature": "log10_home_value",
+                                "threshold": 5.168202638626099,
+                                "children": [
+                                  {
+                                    "id": 50,
+                                    "samples": 42,
+                                    "impurity": 0.9402859586706309,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.6428571428571429,
+                                      "Net outflow": 0.35714285714285715
+                                    }
+                                  },
+                                  {
+                                    "id": 51,
+                                    "samples": 167,
+                                    "impurity": 0.5621814561735371,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.8682634730538922,
+                                      "Net outflow": 0.1317365269461078
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": 52,
+                        "samples": 717,
+                        "impurity": 0.6516390954967293,
+                        "prediction": "Net inflow",
+                        "proportions": {
+                          "Net inflow": 0.8326359832635983,
+                          "Net outflow": 0.16736401673640167
+                        },
+                        "feature": "homeownership_pct",
+                        "threshold": 69.94556427001953,
+                        "children": [
+                          {
+                            "id": 53,
+                            "samples": 168,
+                            "impurity": 0.9351267602011794,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.6488095238095238,
+                              "Net outflow": 0.35119047619047616
+                            },
+                            "feature": "log10_population",
+                            "threshold": 5.6128270626068115,
+                            "children": [
+                              {
+                                "id": 54,
+                                "samples": 142,
+                                "impurity": 0.8760643678555243,
+                                "prediction": "Net inflow",
+                                "proportions": {
+                                  "Net inflow": 0.704225352112676,
+                                  "Net outflow": 0.29577464788732394
+                                },
+                                "feature": "precipitation_inches",
+                                "threshold": 44.17499923706055,
+                                "children": [
+                                  {
+                                    "id": 55,
+                                    "samples": 72,
+                                    "impurity": 0.9910760598382222,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.5555555555555556,
+                                      "Net outflow": 0.4444444444444444
+                                    }
+                                  },
+                                  {
+                                    "id": 56,
+                                    "samples": 70,
+                                    "impurity": 0.5916727785823275,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.8571428571428571,
+                                      "Net outflow": 0.14285714285714285
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 57,
+                                "samples": 26,
+                                "impurity": 0.930586129131993,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.34615384615384615,
+                                  "Net outflow": 0.6538461538461539
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "id": 58,
+                            "samples": 549,
+                            "impurity": 0.5032583347756457,
+                            "prediction": "Net inflow",
+                            "proportions": {
+                              "Net inflow": 0.8888888888888888,
+                              "Net outflow": 0.1111111111111111
+                            },
+                            "feature": "log10_population",
+                            "threshold": 3.7609862089157104,
+                            "children": [
+                              {
+                                "id": 59,
+                                "samples": 27,
+                                "impurity": 0.975119064940866,
+                                "prediction": "Net outflow",
+                                "proportions": {
+                                  "Net inflow": 0.4074074074074074,
+                                  "Net outflow": 0.5925925925925926
+                                }
+                              },
+                              {
+                                "id": 60,
+                                "samples": 522,
+                                "impurity": 0.42368057157091055,
+                                "prediction": "Net inflow",
+                                "proportions": {
+                                  "Net inflow": 0.9137931034482759,
+                                  "Net outflow": 0.08620689655172414
+                                },
+                                "feature": "median_age",
+                                "threshold": 43.25,
+                                "children": [
+                                  {
+                                    "id": 61,
+                                    "samples": 320,
+                                    "impurity": 0.5435644431995964,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.875,
+                                      "Net outflow": 0.125
+                                    }
+                                  },
+                                  {
+                                    "id": 62,
+                                    "samples": 202,
+                                    "impurity": 0.16735084459663171,
+                                    "prediction": "Net inflow",
+                                    "proportions": {
+                                      "Net inflow": 0.9752475247524752,
+                                      "Net outflow": 0.024752475247524754
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "samples": [
+        {
+          "name": "net-labeled-source",
+          "columns": [
+            "county_fips",
+            "county_name",
+            "net_individuals_per_1000",
+            "net_class",
+            "classification_split"
+          ],
+          "images": [
+            "net-labeled-source-1.png"
+          ]
+        },
+        {
+          "name": "net-characteristics-train",
+          "columns": [
+            "log10_population",
+            "median_age",
+            "log10_income",
+            "log10_home_value",
+            "log10_rent",
+            "poverty_pct",
+            "unemployment_pct",
+            "vacancy_pct",
+            "homeownership_pct",
+            "bachelors_plus_pct",
+            "log1p_incidents",
+            "precipitation_inches",
+            "temperature_f",
+            "target"
+          ],
+          "images": [
+            "nb-characteristics-train-1.png",
+            "nb-characteristics-train-2.png",
+            "net-characteristics-train-3.png"
+          ]
+        },
+        {
+          "name": "net-characteristics-test",
+          "columns": [
+            "log10_population",
+            "median_age",
+            "log10_income",
+            "log10_home_value",
+            "log10_rent",
+            "poverty_pct",
+            "unemployment_pct",
+            "vacancy_pct",
+            "homeownership_pct",
+            "bachelors_plus_pct",
+            "log1p_incidents",
+            "precipitation_inches",
+            "temperature_f",
+            "target"
+          ],
+          "images": [
+            "nb-characteristics-test-1.png",
+            "nb-characteristics-test-2.png",
+            "net-characteristics-test-3.png"
+          ]
+        }
+      ],
+      "selected_cv_macro_f1": 0.6724053041710504,
+      "selected_train_macro_f1": 0.6911293295521825,
+      "model": {
+        "accuracy": 0.6540983606557377,
+        "balanced_accuracy": 0.6097163495419309,
+        "macro_f1": 0.5950108712410835,
+        "classes": [
+          "Net outflow",
+          "Net inflow"
+        ],
+        "confusion": [
+          [
+            83,
+            175
+          ],
+          [
+            36,
+            316
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.32170542635658916,
+            0.6782945736434108
+          ],
+          [
+            0.10227272727272728,
+            0.8977272727272727
+          ]
+        ],
+        "classification_report": {
+          "Net outflow": {
+            "precision": 0.6974789915966386,
+            "recall": 0.32170542635658916,
+            "f1-score": 0.4403183023872679,
+            "support": 258.0
+          },
+          "Net inflow": {
+            "precision": 0.6435845213849287,
+            "recall": 0.8977272727272727,
+            "f1-score": 0.7497034400948992,
+            "support": 352.0
+          },
+          "accuracy": 0.6540983606557377,
+          "macro avg": {
+            "precision": 0.6705317564907837,
+            "recall": 0.6097163495419309,
+            "f1-score": 0.5950108712410835,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.6663792317367667,
+            "recall": 0.6540983606557377,
+            "f1-score": 0.6188487425070814,
+            "support": 610.0
+          }
+        }
+      },
+      "baseline": {
+        "accuracy": 0.5770491803278689,
+        "balanced_accuracy": 0.5,
+        "macro_f1": 0.3659043659043659,
+        "classes": [
+          "Net outflow",
+          "Net inflow"
+        ],
+        "confusion": [
+          [
+            0,
+            258
+          ],
+          [
+            0,
+            352
+          ]
+        ],
+        "confusion_normalized": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "classification_report": {
+          "Net outflow": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 258.0
+          },
+          "Net inflow": {
+            "precision": 0.5770491803278689,
+            "recall": 1.0,
+            "f1-score": 0.7318087318087318,
+            "support": 352.0
+          },
+          "accuracy": 0.5770491803278689,
+          "macro avg": {
+            "precision": 0.28852459016393445,
+            "recall": 0.5,
+            "f1-score": 0.3659043659043659,
+            "support": 610.0
+          },
+          "weighted avg": {
+            "precision": 0.3329857565170653,
+            "recall": 0.5770491803278689,
+            "f1-score": 0.42228962884700594,
+            "support": 610.0
+          }
+        }
+      },
+      "example_path": {
+        "county": "Autauga County, Alabama",
+        "county_fips": "01001",
+        "actual": "Net inflow",
+        "predicted": "Net inflow",
+        "steps": [
+          "homeownership_pct: 74.910 > 63.691",
+          "log10_home_value: 5.296 > 5.079",
+          "temperature_f: 66.292 > 56.875",
+          "homeownership_pct: 74.910 > 69.946"
+        ]
+      },
+      "conclusions": [
+        "For net, the selected depth-4 tree classifies 65.4% of 610 held-out counties correctly, compared with 57.7% for the majority baseline.",
+        "Macro-F1 is 0.595 versus baseline 0.366, with balanced accuracy 61.0%. The lowest-recall class is net outflow (32.2%).",
+        "Mean training-fold macro-F1 is 0.691, compared with validation 0.672. The selected model balances fit against validation performance under the fixed candidate grid."
+      ]
+    }
+  },
+  "worked_example": {
+    "parent_entropy": 0.9709505944546686,
+    "weighted_child_entropy": 0.5509775004326937,
+    "information_gain": 0.4199730940219749
+  }
+}

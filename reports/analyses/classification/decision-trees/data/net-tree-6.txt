@@ -1,0 +1,94 @@
+|--- homeownership_pct <= 63.691
+|   |--- log10_home_value <= 5.027
+|   |   |--- class: Net outflow
+|   |--- log10_home_value >  5.027
+|   |   |--- homeownership_pct <= 55.066
+|   |   |   |--- log10_population <= 5.294
+|   |   |   |   |--- class: Net outflow
+|   |   |   |--- log10_population >  5.294
+|   |   |   |   |--- class: Net outflow
+|   |   |--- homeownership_pct >  55.066
+|   |   |   |--- unemployment_pct <= 3.427
+|   |   |   |   |--- class: Net inflow
+|   |   |   |--- unemployment_pct >  3.427
+|   |   |   |   |--- temperature_f <= 56.379
+|   |   |   |   |   |--- median_age <= 37.100
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |   |--- median_age >  37.100
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |--- temperature_f >  56.379
+|   |   |   |   |   |--- log10_home_value <= 5.200
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |   |--- log10_home_value >  5.200
+|   |   |   |   |   |   |--- class: Net inflow
+|--- homeownership_pct >  63.691
+|   |--- log10_home_value <= 5.079
+|   |   |--- precipitation_inches <= 40.490
+|   |   |   |--- poverty_pct <= 21.903
+|   |   |   |   |--- temperature_f <= 57.371
+|   |   |   |   |   |--- bachelors_plus_pct <= 21.348
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |   |--- bachelors_plus_pct >  21.348
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |--- temperature_f >  57.371
+|   |   |   |   |   |--- homeownership_pct <= 75.503
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |   |--- homeownership_pct >  75.503
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |--- poverty_pct >  21.903
+|   |   |   |   |--- class: Net outflow
+|   |   |--- precipitation_inches >  40.490
+|   |   |   |--- log10_home_value <= 4.960
+|   |   |   |   |--- temperature_f <= 65.258
+|   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |--- temperature_f >  65.258
+|   |   |   |   |   |--- class: Net outflow
+|   |   |   |--- log10_home_value >  4.960
+|   |   |   |   |--- temperature_f <= 63.987
+|   |   |   |   |   |--- log10_population <= 4.100
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |   |--- log10_population >  4.100
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |--- temperature_f >  63.987
+|   |   |   |   |   |--- precipitation_inches <= 51.310
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |   |--- precipitation_inches >  51.310
+|   |   |   |   |   |   |--- class: Net inflow
+|   |--- log10_home_value >  5.079
+|   |   |--- temperature_f <= 56.875
+|   |   |   |--- median_age <= 45.550
+|   |   |   |   |--- log10_population <= 4.428
+|   |   |   |   |   |--- log10_income <= 4.791
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |   |--- log10_income >  4.791
+|   |   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |--- log10_population >  4.428
+|   |   |   |   |   |--- homeownership_pct <= 75.063
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |   |--- homeownership_pct >  75.063
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |--- median_age >  45.550
+|   |   |   |   |--- precipitation_inches <= 19.285
+|   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |--- precipitation_inches >  19.285
+|   |   |   |   |   |--- log10_home_value <= 5.168
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |   |--- log10_home_value >  5.168
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |--- temperature_f >  56.875
+|   |   |   |--- homeownership_pct <= 69.946
+|   |   |   |   |--- log10_population <= 5.613
+|   |   |   |   |   |--- precipitation_inches <= 44.175
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |   |--- precipitation_inches >  44.175
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |--- log10_population >  5.613
+|   |   |   |   |   |--- class: Net outflow
+|   |   |   |--- homeownership_pct >  69.946
+|   |   |   |   |--- log10_population <= 3.761
+|   |   |   |   |   |--- class: Net outflow
+|   |   |   |   |--- log10_population >  3.761
+|   |   |   |   |   |--- median_age <= 43.250
+|   |   |   |   |   |   |--- class: Net inflow
+|   |   |   |   |   |--- median_age >  43.250
+|   |   |   |   |   |   |--- class: Net inflow

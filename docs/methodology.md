@@ -14,6 +14,7 @@ and execution instructions live in the [workflow](workflow.md).
 - [Analytical methods](#analytical-methods)
 - [Validation and limitations](#validation-and-limitations)
 - [Reproducibility](#reproducibility)
+- [Supervised classification](#supervised-classification)
 - [Planned supervised analyses](#planned-supervised-analyses)
 
 ## Research question and design
@@ -23,9 +24,9 @@ How are counties’ economic, demographic, and environmental characteristics ass
 Net migration, inflow, and outflow rates per 1,000 ACS residents are coequal
 outcomes. Counts describe volumes. Net equals inflow minus outflow at the row
 level; medians and quartiles are calculated separately for each outcome.
-Its scope is descriptive: cleaned source tables support data discovery, a
-geography-year panel supports exploratory analysis, and a single-year county
-cohort supports clustering and principal component analysis (PCA).
+Its scope is descriptive and retrospective: cleaned source tables support data
+discovery, a geography-year panel supports exploration, and a single-year county
+cohort supports clustering, PCA and held-out classification.
 
 The panel joins matching numeric year labels. The notebook's lagged comparison
 is exploratory and does not enforce publication dates. Future prediction work
@@ -160,7 +161,7 @@ in `reports/tables/monetary_imputation_factors.csv` and `socioeconomic_imputer.j
 
 ### Longitudinal analysis cohort
 
-The authoritative [cleaning notebook](../notebooks/01_data_cleaning.ipynb) exports
+The [cleaning notebook](../notebooks/data_cleaning.ipynb) exports
 one downstream dataset, `analysis_county_year`, with training-only socioeconomic
 imputation and flags. It preserves selected identifiers, characteristics, IRS
 counts, and migration rates. Final rows must contain complete, finite values and
@@ -225,10 +226,9 @@ Distribution and coverage diagnostics are described under
 
 ### Clustering and PCA
 
-The executed notebooks [03 Clustering](../notebooks/03_clustering.ipynb) and
-[04 PCA](../notebooks/04_pca.ipynb) contain estimator code, diagnostics, rendered
-input samples, figures, and measured findings. Both use the
-[2023 cohort and transformed features](#2023-clustering-and-pca-cohort).
+The executed notebooks [Clustering](../notebooks/clustering.ipynb) and
+[PCA](../notebooks/pca.ipynb) contain estimator code, diagnostics, rendered
+input samples, figures, and measured findings. Both use the [2023 cohort and transformed features](#2023-clustering-and-pca-cohort).
 See [reproducibility](#reproducibility) for execution and output locations.
 
 #### Clustering
@@ -328,59 +328,98 @@ holdouts must be established for that design.
 ### Implementations and execution
 
 The [workflow](workflow.md) documents environment setup, source acquisition,
-cleaning, and audits. Execute notebooks in order: [01 Data cleaning](../notebooks/01_data_cleaning.ipynb),
-[02 EDA findings](../notebooks/02_eda_findings.ipynb),
-[03 Clustering](../notebooks/03_clustering.ipynb), and [04 PCA](../notebooks/04_pca.ipynb).
-The all-notebook runner includes all four. Shared unsupervised validation and
+cleaning, and audits. Read the notebooks in this order; after cleaning, analytical notebooks execute independently: [Data cleaning](../notebooks/data_cleaning.ipynb),
+[Exploration findings](../notebooks/exploration.ipynb),
+[Clustering](../notebooks/clustering.ipynb), [PCA](../notebooks/pca.ipynb), [Naive Bayes](../notebooks/naive_bayes.ipynb),
+and [Decision trees](../notebooks/decision_trees.ipynb).
+Open each notebook in Jupyter, select the project kernel, restart and run all cells,
+inspect outputs and save. Shared unsupervised validation and
 image-export helpers live in [unsupervised.py](../src/us_migration/unsupervised.py).
 
 For clustering and PCA alone, install `requirements-dev.txt` in the project
 environment and first produce `data/processed/analysis_county_year.parquet` with
-notebook 01. From the repository root, run:
+the data-cleaning notebook. From the repository root, run:
 
 ```powershell
-.\us-migration\Scripts\python.exe scripts/run_phase2.py
-.\us-migration\Scripts\python.exe -m pytest tests/test_phase2.py tests/test_website_data.py -q
+.\us-migration\Scripts\python.exe -m jupyterlab
+.\us-migration\Scripts\python.exe -m pytest tests/test_unsupervised.py tests/test_website_data.py -q
 .\us-migration\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory website
 ```
 
-The Phase 2 runner consumes the existing cleaned dataset and uses a repository-local
-Jupyter kernel pointing to the invoking interpreter. Alternatively, execute the
-notebooks in Jupyter; root and notebook working directories are supported. Edit
-notebooks 03 and 04 directly; the older notebook builder handles other notebooks.
+Manual execution consumes the existing cleaned dataset. Select the project Python
+kernel in Jupyter; both repository-root and notebook working directories are
+supported. Edit all notebooks directly and save after execution.
 
 ### Outputs and findings
 
-Clustering/PCA outputs are saved to tracked `website/assets/phase2/`,
-`website/data/phase2/`, `website/data/clustering.json`, and `website/data/pca.json`.
-PNG samples use the same DataFrames displayed in notebook output. CSV samples
-include 20 rows; images display five. Separate row keys preserve FIPS leading zeros.
-Two explanatory images in each Overview are distinguished from measured findings.
-The rendered website serves static outputs.
+Clustering and PCA write independent canonical bundles under `reports/analyses/`, with numerical evidence, generated figures, and ownership manifests. Website packaging copies each bundle into its topic data and asset directories. Numeric samples include 20 rows; images display five. Separate row keys preserve FIPS leading zeros. Explanatory toy examples remain distinguished from measured findings.
 
 Measured cluster solutions, variance summaries, and migration associations belong
-to the executed [clustering](../notebooks/03_clustering.ipynb) and
-[PCA](../notebooks/04_pca.ipynb) findings and their website chapters. Recompute these
+to the executed [clustering](../notebooks/clustering.ipynb) and
+[PCA](../notebooks/pca.ipynb) findings and their website chapters. Recompute these
 outputs when inputs change. EDA findings are available in the
 [summary](../reports/eda_summary.md) and [chart gallery](../reports/eda_visualizations.md).
 
 GitHub code links target `Kaxlow/us-migration`, branch `main`, and notebook headings.
 Their availability follows publication of the corresponding files to that branch.
 
+## Supervised classification
+
+Research Framework question 9: **How accurately can county characteristics classify
+counties by migration outcome in terms of net migration, inflows, and outflows?**
+
+The Naive Bayes and decision-tree notebooks use the same 3,050 eligible 2023 counties and 13 transformed
+characteristics as clustering and PCA. Identifiers, migration measurements/derived categories
+and flags stay outside predictors. Six inherited imputations and 133 outlier flags
+remain. Standardization is specific to PCA/clustering; classification uses the
+log-transformed continuous characteristics, with a learned bin encoder for NB.
+
+Sort counties by FIPS, then split 80/20 using seed 42 before constructing labels:
+2,440 training and 610 testing counties. Inflow/outflow targets use separate training-rate
+tertiles (linear quantiles): low ≤ first cut, medium > first and ≤ second, high >
+second. Fixed cuts define labels throughout training cross-validation and testing.
+Net labels use sign; exclude exactly zero from the binary task. The eight balanced
+counties all fall in training, leaving 2,432 binary training counties and 610 tests.
+`website/data/classification/context.json` records full-precision boundaries and counts.
+
+Five-fold shuffled stratified CV (seed 42) ranks candidates by mean macro-F1.
+Learned predictor transformations fit only the current training fold. NB uses five
+quantile bins, merged repeated edges, one-hot indicators and MultinomialNB with
+learned priors; alpha candidates 0.1/1/10 break exact ties toward larger alpha.
+Test values outside training ranges enter extreme bins. This count-vector
+approximation loses within-bin detail and retains dependence among indicators.
+
+Each tree target compares depths 2/4/6, minimum leaf sizes 10/25/50 and Gini/entropy,
+with equal observation weights and seed 42. Exact ties favor shallower depth,
+larger leaves, then Gini. Fit the best configuration at each depth for visualization;
+only the selected tree per target receives final test evaluation. Training and
+validation macro-F1 with fold standard deviations describe fit and variability.
+
+Test metrics include accuracy, balanced accuracy, macro-F1 and per-class precision,
+recall, F1 and support, with count/row-normalized confusion matrices. A majority
+classifier fitted on training supplies each task's baseline. Predictions, settings,
+metrics, bin boundaries, split membership, tree structures, diagrams and source
+provenance are exported by notebook execution. Combined question 9 results compare
+target-specific outcomes; this design does not isolate an algorithm effect.
+
+The 2023 cohort was already explored before this split. These scores describe
+retrospective held-out classification under a fixed specification, with spatial
+dependence, inherited historical imputation, ACS window overlap and IRS/ACS
+population mismatch limiting generalization. Tree rules and NB associations are
+predictive rather than causal. Future forecasts need publication-date alignment
+and fresh temporal/geographic evaluation.
+
+Open either classification notebook in Jupyter, use **Restart Kernel and Run All Cells**, inspect and
+save. Both consume the existing Parquet and write independent result bundles. Website export validates and combines those bundles for question 9. The website uses packaged JSON/CSV/figures from canonical result bundles;
+fitted pickle files are unnecessary. Changes remain local pending explicit remote
+publication authorization.
+
 ## Planned supervised analyses
 
-Naive Bayes, decision trees, regression, AdaBoost, GradientBoosting, and XGBoost
-remain planned chapters. Their estimators, tuning rules, and evaluation will be
-recorded here when implemented.
-
-Evaluate net migration, inflow, and outflow rates separately using a shared
-publication-date-aware temporal/geographic evaluation design. Report per-outcome
-baselines and errors on identical evaluation rows. Net-gain/net-loss classification
-remains a specifically net-migration question. All contemporaneous migration
-counts, rates, derived balances, and migration-cluster labels stay outside the
-predictor matrix. The explored 2023 cohort requires fresh evaluation data before
-claims of untouched test performance. Estimator implementation and tuning belong
-to the later supervised-learning phase.
+Regression and boosting remain planned. Their future forecasting design will
+require publication-date-aware predictors and temporal/geographic evaluation.
+Contemporaneous outcomes and derived migration labels remain excluded from
+predictors. Their design is separate from completed retrospective classification.
 
 ### Three-outcome deliverable contract
 

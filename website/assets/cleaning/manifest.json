@@ -1,0 +1,9 @@
+{
+  "files": {
+    "01_acs_raw_vs_clean.png": "bbe54550f5476ec2b276d6f6c92f74737bbe283d2ecd90395aa0b64a456f4c3b",
+    "02_irs_raw_vs_clean.png": "64d8653efc71e8e02003d15bffd1eed414817518498c754d541a8e6c01366402",
+    "03_acs_flows_raw_vs_clean.png": "6c940f557f64d4b674db61c50c092f833589bb88ff0fb3d827081206e969ae65",
+    "04_fema_raw_vs_clean.png": "5fce8fdf73b566a4a769679f868f4f8325774bbed55ad612cecd8148e6eb0797",
+    "05_noaa_raw_vs_clean.png": "3bb8108f9b80b44c1316b8830aab7bf3fdf64c2d193b877bf66f9614ddd28882"
+  }
+}

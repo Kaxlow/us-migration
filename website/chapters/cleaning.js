@@ -1,5 +1,5 @@
 import {base,esc} from '../shared.js';
-/* Descriptions follow notebook 01; evidence is exported from its saved outputs. */
+/* Descriptions follow the data-cleaning notebook; evidence is exported from its saved outputs. */
 const cleaningStages = [
   {
     title: 'ACS characteristics', reference: 'Notebook section 2',
@@ -57,7 +57,7 @@ const cleaningStages = [
 ];
 
 export function cleaningContent(cleaningEvidence) {
-  return `<p>Data preparation preserves the original records, standardizes each source, and combines comparable geography-year observations. The process then checks data quality, fills eligible missing socioeconomic values using training data only, and validates the final analysis dataset. The comparisons and audit tables below show what changed at each stage. For the full implementation, saved cell outputs, and additional checks, see the <a href="${base}notebooks/01_data_cleaning.ipynb">Data Cleaning notebook</a>.</p>
+  return `<p>Data preparation preserves the original records, standardizes each source, and combines comparable geography-year observations. The process then checks data quality, fills eligible missing socioeconomic values using training data only, and validates the final analysis dataset. The comparisons and audit tables below show what changed at each stage. For the full implementation, saved cell outputs, and additional checks, see the <a href="${base}notebooks/data_cleaning.ipynb">Data Cleaning notebook</a>.</p>
     <h3>Prepare and verify the source records</h3><p>Read the download catalog and verify snapshot checksums. Keep raw files separate from cleaned outputs and retain source hashes for traceability. Store geographic codes as strings to preserve leading zeros, normalize formatted numeric values, and record each source's reference period: IRS interval-ending years, ACS five-year windows, FEMA incident-start years, and NOAA calendar years.</p>
     <div class="cleaning-sequence">${cleaningStages.map((stage, index) => `
       <article class="cleaning-stage" id="cleaning-${index + 1}">

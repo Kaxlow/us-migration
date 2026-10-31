@@ -1,0 +1,154 @@
+|--- log10_rent <= 2.945
+|   |--- temperature_f <= 59.196
+|   |   |--- log10_home_value <= 5.262
+|   |   |   |--- log10_population <= 4.768
+|   |   |   |   |--- log10_home_value <= 4.964
+|   |   |   |   |   |--- unemployment_pct <= 3.038
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- unemployment_pct >  3.038
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |--- log10_home_value >  4.964
+|   |   |   |   |   |--- log10_population <= 4.427
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- log10_population >  4.427
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |--- log10_population >  4.768
+|   |   |   |   |--- median_age <= 40.650
+|   |   |   |   |   |--- class: Low
+|   |   |   |   |--- median_age >  40.650
+|   |   |   |   |   |--- class: Low
+|   |   |--- log10_home_value >  5.262
+|   |   |   |--- log10_population <= 4.334
+|   |   |   |   |--- median_age <= 38.600
+|   |   |   |   |   |--- class: High
+|   |   |   |   |--- median_age >  38.600
+|   |   |   |   |   |--- unemployment_pct <= 1.786
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- unemployment_pct >  1.786
+|   |   |   |   |   |   |--- class: High
+|   |   |   |--- log10_population >  4.334
+|   |   |   |   |--- median_age <= 41.000
+|   |   |   |   |   |--- log10_population <= 4.521
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |   |--- log10_population >  4.521
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |--- median_age >  41.000
+|   |   |   |   |   |--- unemployment_pct <= 4.585
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |   |--- unemployment_pct >  4.585
+|   |   |   |   |   |   |--- class: Low
+|   |--- temperature_f >  59.196
+|   |   |--- log10_home_value <= 5.199
+|   |   |   |--- precipitation_inches <= 41.475
+|   |   |   |   |--- log10_rent <= 2.862
+|   |   |   |   |   |--- log10_population <= 3.733
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- log10_population >  3.733
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |--- log10_rent >  2.862
+|   |   |   |   |   |--- median_age <= 41.050
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |   |--- median_age >  41.050
+|   |   |   |   |   |   |--- class: High
+|   |   |   |--- precipitation_inches >  41.475
+|   |   |   |   |--- log10_population <= 4.391
+|   |   |   |   |   |--- vacancy_pct <= 15.822
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |   |--- vacancy_pct >  15.822
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |--- log10_population >  4.391
+|   |   |   |   |   |--- log10_rent <= 2.907
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- log10_rent >  2.907
+|   |   |   |   |   |   |--- class: Low
+|   |   |--- log10_home_value >  5.199
+|   |   |   |--- log10_population <= 4.794
+|   |   |   |   |--- log10_population <= 4.167
+|   |   |   |   |   |--- temperature_f <= 66.808
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- temperature_f >  66.808
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |--- log10_population >  4.167
+|   |   |   |   |   |--- unemployment_pct <= 3.937
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |   |--- unemployment_pct >  3.937
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |--- log10_population >  4.794
+|   |   |   |   |--- class: Low
+|--- log10_rent >  2.945
+|   |--- temperature_f <= 55.604
+|   |   |--- log10_home_value <= 5.371
+|   |   |   |--- log10_population <= 4.350
+|   |   |   |   |--- log10_population <= 3.994
+|   |   |   |   |   |--- precipitation_inches <= 19.380
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- precipitation_inches >  19.380
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |--- log10_population >  3.994
+|   |   |   |   |   |--- unemployment_pct <= 3.680
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- unemployment_pct >  3.680
+|   |   |   |   |   |   |--- class: High
+|   |   |   |--- log10_population >  4.350
+|   |   |   |   |--- bachelors_plus_pct <= 20.720
+|   |   |   |   |   |--- log10_population <= 4.836
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |   |--- log10_population >  4.836
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |--- bachelors_plus_pct >  20.720
+|   |   |   |   |   |--- homeownership_pct <= 65.228
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- homeownership_pct >  65.228
+|   |   |   |   |   |   |--- class: Low
+|   |   |--- log10_home_value >  5.371
+|   |   |   |--- precipitation_inches <= 28.925
+|   |   |   |   |--- log10_income <= 4.874
+|   |   |   |   |   |--- log10_population <= 5.119
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- log10_population >  5.119
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |--- log10_income >  4.874
+|   |   |   |   |   |--- log10_rent <= 3.175
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- log10_rent >  3.175
+|   |   |   |   |   |   |--- class: High
+|   |   |   |--- precipitation_inches >  28.925
+|   |   |   |   |--- log10_income <= 4.862
+|   |   |   |   |   |--- homeownership_pct <= 74.932
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- homeownership_pct >  74.932
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |--- log10_income >  4.862
+|   |   |   |   |   |--- log10_population <= 5.017
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- log10_population >  5.017
+|   |   |   |   |   |   |--- class: Medium
+|   |--- temperature_f >  55.604
+|   |   |--- homeownership_pct <= 54.323
+|   |   |   |--- vacancy_pct <= 6.896
+|   |   |   |   |--- class: High
+|   |   |   |--- vacancy_pct >  6.896
+|   |   |   |   |--- class: High
+|   |   |--- homeownership_pct >  54.323
+|   |   |   |--- unemployment_pct <= 4.729
+|   |   |   |   |--- log10_home_value <= 5.354
+|   |   |   |   |   |--- log10_population <= 3.948
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- log10_population >  3.948
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |--- log10_home_value >  5.354
+|   |   |   |   |   |--- poverty_pct <= 5.078
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |   |--- poverty_pct >  5.078
+|   |   |   |   |   |   |--- class: High
+|   |   |   |--- unemployment_pct >  4.729
+|   |   |   |   |--- log10_population <= 5.677
+|   |   |   |   |   |--- log10_income <= 4.747
+|   |   |   |   |   |   |--- class: Medium
+|   |   |   |   |   |--- log10_income >  4.747
+|   |   |   |   |   |   |--- class: High
+|   |   |   |   |--- log10_population >  5.677
+|   |   |   |   |   |--- precipitation_inches <= 22.910
+|   |   |   |   |   |   |--- class: Low
+|   |   |   |   |   |--- precipitation_inches >  22.910
+|   |   |   |   |   |   |--- class: High

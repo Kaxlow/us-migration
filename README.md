@@ -1,146 +1,46 @@
 # Do County Characteristics Explain Migration Flows?
 
-A machine learning project studying net migration, inflows, and outflows across US counties.
+This project studies how US counties' economic, demographic, housing, and environmental characteristics accompany domestic migration. Net migration, inflows, and outflows receive equal emphasis as rates per 1,000 ACS residents; counts describe movement volumes.
 
-All three rates per 1,000 ACS residents receive equal emphasis. Counts describe movement volumes and rankings; similar net migration can accompany very different inflow and outflow levels.
+The evidence includes longitudinal exploration, 2023 county clustering and PCA, and retrospective classification. The [research website](https://kaxlow.github.io/us-migration/) presents published work. This checkout includes local revisions that will appear there after publication.
 
-## Research website
+## Read the project
 
-The responsive [research website](https://kaxlow.github.io/us-migration/) presents the introduction,
-interactive county maps, data preparation, and ten exploratory charts. If launching from a local copy of the repository, run
-`.\us-migration\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory website`
-and open http://127.0.0.1:8000. See its README for independent data-export commands.
+Start with the website's Overview and Findings chapters, then follow the linked analyses and supporting detail. The [notebook index](notebooks/README.md) explains the reading order and execution dependencies. [Methodology](docs/methodology.md) defines the analytical design, and the [glossary](docs/data-glossary.md) defines variables and units.
 
-Phase 2 adds completed Clustering and PCA chapters with executed notebooks,
-sample images, downloadable results and GitHub section links. Run just those
-analyses with `python scripts/run_phase2.py` after the cleaned dataset exists.
-See [Phase 2 methodology and reproduction](docs/methodology.md#clustering-and-pca).
+## Local setup and preview
 
-## Project scope
-
-- Research question: How are counties’ economic, demographic, and environmental characteristics associated with net migration, inflows, and outflows?
-- Coverage: 2009 onward, through each source's latest published release; native county geographies.
-- Sources: IRS migration, ACS county characteristics and migration flows, FEMA declarations, NOAA county climate.
-- Deliverables: immutable raw snapshots, separate cleaned tables, a descriptive county-year panel, and executed EDA notebooks.
-
-## Local setup
-
-The existing local environment is in `us-migration/` and uses Python 3.13.9.
-Activate it from the repository root in PowerShell:
-
-```powershell
-.\us-migration\Scripts\Activate.ps1
-python -m pip install -r requirements-dev.txt
-```
-
-For a fresh checkout, create an environment first:
+Use the existing `us-migration/` Python environment, or create `.venv/` for a fresh checkout:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.txt
+python -m http.server 8000 --bind 127.0.0.1 --directory website
 ```
 
-Add dependencies as they become necessary for the analysis.
+Open [the local website](http://127.0.0.1:8000). Its committed static exports support preview independently of the raw downloads.
 
-## API keys
+## Repository responsibilities
 
-Request a [Census API key](https://api.census.gov/data/key_signup.html) and follow
-the emailed activation instructions. If using NOAA Climate Data Online (CDO),
-request a [NOAA token](https://www.ncei.noaa.gov/cdo-web/token).
-IRS public files, OpenFEMA, and NOAA public bulk downloads do not need these keys.
-
-From the repository root, create your local configuration without overwriting
-an existing file:
-
-```powershell
-if (-not (Test-Path -LiteralPath .env)) { Copy-Item .env.example .env }
-notepad .env
-```
-
-Fill in the values in `.env` only:
-
-```dotenv
-CENSUS_API_KEY=your_census_key
-NOAA_CDO_TOKEN=your_noaa_token
-```
-
-Leave the NOAA value blank if using only bulk climate files. `.env` is ignored
-by Git; `.env.example` is the shareable template and must contain no secrets.
-
-After installing the requirements, load keys in Python. For a script or notebook
-running with the repository root as its working directory:
-
-```python
-import os
-from dotenv import load_dotenv
-
-load_dotenv(".env")
-census_key = os.getenv("CENSUS_API_KEY")
-noaa_token = os.getenv("NOAA_CDO_TOKEN")
-```
-
-For notebooks running from `notebooks/`, use `load_dotenv("../.env")` instead.
-Existing environment variables take precedence. A `.env` file is not loaded
-automatically by Python; download scripts must call the loader. Census requests
-use the `key` query parameter; CDO requests use a `token` HTTP header.
-Avoid printing credentials or logging request URLs containing keys.
-
-Verify Git excludes the local file with `git check-ignore .env` (it should print
-`.env`). The downloader loads this file and reports API retrieval errors without printing keys.
-
-## Repository layout
-
-| Path | Purpose |
+| Location | Responsibility |
 | --- | --- |
-| `data/raw/` | Original source data; ignored by Git |
-| `data/interim/` | Intermediate transformations; ignored by Git |
-| `data/processed/` | Analysis-ready data; ignored by Git |
-| `notebooks/` | Exploratory notebooks |
-| `src/us_migration/` | Reusable Python analysis code |
-| `scripts/` | Data download, preparation, and execution scripts |
-| `tests/` | Tests for reusable code |
-| `docs/` | Data sources, methodology, and decisions |
-| `reports/` | Written findings and deliverables |
-| `reports/figures/` | Generated figures; ignored by Git |
-| `models/` | Generated model artifacts; ignored by Git |
+| `data/raw/`, `data/interim/`, `data/processed/` | Immutable snapshots, temporary work, and validated analysis inputs |
+| `src/us_migration/` | Reusable transformations, cohort contracts, validation, and export utilities |
+| `notebooks/` | Questions, analysis choices, estimator fitting, evidence, and interpretation |
+| `reports/analyses/` | Owned numerical result bundles and generated figures, grouped by topic |
+| `reports/tables/` | Source and cleaning diagnostics |
+| `website/` | Static presentation and packaged publication copies |
+| `scripts/` | Acquisition, audits, and website packaging commands |
+| `tests/` | Numerical, dependency, export, and browser checks |
+| `docs/` | Workflow, methodology, data definitions, and contribution guidance |
 
-## Workflow
+## Reproduce or extend
 
-```powershell
-python scripts/download_data.py --start 2009 --end 2026
-python scripts/download_cleaning_support.py
-python -m pytest -q
-python scripts/run_notebooks.py
-python scripts/audit_data.py
-```
+Follow the [workflow](docs/workflow.md) for credentials, downloads, notebook execution, audits, and incremental export. Read [Adding an analysis](docs/adding-an-analysis.md) before extending the research. The three-outcome contract, declared cohorts, and provenance connect results across surfaces.
 
-See [the complete workflow](docs/workflow.md),
-[coverage manifest](docs/coverage-manifest.json),
-[observed coverage](docs/coverage-observed.csv),
-[methodology](docs/methodology.md), and [EDA findings](reports/eda_summary.md).
-The [quality/distribution notebook](notebooks/01_data_cleaning.ipynb)
-and [correlation notebook](notebooks/02_eda_findings.ipynb) contain saved outputs.
-They now demonstrate raw-data cleaning, export an audited missing-free analysis
-cohort, and produce ten captioned findings charts. See the
-[notebook cleaning guide](docs/notebook-cleaning.md) and
-[chart gallery](reports/eda_visualizations.md).
-Downloads resume from verified cached snapshots. Use `--refresh` to check for upstream revisions.
+Run `python -m pytest -q` for Python checks. Browser checks and local preview are documented in the [website guide](website/README.md).
 
-Keep credentials in a local `.env` file if needed; document variable names in
-`.env.example`. Never commit credentials or sensitive data. Review notebook
-outputs before committing them.
+Keep credentials in a local `.env` using [.env.example](.env.example). Source snapshots and processed data remain Git-ignored. Review saved notebook outputs before sharing.
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## License
-
-This project's original code and documentation are licensed under the
-[MIT License](LICENSE).
-
-Third-party datasets and other third-party materials remain subject to their
-respective licenses. Document source-data licenses in `docs/data-sources.md`.
-
-See [the cleaned-data glossary](docs/data-glossary.md) for variable definitions, units, provenance flags, and event-count semantics.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Original code and documentation use the [MIT License](LICENSE); source data retain their [documented licenses](docs/data-sources.md).

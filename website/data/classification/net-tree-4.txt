@@ -1,0 +1,34 @@
+|--- homeownership_pct <= 63.691
+|   |--- homeownership_pct <= 55.066
+|   |   |--- class: Net outflow
+|   |--- homeownership_pct >  55.066
+|   |   |--- log10_home_value <= 5.200
+|   |   |   |--- class: Net outflow
+|   |   |--- log10_home_value >  5.200
+|   |   |   |--- vacancy_pct <= 8.010
+|   |   |   |   |--- class: Net outflow
+|   |   |   |--- vacancy_pct >  8.010
+|   |   |   |   |--- class: Net inflow
+|--- homeownership_pct >  63.691
+|   |--- log10_home_value <= 5.079
+|   |   |--- precipitation_inches <= 40.490
+|   |   |   |--- bachelors_plus_pct <= 21.419
+|   |   |   |   |--- class: Net outflow
+|   |   |   |--- bachelors_plus_pct >  21.419
+|   |   |   |   |--- class: Net outflow
+|   |   |--- precipitation_inches >  40.490
+|   |   |   |--- log10_home_value <= 4.960
+|   |   |   |   |--- class: Net outflow
+|   |   |   |--- log10_home_value >  4.960
+|   |   |   |   |--- class: Net inflow
+|   |--- log10_home_value >  5.079
+|   |   |--- temperature_f <= 56.875
+|   |   |   |--- median_age <= 45.550
+|   |   |   |   |--- class: Net inflow
+|   |   |   |--- median_age >  45.550
+|   |   |   |   |--- class: Net inflow
+|   |   |--- temperature_f >  56.875
+|   |   |   |--- homeownership_pct <= 69.946
+|   |   |   |   |--- class: Net inflow
+|   |   |   |--- homeownership_pct >  69.946
+|   |   |   |   |--- class: Net inflow

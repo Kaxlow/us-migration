@@ -1,0 +1,154 @@
+{
+  "input": "data/processed/analysis_county_year.parquet",
+  "input_sha256": "5cc5016e0feb246d20ff68625661104efe2d63049d6e209136947cc251e233e2",
+  "year": 2023,
+  "counties": 3050,
+  "features": [
+    "log10_population",
+    "median_age",
+    "log10_income",
+    "log10_home_value",
+    "log10_rent",
+    "poverty_pct",
+    "unemployment_pct",
+    "vacancy_pct",
+    "homeownership_pct",
+    "bachelors_plus_pct",
+    "log1p_incidents",
+    "precipitation_inches",
+    "temperature_f"
+  ],
+  "feature_labels": [
+    "Log population",
+    "Median age",
+    "Log income",
+    "Log home value",
+    "Log rent",
+    "Poverty %",
+    "Unemployment %",
+    "Vacancy %",
+    "Homeownership %",
+    "Bachelor\u2019s+ %",
+    "Log1p incidents",
+    "Precipitation",
+    "Temperature"
+  ],
+  "thresholds": {
+    "inflow": [
+      39.00802297939778,
+      50.44741683035575
+    ],
+    "outflow": [
+      38.995501763696964,
+      47.03068951773615
+    ]
+  },
+  "seed": 42,
+  "test_size": 0.2,
+  "question": "How accurately can county characteristics classify counties by migration outcome in terms of net migration, inflows, and outflows?",
+  "split_counts": {
+    "train": 2440,
+    "test": 610
+  },
+  "balanced_counties": 8,
+  "imputed_counties": 6,
+  "outlier_flagged_counties": 133,
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.1"
+  },
+  "class_counts": {
+    "inflow": [
+      {
+        "classification_split": "test",
+        "inflow_class": "High",
+        "count": 206
+      },
+      {
+        "classification_split": "test",
+        "inflow_class": "Low",
+        "count": 222
+      },
+      {
+        "classification_split": "test",
+        "inflow_class": "Medium",
+        "count": 182
+      },
+      {
+        "classification_split": "train",
+        "inflow_class": "High",
+        "count": 813
+      },
+      {
+        "classification_split": "train",
+        "inflow_class": "Low",
+        "count": 814
+      },
+      {
+        "classification_split": "train",
+        "inflow_class": "Medium",
+        "count": 813
+      }
+    ],
+    "outflow": [
+      {
+        "classification_split": "test",
+        "outflow_class": "High",
+        "count": 203
+      },
+      {
+        "classification_split": "test",
+        "outflow_class": "Low",
+        "count": 211
+      },
+      {
+        "classification_split": "test",
+        "outflow_class": "Medium",
+        "count": 196
+      },
+      {
+        "classification_split": "train",
+        "outflow_class": "High",
+        "count": 813
+      },
+      {
+        "classification_split": "train",
+        "outflow_class": "Low",
+        "count": 814
+      },
+      {
+        "classification_split": "train",
+        "outflow_class": "Medium",
+        "count": 813
+      }
+    ],
+    "net": [
+      {
+        "classification_split": "test",
+        "net_class": "Net inflow",
+        "count": 352
+      },
+      {
+        "classification_split": "test",
+        "net_class": "Net outflow",
+        "count": 258
+      },
+      {
+        "classification_split": "train",
+        "net_class": "Balanced",
+        "count": 8
+      },
+      {
+        "classification_split": "train",
+        "net_class": "Net inflow",
+        "count": 1466
+      },
+      {
+        "classification_split": "train",
+        "net_class": "Net outflow",
+        "count": 966
+      }
+    ]
+  }
+}

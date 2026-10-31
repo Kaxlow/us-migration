@@ -43,3 +43,6 @@ Thumbs.db
 !/reports/figures/.gitkeep
 /models/*
 !/models/README.md
+
+# Canonical analysis figures are regenerated; website copies are published.
+/reports/analyses/**/figures/

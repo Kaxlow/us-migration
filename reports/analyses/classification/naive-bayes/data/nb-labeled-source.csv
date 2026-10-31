@@ -1,0 +1,21 @@
+county_fips,county_name,inflow_individuals_per_1000,inflow_class,classification_split
+01001,"Autauga County, Alabama",73.29003963903179,High,test
+01003,"Baldwin County, Alabama",58.97601533684803,High,train
+01005,"Barbour County, Alabama",27.063052873934645,Low,train
+01007,"Bibb County, Alabama",37.78439869989166,Low,train
+01009,"Blount County, Alabama",42.19793564055859,Medium,train
+01011,"Bullock County, Alabama",27.76410357388993,Low,train
+01013,"Butler County, Alabama",27.22390599244962,Low,train
+01015,"Calhoun County, Alabama",38.42742872887266,Low,train
+01017,"Chambers County, Alabama",43.77358490566038,Medium,train
+01019,"Cherokee County, Alabama",53.6790358388836,High,train
+01021,"Chilton County, Alabama",42.57142857142857,Medium,train
+01023,"Choctaw County, Alabama",22.035928143712574,Low,train
+01025,"Clarke County, Alabama",28.725550390316638,Low,train
+01027,"Clay County, Alabama",39.89286721172822,Medium,train
+01029,"Cleburne County, Alabama",51.52746820506097,High,test
+01031,"Coffee County, Alabama",76.137264664122,High,train
+01033,"Colbert County, Alabama",51.10324729392173,High,train
+01035,"Conecuh County, Alabama",35.05389536412234,Low,train
+01037,"Coosa County, Alabama",55.700862152475054,High,train
+01039,"Covington County, Alabama",38.38287247323824,Low,train

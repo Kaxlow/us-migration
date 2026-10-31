@@ -1,0 +1,14 @@
+{
+  "files": {
+    "pca-coefficients.csv": "9d1c466d9bcdff40113551384415da33c9d400d279e1508421e96f2d229bdb4e",
+    "pca-county-scores.csv": "676583275c1c3d7619178c465a4715a821a14b19490064c394f2404e3f882be2",
+    "pca-migration-associations.csv": "83cb7c4f78d1e42e007dc9b4d7ca53f3a331fbed4d44c5bfdb21fab805e300ba",
+    "pca-score-quintiles.csv": "f639afe1c6ef55d6fe7c5171d99248f4a4dd0e4e4fb80947bc76fb39f2cfadba",
+    "pca-standardized-sample.csv": "11a882d42f0b01655d96d6dce76ded745a68fcfe95391f82f04a438646479bb7",
+    "pca-toy.json": "6a14b3e018cea740393c8aa50d7d541c2de6fe3b2897a92d39aa83163127127e",
+    "pca-variable-correlations.csv": "c75c118ca31fe28029a3caf6ef6d0cd83b5f4415d2437c1de5adecaf1562f04d",
+    "pca-variance.csv": "08a87173a48bea193484ae816a8ee4ce88b7ce4e606c96c3bf2fd4acdcfd236f",
+    "pca.json": "2be886d59324e946519cc78ad0f1bb419c9ba39e4ffe3c19b303e94838322f35",
+    "sample-row-keys.csv": "19dbefa896834fb146625ac06ec12e355e5cbca9ed31c3875081eec80ba10fe8"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "files": {
+    "clustering-characteristics-dendrogram.png": "4ce097a491a39d9aedb69d8fcd376ac1a735dccf851323f52a77d65bd49657d1",
+    "clustering-characteristics-outcomes.png": "bf65bf51c218ad04c492729a7f5680846b32969c8e6d395aeaaf24bd990202e7",
+    "clustering-characteristics-profiles.png": "8aa1ebc19f319049632a237ebf2eb9d2be8e0611d84c95c05faabeee12f655a5",
+    "clustering-characteristics-sample-a.png": "3cc8524c2bf52883f31839660352fae1b796a71eb6b5274ac1ae4323889755f7",
+    "clustering-characteristics-sample-b.png": "cbd6b26139f19c0152ce514a4130b74b1b6c0dcb1afa4988de5de99535c44b46",
+    "clustering-characteristics-scatter.png": "d0c91044c3eaf79593ca2c24fc031a9cb06757ce2a28779b66ebec00f0bc0ad5",
+    "clustering-cross-view.png": "94f4aea8b38c39a1f15284ecf88a5cd0323ed49e8c7a794379e02a5b47ec4dbf",
+    "clustering-migration-dendrogram.png": "20600708f217761021f03356d5b6d7bfed6aaf1c139fb529f081eeece72c8d6b",
+    "clustering-migration-outcomes.png": "5078a5b1065c57082de7bbbb5d9776fab08e2304b24ee98d83aec2ce37ccaafa",
+    "clustering-migration-profiles.png": "b5c707a42ea5e748c270ee39566afa9b7f25c81450b7b559a6725089e41af4f3",
+    "clustering-migration-sample.png": "6370375d3eb5a572a6286bd3c863537b465dc8a829578ea9bbf8b6c1665d36df",
+    "clustering-migration-scatter.png": "c9ab4dff650b94769b5d19d2a6a8689f71274c33e024d8e78472c25cfacac7c1",
+    "clustering-overview-hierarchy.png": "9155bd88d1f0adda619cbd17342eb0c2a17a50caa2ea641aa1db9159ae49588e",
+    "clustering-overview-partitional.png": "7ebc1f3eda10b66df3ccba691e13dffc54c2625ecf72d642635413be1dad446e",
+    "clustering-silhouette.png": "fc120b74dd754fc61aa19153f8ced50aa2ee3a80894075b54632e38bdbeccab7"
+  }
+}

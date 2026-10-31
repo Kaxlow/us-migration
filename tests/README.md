@@ -1,12 +1,9 @@
-# Tests
+# Verification
 
-Run `python -m pytest -q` in the repo environment.
-Small offline fixtures check flow direction, suppression and valid negative AGI,
-duplicate/conflicting IRS pairs, ACS missing codes and MOEs, NOAA state conversion,
-FEMA geography/date handling, missing migration joins, immutable snapshots, cache
-reuse, and credential redaction. Real-data diagnostics are in the executed notebooks.
+Run `python -m pytest -q`. The configured test root is `tests/`, keeping ignored interim work outside collection. If Windows restricts temporary directories, pass a fresh repository-local `--basetemp=data/interim/<unique-name>` and `-p no:cacheprovider`.
 
-`test_phase2.py` checks the unsupervised input contract, outcome exclusion,
-cluster selection and exported summaries, PCA geometry, shared county rows and
-executed notebooks. It can validate the committed result exports without raw
-source downloads; if the local cleaned Parquet exists, its checksum is checked too.
+Offline fixtures check acquisition integrity, parsing, geographic handling, imputation, and cohort validation. Unsupervised and classification tests independently recompute exported summaries and verify selection rules, row membership, PCA geometry, prediction metrics, and tree structure. Workflow checks establish that Python imports are independent of notebook files. Export tests cover topic isolation, incompatible provenance, checksum failures, and ownership-bound cleanup.
+
+Saved notebooks retain executed evidence. Raw/processed inputs remain optional for export-only checks; tests requiring those inputs identify their dependency.
+
+See [browser verification](../website/README.md#browser-verification) for the interactive suites and viewport coverage.
