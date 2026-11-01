@@ -8,7 +8,7 @@ export async function drawCharts({clusteringResults,geo,states}) {
   chartAxes(svg,x,y,'Number of clusters k','Mean silhouette');
   svg.select('.x-axis').call(d3.axisBottom(x).tickValues(d3.range(2,9)).tickFormat(d3.format('d')));
   const groups=d3.groups(clusteringResults.metrics,r=>`${r.view} / ${r.method}`);
-  const colors=groups.map(([name])=>name.startsWith('migration')?'#b27c16':'#697787');
+  const colors=groups.map(([name])=>name.startsWith('migration')?'#965030':'#3d7067');
   groups.forEach(([name,rows],i)=>{
     svg.append('path').datum(rows).attr('d',d3.line().x(r=>x(r.k)).y(r=>y(r.silhouette))).attr('fill','none').attr('stroke',colors[i]).attr('stroke-width',2).attr('stroke-dasharray',name.includes('hierarchical')?'6 3':null);
     inspect(svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx',r=>x(r.k)).attr('cy',r=>y(r.silhouette)).attr('r',5).attr('fill',colors[i]),r=>`${name}, k=${r.k}, silhouette=${r.silhouette.toFixed(3)}`);

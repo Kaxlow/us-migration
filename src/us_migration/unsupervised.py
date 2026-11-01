@@ -6,16 +6,24 @@ import textwrap
 from .snapshot_style import PAPER, INK, style_cell
 
 import matplotlib.pyplot as plt
+from matplotlib import colormaps
+from matplotlib.colors import LinearSegmentedColormap
+from cycler import cycler
 import numpy as np
 import pandas as pd
 
 from .cohorts import FEATURES, LABELS, MIGRATION, STANDARDIZED_FEATURES, STANDARDIZED_MIGRATION, prepare_cross_section
-COLORS = ['#80600d', '#697787', '#36847c', '#b56043', '#8c6eaa', '#466b9c', '#bb903b', '#626957']
+COLORS = ['#965030', '#3d7067', '#8a9272', '#b77f5a', '#665f50', '#749b8e', '#c3a875', '#293d36']
 
 
 def configure_plots():
+    for name, colors in [('migration_sequential', ['#f8f3e8', '#8eafa0', '#293d36']),
+                         ('migration_diverging', ['#965030', '#f8f3e8', '#3d7067'])]:
+        if name not in colormaps:
+            colormaps.register(LinearSegmentedColormap.from_list(name, colors))
     plt.rcParams.update({'figure.facecolor': '#ffffff', 'axes.facecolor': '#ffffff',
-                         'text.color': '#443313', 'axes.labelcolor': '#443313',
+                         'text.color': '#293d36', 'axes.labelcolor': '#293d36',
+                         'axes.prop_cycle': cycler(color=COLORS),
                          'axes.edgecolor': '#bbae90', 'xtick.color': '#665a43',
                          'ytick.color': '#665a43', 'font.family': 'DejaVu Sans',
                          'axes.titlesize': 15, 'axes.labelsize': 11,

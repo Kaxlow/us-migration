@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-10-30T09:50:34.305683</dc:date>
+    <dc:date>2026-10-31T16:19:14.091211</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -44,7 +44,7 @@ z
 " style="fill: #eee7d7; stroke: #000000; stroke-linejoin: miter"/>
     </g>
     <!-- Parent: 6 inflow / 4 outflow -->
-    <g style="fill: #443313" transform="translate(289.376562 57.750047) scale(0.1 -0.1)">
+    <g style="fill: #293d36" transform="translate(289.376562 57.750047) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-33" d="M 1259 4147 
 L 1259 2394 
@@ -391,7 +391,7 @@ z
 " style="fill: #eee7d7; stroke: #000000; stroke-linejoin: miter"/>
     </g>
     <!-- Left: 4 inflow / 0 outflow -->
-    <g style="fill: #443313" transform="translate(114.390219 214.926047) scale(0.1 -0.1)">
+    <g style="fill: #293d36" transform="translate(114.390219 214.926047) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-2f" d="M 628 4666 
 L 1259 4666 
@@ -486,7 +486,7 @@ z
 " style="fill: #eee7d7; stroke: #000000; stroke-linejoin: miter"/>
     </g>
     <!-- Right: 2 inflow / 4 outflow -->
-    <g style="fill: #443313" transform="translate(473.799625 214.926047) scale(0.1 -0.1)">
+    <g style="fill: #293d36" transform="translate(473.799625 214.926047) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-35" d="M 2841 2188 
 Q 3044 2119 3236 1894 
@@ -641,7 +641,7 @@ L 530.736967 178.887039
    </g>
    <g id="text_4">
     <!-- Illustrative characteristic split -->
-    <g style="fill: #443313" transform="translate(282.178125 140.4) scale(0.1 -0.1)">
+    <g style="fill: #293d36" transform="translate(282.178125 140.4) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-2c" d="M 628 4666 
 L 1259 4666 

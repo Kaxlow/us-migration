@@ -449,6 +449,22 @@
       "spearman_rho": 0.33523679002169665
     }
   },
+  "conclusion_sections": [
+    {
+      "title": "Summarizing county characteristics",
+      "paragraphs": [
+        "PC1\u2013PC5 retain 80.7% of the variation in 13 standardized county characteristics across 3,050 counties in 2023. PC1 and PC2 retain 54.5%, so a two-dimensional display captures just over half of the characteristic variation.",
+        "PC1 describes an income, education and housing-cost dimension. Its scores accompany greater two-way movement: Spearman correlations are 0.309 with inflow and 0.335 with outflow, compared with 0.083 with net migration."
+      ]
+    },
+    {
+      "title": "Migration along the components",
+      "paragraphs": [
+        "PC3 combines rainfall, age and incident history and has the strongest net-migration association among the five retained components (Spearman correlation 0.362). PC4 and PC5 have weaker negative net associations, while PC2 has weak associations with all three outcomes.",
+        "These results answer Question 7 by connecting broad county dimensions with observed migration rates. PCA selects directions that explain characteristic variance; the migration comparisons are subsequent descriptive analyses. Component signs depend on orientation, correlated inputs share information, and these associations describe the 2023 cohort."
+      ]
+    }
+  ],
   "coefficients": {
     "log10_population": {
       "PC1": 0.32403880404956764,
@@ -636,8 +652,9 @@
     }
   },
   "conclusions": [
-    "PC1\u2013PC5 retain 80.7% of variation in the 13 standardized county characteristics. PC1 and PC2 alone retain 54.5%.",
-    "PC1, the income, education and housing-cost dimension, accompanies greater two-way movement: inflow rho = 0.309 and outflow rho = 0.335, with a weaker net association (rho = 0.083).",
-    "PC3, combining rainfall, age and incident history, has the strongest net-migration association among the retained components (rho = 0.362). PC4 and PC5 show weaker negative net associations; PC2 has weak associations with all three outcomes. These are descriptive patterns within the observed county cohort."
+    "PC1\u2013PC5 retain 80.7% of the variation in 13 standardized county characteristics across 3,050 counties in 2023. PC1 and PC2 retain 54.5%, so a two-dimensional display captures just over half of the characteristic variation.",
+    "PC1 describes an income, education and housing-cost dimension. Its scores accompany greater two-way movement: Spearman correlations are 0.309 with inflow and 0.335 with outflow, compared with 0.083 with net migration.",
+    "PC3 combines rainfall, age and incident history and has the strongest net-migration association among the five retained components (Spearman correlation 0.362). PC4 and PC5 have weaker negative net associations, while PC2 has weak associations with all three outcomes.",
+    "These results answer Question 7 by connecting broad county dimensions with observed migration rates. PCA selects directions that explain characteristic variance; the migration comparisons are subsequent descriptive analyses. Component signs depend on orientation, correlated inputs share information, and these associations describe the 2023 cohort."
   ]
 }

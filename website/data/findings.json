@@ -294,18 +294,20 @@
     "year": 2023,
     "counties": 3050,
     "conclusions": [
-      "Both methods select two characteristic profiles and two migration groups among 3,050 counties. Agreement between methods is moderate (adjusted Rand index 0.548 for characteristics and 0.448 for migration), so the group boundaries depend on the chosen geometry.",
-      "The higher-income, education and housing-cost characteristic profile has higher median inflow and outflow rates (51.31 and 48.05) than the other profile (41.97 and 40.88). Median net migration differs by only 0.70 per 1,000, and the middle halves of the net-migration distributions overlap substantially. The characteristic profiles primarily distinguish two-way turnover.",
-      "Clustering inflow and outflow directly separates higher-turnover and lower-turnover counties. Their median net rates are 7.81 and 0.62 per 1,000, respectively. These outcome contrasts follow the rate-based grouping; the characteristic analysis compares migration after fitting. All reported rates describe IRS-covered individuals per 1,000 ACS residents."
+      "K-means and hierarchical clustering each select two characteristic profiles among 3,050 counties in 2023. Their adjusted Rand index of 0.548 indicates moderate agreement, so county assignments depend partly on the distance measure and clustering method.",
+      "The profile with higher income, education and housing costs has median inflow and outflow rates of 51.31 and 48.05 per 1,000 residents, compared with 41.97 and 40.88 in the other profile. The profiles differ by only 0.70 in median net migration, and their middle 50% of net rates overlap substantially. County characteristics primarily distinguish two-way turnover in this comparison.",
+      "Clustering inflow and outflow rates directly also selects two groups. The higher-turnover group has a median net rate of 7.81 per 1,000 residents, compared with 0.62 for the lower-turnover group. Agreement between clustering methods is moderate (adjusted Rand index 0.448). These migration differences follow from grouping the rates themselves; the characteristic profiles compare migration after fitting.",
+      "Together, the two views answer Question 8: counties share broad characteristic and movement profiles, while grouping choices affect the boundaries. Rates measure IRS-covered individuals per 1,000 ACS residents. These descriptive group comparisons support interpretation of the observed cohort; causal explanations require a separate design."
     ]
   },
   "pca": {
     "year": 2023,
     "counties": 3050,
     "conclusions": [
-      "PC1\u2013PC5 retain 80.7% of variation in the 13 standardized county characteristics. PC1 and PC2 alone retain 54.5%.",
-      "PC1, the income, education and housing-cost dimension, accompanies greater two-way movement: inflow rho = 0.309 and outflow rho = 0.335, with a weaker net association (rho = 0.083).",
-      "PC3, combining rainfall, age and incident history, has the strongest net-migration association among the retained components (rho = 0.362). PC4 and PC5 show weaker negative net associations; PC2 has weak associations with all three outcomes. These are descriptive patterns within the observed county cohort."
+      "PC1\u2013PC5 retain 80.7% of the variation in 13 standardized county characteristics across 3,050 counties in 2023. PC1 and PC2 retain 54.5%, so a two-dimensional display captures just over half of the characteristic variation.",
+      "PC1 describes an income, education and housing-cost dimension. Its scores accompany greater two-way movement: Spearman correlations are 0.309 with inflow and 0.335 with outflow, compared with 0.083 with net migration.",
+      "PC3 combines rainfall, age and incident history and has the strongest net-migration association among the five retained components (Spearman correlation 0.362). PC4 and PC5 have weaker negative net associations, while PC2 has weak associations with all three outcomes.",
+      "These results answer Question 7 by connecting broad county dimensions with observed migration rates. PCA selects directions that explain characteristic variance; the migration comparisons are subsequent descriptive analyses. Component signs depend on orientation, correlated inputs share information, and these associations describe the 2023 cohort."
     ]
   },
   "classification": {
@@ -466,10 +468,9 @@
       },
       "test_count": 610,
       "conclusions": [
-        "The selected Multinomial NB (alpha 1) correctly classifies 50.8% of 610 held-out counties by inflow-rate tertile; the majority baseline achieves 36.4%.",
-        "Macro-F1 is 0.498, compared with baseline 0.178; balanced accuracy is 50.1%. The medium class has the lowest recall (34.6%).",
-        "Selected mean training-fold macro-F1 is 0.513 and validation macro-F1 is 0.501. This gap describes how the fitted specification transfers to held-out training folds.",
-        "Rate tertiles describe relative inflow intensity among training counties. These contemporaneous associations support retrospective classification; spatial dependence, prior exploration, source coverage and binning limit claims about future migration."
+        "The selected Multinomial Naive Bayes model (alpha 1) correctly classifies 50.8% of 610 held-out counties by 2023 inflow-rate tertile. In comparison, the majority baseline achieves 36.4%. Macro-F1 rises from 0.178 for the baseline to 0.498 for the model, and balanced accuracy is 50.1%. County characteristics therefore provide useful, though limited, information about relative inflow intensity.",
+        "The medium-inflow class has the lowest recall (34.6%), showing that counties in the middle of the inflow distribution are harder to separate using these binned characteristics. Mean training-fold macro-F1 is 0.513 and validation macro-F1 is 0.501; the small gap suggests similar performance across the fitted and held-out training folds.",
+        "This answers the inflow portion of Question 9. Rate tertiles describe relative intensity using training-derived thresholds. The fitted indicator patterns describe associations; correlated predictors, quantile binning and the conditional-independence assumption constrain interpretation. The evidence supports retrospective classification on the observed 2023 cohort."
       ]
     },
     "outflow": {
@@ -629,9 +630,8 @@
       },
       "test_count": 610,
       "conclusions": [
-        "For outflow, the selected depth-6 tree classifies 54.1% of 610 held-out counties correctly, compared with 34.6% for the majority baseline.",
-        "Macro-F1 is 0.525 versus baseline 0.171, with balanced accuracy 53.7%. The lowest-recall class is medium (30.6%).",
-        "Mean training-fold macro-F1 is 0.609, compared with validation 0.517. The selected model balances fit against validation performance under the fixed candidate grid."
+        "The selected depth-6 tree correctly classifies 54.1% of 610 held-out counties by 2023 outflow-rate tertile, compared with 34.6% for the majority baseline. Macro-F1 is 0.525 versus 0.171, and balanced accuracy is 53.7%. These gains show that county characteristics help distinguish relative outflow intensity.",
+        "The medium-outflow class has the lowest recall (30.6%). Mean training-fold macro-F1 is 0.609, compared with validation macro-F1 of 0.517. This gap shows that the deeper selected tree fits its training counties more closely than it classifies held-out training folds."
       ]
     },
     "net": {
@@ -749,9 +749,9 @@
       },
       "test_count": 610,
       "conclusions": [
-        "For net, the selected depth-4 tree classifies 65.4% of 610 held-out counties correctly, compared with 57.7% for the majority baseline.",
-        "Macro-F1 is 0.595 versus baseline 0.366, with balanced accuracy 61.0%. The lowest-recall class is net outflow (32.2%).",
-        "Mean training-fold macro-F1 is 0.691, compared with validation 0.672. The selected model balances fit against validation performance under the fixed candidate grid."
+        "The selected depth-4 tree correctly classifies 65.4% of 610 held-out counties as net inflow or net outflow, compared with 57.7% for the majority baseline. Macro-F1 is 0.595 versus 0.366, and balanced accuracy is 61.0%.",
+        "Net-outflow recall is 32.2%, so the model identifies fewer than one third of actual net-outflow counties. Overall accuracy should be read alongside this class-specific result. Mean training-fold macro-F1 is 0.691 and validation macro-F1 is 0.672.",
+        "Together, these tasks answer the outflow and net-direction portions of Question 9. Tree paths express conditional predictive associations on the observed 2023 cohort. Each target has its own class distribution and baseline, so differences between the tasks reflect both the target and fitted model. The Findings chapter combines these results with the independent inflow analysis."
       ]
     }
   },

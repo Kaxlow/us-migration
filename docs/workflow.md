@@ -173,6 +173,8 @@ python -m pytest -q
 
 Run the cleaning-evidence command after saving the cleaning notebook. Run the packaging command after saving an analytical notebook. Classification packaging requires both independently generated bundles, with matching input, county membership, split, and target context. A failed validation leaves existing publication artifacts intact. Packaging updates the compact Findings payload after selected topics.
 
+Conclusions in clustering, PCA, Naive Bayes and decision trees are authored directly in Markdown cells. The repository module `src/us_migration/analysis_exports.py` copies that reviewed prose into the topic bundles. Each notebook invokes it with one collapsed helper call immediately before Conclusions; the conclusion sections contain only Markdown. Review the conclusion values after changing data or model choices, then save the notebook before exporting. Rebuild the landing-page county-pair flow files with `python scripts/build_flow_map.py` after refreshing `irs_county_flows.parquet`.
+
 For a fresh checkout, regenerate ignored canonical figures by executing the corresponding notebooks before packaging. Existing committed website artifacts remain available for local preview. Source and cleaning audit tables remain in `reports/tables/`; numerical analytical evidence belongs to topic bundles.
 
 Follow [Adding an analysis](adding-an-analysis.md) for incremental extensions and [website verification](../website/README.md#browser-verification) for interactive checks.

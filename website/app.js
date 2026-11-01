@@ -39,7 +39,7 @@ window.addEventListener('popstate',()=>{
   const position=history.state?.scrollY;
   restoring=true;route(position).finally(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{restoring=false;})));
 });
-nav.innerHTML=[...new Set(chapters.map(c=>c.group))].map(group=>{
+nav.innerHTML=['Overview','Data & Methods','Analyses','Findings','Future work'].map(group=>{
   const links=chapters.filter(c=>c.group===group).map(c=>`<a href="#${c.slug}" data-status="${c.status}">${c.title}</a>`).join('');
   return group==='Future work'?`<details class="nav-group future-nav"><summary>Future work</summary>${links}</details>`:`<div class="nav-group"><span class="nav-group-label">${group}</span>${links}</div>`;
 }).join('');
@@ -138,28 +138,17 @@ function arrangeSections(chapter){
   const byId=id=>sections.find(s=>s.querySelector(':scope > h2')?.id===id);
   if(chapter.group==='Analyses'){
     const overview=byId('section-overview');
-    const details=document.createElement('details');details.className='method-details';
-    details.innerHTML='<summary>How the method works</summary>';
-    while(overview.children.length>1)details.append(overview.children[1]);
     const bundle=chapter.slug==='clustering'?data.clusteringResults:chapter.slug==='pca'?data.pcaResults:chapter.slug==='naivebayes'?data.naiveBayesResults:data.decisionTreeResults;
     const sentences=bundle.conclusions||Object.values(bundle.tasks).map(t=>t.conclusions[0]);
     const question={clustering:'Can county profiles reveal different migration patterns?',pca:'Which dimensions summarize county characteristics?',naivebayes:'How accurately do characteristics classify inflow intensity?',dectrees:'How accurately do characteristics classify outflow intensity and net direction?'}[chapter.slug];
-    overview.insertAdjacentHTML('beforeend',`<div class="prose chapter-answer"><p class="study-question">${question}</p>${sentences.slice(0,chapter.slug==='clustering'?2:1).map(t=>`<p>${esc(t)}</p>`).join('')}</div>`);
-    overview.append(details);
-    for(const id of ['section-overview','section-results','section-conclusions','section-data-prep','section-code']){
-      const section=byId(id);if(!section)continue;
-      if(['section-data-prep','section-code'].includes(id)){
-        const extra=document.createElement('details');extra.className='supporting-detail';
-        extra.innerHTML='<summary>'+ (id==='section-code'?'Execution and code references':'Cohort, transformations and sample tables')+'</summary>';
-        while(section.children.length>1)extra.append(section.children[1]);section.append(extra);
-      }
-      content.append(section);
+    overview.querySelector('.analysis-prose')?.insertAdjacentHTML('beforebegin','<h3>How the method works</h3>');
+    overview.querySelector('h2').insertAdjacentHTML('afterend',`<div class="prose chapter-answer"><p class="study-question">${question}</p>${sentences.slice(0,chapter.slug==='clustering'?2:1).map(t=>`<p>${esc(t)}</p>`).join('')}</div>`);
+    for(const id of ['section-overview','section-data-prep','section-code','section-results','section-conclusions']){
+      const section=byId(id);if(section)content.append(section);
     }
   }else if(chapter.slug==='data-prep-eda'){
     for(const id of ['section-eda-findings','section-data-sources','section-data-cleaning'])content.append(byId(id));
-    const cleaning=byId('section-data-cleaning'),details=document.createElement('details');
-    details.innerHTML='<summary>Inspect the source-by-source cleaning evidence</summary>';
-    while(cleaning.children.length>1)details.append(cleaning.children[1]);cleaning.append(details);
+
   }
 }
 main.addEventListener('toggle',()=>{updateStickyOffsets();window.dispatchEvent(new Event('resize'));},true);

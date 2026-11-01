@@ -2408,9 +2408,8 @@
         ]
       },
       "conclusions": [
-        "For outflow, the selected depth-6 tree classifies 54.1% of 610 held-out counties correctly, compared with 34.6% for the majority baseline.",
-        "Macro-F1 is 0.525 versus baseline 0.171, with balanced accuracy 53.7%. The lowest-recall class is medium (30.6%).",
-        "Mean training-fold macro-F1 is 0.609, compared with validation 0.517. The selected model balances fit against validation performance under the fixed candidate grid."
+        "The selected depth-6 tree correctly classifies 54.1% of 610 held-out counties by 2023 outflow-rate tertile, compared with 34.6% for the majority baseline. Macro-F1 is 0.525 versus 0.171, and balanced accuracy is 53.7%. These gains show that county characteristics help distinguish relative outflow intensity.",
+        "The medium-outflow class has the lowest recall (30.6%). Mean training-fold macro-F1 is 0.609, compared with validation macro-F1 of 0.517. This gap shows that the deeper selected tree fits its training counties more closely than it classifies held-out training folds."
       ]
     },
     "net": {
@@ -3906,9 +3905,9 @@
         ]
       },
       "conclusions": [
-        "For net, the selected depth-4 tree classifies 65.4% of 610 held-out counties correctly, compared with 57.7% for the majority baseline.",
-        "Macro-F1 is 0.595 versus baseline 0.366, with balanced accuracy 61.0%. The lowest-recall class is net outflow (32.2%).",
-        "Mean training-fold macro-F1 is 0.691, compared with validation 0.672. The selected model balances fit against validation performance under the fixed candidate grid."
+        "The selected depth-4 tree correctly classifies 65.4% of 610 held-out counties as net inflow or net outflow, compared with 57.7% for the majority baseline. Macro-F1 is 0.595 versus 0.366, and balanced accuracy is 61.0%.",
+        "Net-outflow recall is 32.2%, so the model identifies fewer than one third of actual net-outflow counties. Overall accuracy should be read alongside this class-specific result. Mean training-fold macro-F1 is 0.691 and validation macro-F1 is 0.672.",
+        "Together, these tasks answer the outflow and net-direction portions of Question 9. Tree paths express conditional predictive associations on the observed 2023 cohort. Each target has its own class distribution and baseline, so differences between the tasks reflect both the target and fitted model. The Findings chapter combines these results with the independent inflow analysis."
       ]
     }
   },

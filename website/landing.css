@@ -1,0 +1,17 @@
+.landing{background:#f8f3e8}.landing main{max-width:1500px;padding:0 4% 40px}.flow-explorer{background:#fffdf7;border:1px solid var(--line);border-radius:12px;overflow:hidden}.flow-controls{display:flex;align-items:end;gap:18px;padding:20px 24px;border-bottom:1px solid var(--line);flex-wrap:wrap}.flow-controls label{display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:600;letter-spacing:.5px}.flow-controls input,.flow-controls select{background:#fffdf7;border:1px solid #cfc4ad;border-radius:5px;padding:9px 12px;color:var(--ink);font-size:14px;letter-spacing:0;height:42px}.county-control{flex:1;min-width:220px}.flow-controls button,.flow-view-controls button,#flow-download{border:1px solid #cfc4ad;border-radius:5px;background:#eee7d7;padding:9px 13px;color:var(--ink);font-size:12px}.flow-map-layout{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;padding:12px 20px 0;align-items:center}.flow-stage{position:relative;min-width:0;height:clamp(350px,48vh,600px)}#flow-canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}#flow-canvas:active{cursor:grabbing}.flow-view-controls{position:absolute;top:6px;right:6px;display:flex;gap:5px}.flow-view-controls button{padding:5px 10px;background:#fffdf7e8}.flow-key{display:flex;gap:12px 22px;flex-wrap:wrap;align-items:center;padding:10px 24px;font-size:11px;color:var(--muted)}.flow-key span{display:flex;align-items:center;gap:7px}.flow-key i{width:24px;height:3px;display:inline-block}.flow-key .inward{background:#965030}.flow-key .outward{background:#3d7067}.flow-status{border-top:1px solid var(--line);padding:13px 24px;background:#f2ecdf;font-size:13px;min-height:49px}#flow-tooltip{position:absolute;pointer-events:none;background:#263b34;color:#fffdf7;padding:9px 12px;font-size:12px;border-radius:5px;max-width:290px;z-index:5}.atlas-next{text-align:center;padding:26px 0 35px}.analysis-button{display:inline-flex;gap:45px;align-items:center;background:#293d36;color:#fff8e9;padding:13px 24px;border-radius:5px;text-decoration:none;font-size:15px}.analysis-button:hover{background:#3d7067}
+@media(max-width:700px){.landing main{padding:0 12px 30px}.flow-controls{padding:14px;gap:12px}.county-control{flex-basis:100%;min-width:0}.flow-controls input{width:100%}.flow-controls label:not(.county-control){flex:1;min-width:0}.flow-controls select{max-width:100%;width:100%;padding:8px}.flow-map-layout{grid-template-columns:85px minmax(0,1fr);gap:4px;padding:6px}.flow-stage{height:350px}.flow-view-controls{gap:3px;right:0}.flow-view-controls button{font-size:10px;padding:5px 7px}.flow-key{font-size:10px;padding:10px 12px;gap:8px}.flow-status{padding:12px;font-size:12px}}
+
+.landing main{padding-top:0}
+.atlas-title{font-size:clamp(28px,4vw,48px);line-height:1.15;letter-spacing:-1px;font-weight:500;text-align:center;margin:30px 0 24px}
+.flow-explorer{overflow:visible}
+.flow-map-layout{display:block}
+.flow-stage{height:clamp(350px,58vh,650px);overflow:hidden}
+.county-control{position:relative}
+.county-control .county-suggestions{width:100%;max-width:100%;min-width:0}
+.flow-controls .county-suggestions button{border:0;background:transparent;font-weight:400;letter-spacing:0}
+.county-suggestions button:hover,.county-suggestions button:focus{background:#eee7d7}
+.flow-status:empty{display:none}
+.flow-status{min-height:0;border:0;background:transparent}
+.atlas-next{padding:24px 0 0}
+.analysis-button{padding:16px 30px;font-size:17px;font-weight:600}
+@media(max-width:700px){.atlas-title{margin:24px 0 20px}.flow-stage{height:350px}}

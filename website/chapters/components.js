@@ -21,3 +21,7 @@ export function cohortPreparation(d, pca=false) {
   <div class="analysis-samples">${resultFigure(prefix+'-a','Model input sample · columns 1–7','Standardized numeric features. Values are rounded for this image; CSVs retain precision.',book,'Data-preparation')}${resultFigure(prefix+'-b','Model input sample · columns 8–13','The same five counties, with the remaining characteristic inputs.',book,'Data-preparation')}${pca?'':resultFigure('clustering-migration-sample','Migration input sample','Standardized inflow and outflow rates; names and outcome categories are excluded.',book,'Data-preparation')}</div>
   <p class="analysis-downloads">${resultDownload(pca?'pca-standardized-sample.csv':'characteristics-standardized-sample.csv','Download numeric characteristic sample')}${pca?'':` · ${resultDownload('migration-standardized-sample.csv','Download numeric migration sample')}`} · ${resultDownload('sample-row-keys.csv','Separate row keys',pca?'pca':'clustering')}</p>`;
 }
+
+export function conclusionProse(sections) {
+  return `<div class="prose analysis-prose">${sections.map(s=>`${s.title?`<h3>${esc(s.title)}</h3>`:''}${s.paragraphs.map(p=>`<p>${esc(p)}</p>`).join('')}`).join('')}</div>`;
+}

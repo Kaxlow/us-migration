@@ -64,9 +64,9 @@ export function cleaningContent(cleaningEvidence) {
         <h3><span>${String(index + 1).padStart(2, '0')}</span> ${stage.title}</h3>
         <p>${stage.text}</p>
         ${stage.image ? `<figure class="cleaning-comparison"><a href="assets/cleaning/${stage.image}.png"><img loading="lazy" src="assets/cleaning/${stage.image}.png" alt="Raw versus cleaned comparison for ${stage.title}"></a><figcaption>${stage.imageCaption} Select the image to inspect it at full size.</figcaption></figure>` : ''}
-        ${stage.evidence.map(([key, label]) => `<details class="notebook-evidence" ${index >= 5 ? 'open' : ''}><summary>${label}</summary>
+        ${stage.evidence.map(([key, label]) => `<section class="notebook-evidence"><h4>${label}</h4>
           ${cleaningEvidence.sections[key].outputs.map(output => `<div class="notebook-output"><div class="table-scroll" tabindex="0" aria-label="Data preparation output: ${esc(label)}">${output.html}</div></div>`).join('')}
-        </details>`).join('')}
+        </section>`).join('')}
         ${index === 5 || index === 7 ? `<div class="notebook-output"><p class="caption">${index === 5 ? 'After joining: five rows from the saved county-year panel.' : 'Before and after imputation: the same records in the original panel and prepared export, before final row selection.'}</p><div class="table-scroll" tabindex="0" aria-label="${index === 5 ? 'Joined dataset snapshot' : 'Paired imputation snapshot'}">${cleaningEvidence.exportSnapshots[index === 5 ? 'joined' : 'imputed']}</div></div>` : ''}
         ${stage.note ? `<p class="caption">${stage.note}</p>` : ''}
       </article>`).join('')}</div>`;

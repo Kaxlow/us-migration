@@ -2,7 +2,7 @@ import {outcomes,outcomeSelect,outcomeById,cardControls} from '../outcomes.js';
 import {d3} from '../vendor.js';
 import {chartSvg,chartAxes} from './chart-utils.js';
 
-export const clusterColors=['#b27c16','#697787','#36847c','#b56043'];
+export const clusterColors=['#965030','#3d7067','#8a9272','#b77f5a'];
 const number=d3.format('.2f');
 // Pointer, touch and keyboard inspection share a visible readout.
 export function inspect(selection,label){
@@ -46,7 +46,7 @@ export function heatmap(id,rows,columns,values,limit=2,percent=false){
   const svg=chartSvg(id,'Interactive matrix',Math.max(260,rows.length*27+90)),height=+svg.attr('viewBox').split(' ')[3];
   svg.attr('viewBox',`0 0 ${width} ${height}`).style('font-size','12px');
   const x=d3.scaleBand().domain(columns).range([left,width-12]).padding(.04),y=d3.scaleBand().domain(rows).range([35,height-55]).padding(.04);
-  const color=percent?d3.scaleLinear().domain([0,100]).range(['#f5f0e4','#b27c16']):d3.scaleLinear().domain([-limit,0,limit]).range(['#697787','#f5f0e4','#b27c16']).clamp(true);
+  const color=percent?d3.scaleLinear().domain([0,100]).range(['#f5f0e4','#965030']):d3.scaleLinear().domain([-limit,0,limit]).range(['#3d7067','#f5f0e4','#965030']).clamp(true);
   svg.append('g').attr('transform',`translate(0,${height-55})`).call(d3.axisBottom(x));svg.append('g').attr('transform',`translate(${left-5},0)`).call(d3.axisLeft(y).tickSize(0));
   const cells=rows.flatMap((row,i)=>columns.map((column,j)=>({row,column,value:+values[i][j]})));
   inspect(svg.selectAll('rect').data(cells).join('rect').attr('x',r=>x(r.column)).attr('y',r=>y(r.row)).attr('width',x.bandwidth()).attr('height',y.bandwidth()).attr('fill',r=>color(r.value)),r=>`${r.row} · ${r.column}: ${number(r.value)}${percent?'%':''}`);
@@ -70,7 +70,7 @@ function tree(id,data){
   svg.append('g').attr('transform','translate(65,0)').call(d3.axisLeft(y).ticks(5));
   svg.append('text').attr('x',65).attr('y',18).text('Average cosine distance');
   const segments=data.icoord.map((xs,i)=>xs.map((v,j)=>[x(v),y(data.dcoord[i][j]) ]));
-  inspect(svg.selectAll('.branch').data(segments).join('path').attr('class','branch').attr('d',d3.line()).attr('fill','none').attr('stroke','#697787').attr('stroke-width',2),(_,i)=>'Hierarchy merge');
+  inspect(svg.selectAll('.branch').data(segments).join('path').attr('class','branch').attr('d',d3.line()).attr('fill','none').attr('stroke','#3d7067').attr('stroke-width',2),(_,i)=>'Hierarchy merge');
   svg.selectAll('.leaf').data(data.ivl).join('text').attr('class','leaf').attr('transform',(r,i)=>`translate(${x(i*10+5)},342) rotate(65)`).attr('font-size',10).text(r=>r);
   d3.select(`#${id} .interactive-body`).append('p').attr('class','chart-footnote').text('Hover or focus branches to inspect. Parentheses show county counts in collapsed nodes.');
   inspect(svg.selectAll('.branch'),(_,i)=>`Merge distance ${number(Math.max(...data.dcoord[i]))}`);
@@ -113,15 +113,15 @@ export async function pcaDetails({pcaResults:d}){
   if(document.getElementById('pca-scores')!==host)return;
   const pcs=d.variance.slice(0,d.retained).map(r=>r.component);
   heatmap('pca-loadings',d.feature_labels,pcs,loadings.map(row=>pcs.map(pc=>+row[pc])),1);
-  selectOutcome('pca-scores',o=>{const limit=d.color_limits[o.id],color=d3.scaleLinear().domain(o.id==='net'?[-limit,0,limit]:[0,limit]).range(o.id==='net'?['#697787','#f5f0e4','#b27c16']:(o.id==='inflow'?['#f5f0e4','#b27c16']:['#f5f0e4','#697787'])).clamp(true);
+  selectOutcome('pca-scores',o=>{const limit=d.color_limits[o.id],color=d3.scaleLinear().domain(o.id==='net'?[-limit,0,limit]:[0,limit]).range(o.id==='net'?['#3d7067','#f5f0e4','#965030']:(o.id==='inflow'?['#f5f0e4','#965030']:['#f5f0e4','#3d7067'])).clamp(true);
     scatter('pca-scores',scores,'PC1','PC2',r=>color(+r[o.rate]),'PC1','PC2',false,o);colorLegend('pca-scores',o.label+' / 1,000 residents',o.id==='net'?'diverging':o.id==='inflow'?'sequential':'outflow',[o.id==='net'?number(-limit):'0',o.id==='net'?'0':number(limit/2),number(limit)]);});
   const root=d3.select('#pca-quintiles .interactive-body');root.append('label').text('Component ').append('select').attr('class','component-select').attr('aria-label','Quintile component').selectAll('option').data(pcs).join('option').text(r=>r);
   root.node().insertAdjacentHTML('afterbegin',outcomeSelect('Quintile outcome'));
   const card=root.node().closest('.chart-card');root.selectAll('label').each(function(){cardControls(card,this);});
   function draw(){root.selectAll('svg,.chart-tooltip').remove();const pc=card.querySelector('.component-select').value,o=outcomeById(card.querySelector('.outcome-select').value),all=quintiles.filter(r=>r.outcome===o.id),rows=all.filter(r=>r.component===pc),svg=chart('pca-quintiles'),x=d3.scaleLinear().domain([1,5]).range([65,820]),y=d3.scaleLinear().domain(d3.extent(all.flatMap(r=>[+r.q25,+r.q75]))).nice().range([330,35]);svg.attr('aria-label',o.label+' by '+pc+' score quintile');chartAxes(svg,x,y,'Score quintile (low → high)',o.label+': median and middle 50%');svg.select('.x-axis').call(d3.axisBottom(x).tickValues([1,2,3,4,5]).tickFormat(d3.format('d')));
-    svg.selectAll('.interval').data(rows).join('line').attr('class','interval').attr('x1',r=>x(+r.quintile)).attr('x2',r=>x(+r.quintile)).attr('y1',r=>y(+r.q25)).attr('y2',r=>y(+r.q75)).attr('stroke','#697787').attr('stroke-width',4);
-    svg.append('path').datum(rows).attr('d',d3.line().x(r=>x(+r.quintile)).y(r=>y(+r.median))).attr('fill','none').attr('stroke','#b27c16');
-    inspect(svg.selectAll('circle').data(rows).join('circle').attr('cx',r=>x(+r.quintile)).attr('cy',r=>y(+r.median)).attr('r',6).attr('fill','#b27c16'),r=>`${pc} · ${o.label} · Q${r.quintile} · n=${r.counties} · Median ${number(r.median)} · IQR ${number(r.q25)}–${number(r.q75)}`);
+    svg.selectAll('.interval').data(rows).join('line').attr('class','interval').attr('x1',r=>x(+r.quintile)).attr('x2',r=>x(+r.quintile)).attr('y1',r=>y(+r.q25)).attr('y2',r=>y(+r.q75)).attr('stroke','#3d7067').attr('stroke-width',4);
+    svg.append('path').datum(rows).attr('d',d3.line().x(r=>x(+r.quintile)).y(r=>y(+r.median))).attr('fill','none').attr('stroke','#965030');
+    inspect(svg.selectAll('circle').data(rows).join('circle').attr('cx',r=>x(+r.quintile)).attr('cy',r=>y(+r.median)).attr('r',6).attr('fill','#965030'),r=>`${pc} · ${o.label} · Q${r.quintile} · n=${r.counties} · Median ${number(r.median)} · IQR ${number(r.q25)}–${number(r.q75)}`);
   }d3.select(card).selectAll('select').on('change',draw);draw();
   legend('pca-quintiles',['<i class="dot-key gold"></i>Median','<i class="whisker-key"></i>Middle 50%']);
   const {svg,x,y}=scatter('pca-overview-directions',toy.points.map(p=>({x:p[0],y:p[1]})),'x','y',()=>clusterColors[1],'Centered feature A','Centered feature B');

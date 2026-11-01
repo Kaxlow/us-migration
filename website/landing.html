@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>US County Migration Atlas</title>
+  <meta name="description" content="Explore US county-to-county migration in an interactive 3D atlas, from 2009 to 2023, then discover the research behind the patterns.">
+  <link rel="icon" href="assets/migration-arrows.svg"><link rel="stylesheet" href="styles.css?v=atlas-3"><link rel="stylesheet" href="landing.css?v=atlas-3">
+  <script defer src="vendor/d3.min.js"></script><script type="module" src="landing.js?v=atlas-3"></script>
+</head>
+<body class="landing">
+<a class="skip" href="#flow-controls">Skip to map controls</a>
+<main>
+  <h1 class="atlas-title">US County Migration Atlas</h1>
+  <section class="flow-explorer" aria-label="Interactive county migration atlas">
+    <form id="flow-controls" class="flow-controls" onsubmit="return false">
+      <label class="county-control">County <input id="flow-county" type="search" aria-controls="flow-counties" aria-expanded="false" placeholder="Search by county or state" autocomplete="off" disabled><div id="flow-counties" class="county-suggestions" hidden></div></label>
+      <label>Ending year <select id="flow-year" disabled></select></label>
+      <label>Movement <select id="flow-mode" disabled><option value="inflow">Inflow</option><option value="outflow">Outflow</option><option value="net">Net migration</option></select></label>
+      <button id="flow-play" type="button" disabled aria-pressed="false">Play years</button>
+      <button id="flow-motion" type="button" disabled aria-pressed="false">Animate flows</button>
+    </form>
+    <div class="flow-map-layout">
+      <div class="flow-stage"><canvas id="flow-canvas" tabindex="0" role="img" aria-label="3D map of county migration flows. Drag or use arrow keys to pan; use plus and minus to zoom. Hover a flow for its value."></canvas><div class="flow-view-controls"><button id="flow-zoom-in" aria-label="Zoom in">+</button><button id="flow-zoom-out" aria-label="Zoom out">−</button><button id="flow-reset">Reset view</button></div><div id="flow-tooltip" role="tooltip" hidden></div></div>
+    </div>
+    <div class="flow-key"><span><i class="inward"></i>Inward flow</span><span><i class="outward"></i>Outward flow</span></div>
+    <div id="flow-status" class="flow-status" role="status">Loading county migration data…</div>
+  </section>
+  <div class="atlas-next"><a class="analysis-button" href="index.html">View the analysis <span aria-hidden="true">→</span></a></div>
+</main>
+</body></html>

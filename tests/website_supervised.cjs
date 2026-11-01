@@ -23,7 +23,7 @@ const server=require('node:http').createServer((req,res)=>{
     await page.goto(url+'#'+chapter+'/section-results');
     await page.waitForSelector('.confusion-plot .main-svg');
     await page.evaluate(()=>document.fonts.ready);
-    assert.deepEqual(await page.locator('.section-title').allTextContents(),['Overview','Results','Conclusions','Data Prep','Code']);
+    assert.deepEqual(await page.locator('.section-title').allTextContents(),['Overview','Data Prep','Code','Results','Conclusion']);
     const tasks=chapter==='naivebayes'?['inflow']:['outflow','net'];
     for(const outcome of tasks){
      const plot=page.locator('#'+outcome+'-confusion');
@@ -69,7 +69,7 @@ const server=require('node:http').createServer((req,res)=>{
     await page.goBack();await page.waitForSelector('.confusion-plot .main-svg');await page.waitForTimeout(200);
     assert(Math.abs(await page.evaluate(()=>scrollY)-scroll)<4,'Back restores reading position');
     await page.locator(`.section-nav a[href="#${chapter}/section-conclusions"]`).click();
-    assert((await page.locator('#section-conclusions').innerText()).includes('Conclusions'));
+    assert((await page.locator('#section-conclusions').innerText()).includes('Conclusion'));
     await page.waitForTimeout(150);
     assert(!(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)), 'Conclusions fit viewport');
     if(chapter==='dectrees'&&width===1440){await page.locator('#section-conclusions').scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'../data/interim/classification-conclusions-1440.png')});}

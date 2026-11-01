@@ -2,7 +2,7 @@
 
 This project studies how US counties' economic, demographic, housing, and environmental characteristics accompany domestic migration. Net migration, inflows, and outflows receive equal emphasis as rates per 1,000 ACS residents; counts describe movement volumes.
 
-The evidence includes longitudinal exploration, 2023 county clustering and PCA, and retrospective classification. The [research website](https://kaxlow.github.io/us-migration/) presents published work. This checkout includes local revisions that will appear there after publication.
+The evidence includes longitudinal exploration, 2023 county clustering and PCA, and retrospective classification. The [migration atlas and research website](https://kaxlow.github.io/us-migration/landing.html) presents published work. This checkout includes local revisions that will appear there after publication.
 
 ## Read the project
 

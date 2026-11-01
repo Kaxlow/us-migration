@@ -140,13 +140,14 @@ def evaluate(model, baseline, x_test, y_test, classes, counties, root, outcome):
     fig, axes = plt.subplots(1, 2, figsize=(11, 4))
     for ax, key, title in zip(axes, ['confusion', 'confusion_normalized'], ['County counts', 'Share of actual class']):
         matrix = np.asarray(result['model'][key])
-        ax.imshow(matrix, cmap='YlGnBu', vmin=0)
+        ax.imshow(matrix, cmap='migration_sequential', vmin=0,
+                  vmax=1 if key == 'confusion_normalized' else matrix.max())
         ax.set(xticks=range(len(classes)), yticks=range(len(classes)), xticklabels=classes,
                yticklabels=classes, xlabel='Predicted', ylabel='Actual', title=title)
         for i in range(len(classes)):
             for j in range(len(classes)):
                 ax.text(j, i, str(matrix[i,j]) if key=='confusion' else f'{matrix[i,j]:.1%}',
-                        ha='center', va='center', color='white' if matrix[i,j]>matrix.max()*.6 else 'black')
+                        ha='center', va='center', color='white' if matrix[i,j]>(1 if key == 'confusion_normalized' else matrix.max())*.6 else '#293d36')
     figure(fig, root, outcome+'-confusion')
     return result
 

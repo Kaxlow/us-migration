@@ -782,10 +782,9 @@
         }
       ],
       "conclusions": [
-        "The selected Multinomial NB (alpha 1) correctly classifies 50.8% of 610 held-out counties by inflow-rate tertile; the majority baseline achieves 36.4%.",
-        "Macro-F1 is 0.498, compared with baseline 0.178; balanced accuracy is 50.1%. The medium class has the lowest recall (34.6%).",
-        "Selected mean training-fold macro-F1 is 0.513 and validation macro-F1 is 0.501. This gap describes how the fitted specification transfers to held-out training folds.",
-        "Rate tertiles describe relative inflow intensity among training counties. These contemporaneous associations support retrospective classification; spatial dependence, prior exploration, source coverage and binning limit claims about future migration."
+        "The selected Multinomial Naive Bayes model (alpha 1) correctly classifies 50.8% of 610 held-out counties by 2023 inflow-rate tertile. In comparison, the majority baseline achieves 36.4%. Macro-F1 rises from 0.178 for the baseline to 0.498 for the model, and balanced accuracy is 50.1%. County characteristics therefore provide useful, though limited, information about relative inflow intensity.",
+        "The medium-inflow class has the lowest recall (34.6%), showing that counties in the middle of the inflow distribution are harder to separate using these binned characteristics. Mean training-fold macro-F1 is 0.513 and validation macro-F1 is 0.501; the small gap suggests similar performance across the fitted and held-out training folds.",
+        "This answers the inflow portion of Question 9. Rate tertiles describe relative intensity using training-derived thresholds. The fitted indicator patterns describe associations; correlated predictors, quantile binning and the conditional-independence assumption constrain interpretation. The evidence supports retrospective classification on the observed 2023 cohort."
       ]
     }
   }

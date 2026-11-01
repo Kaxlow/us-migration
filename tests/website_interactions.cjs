@@ -4,11 +4,15 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'../website');
 async function checkMapColumns(page,id){
-  const geometry=await page.locator(id).evaluate(el=>{
-    const guide=el.querySelector('.map-guide').getBoundingClientRect(),map=el.querySelector('.map-wrap').getBoundingClientRect(),top=el.querySelector('.map-top').getBoundingClientRect();
-    return {left:guide.right<=map.left,below:guide.top>=top.bottom-1,stretch:Math.abs(guide.height-map.height)<2,aligned:Math.abs(guide.top-map.top)<2,width:map.width};
-  });
-  assert(geometry.left&&geometry.below&&geometry.stretch&&geometry.aligned&&geometry.width>100,'Instructions occupy a separate, vertically stretched left column below the map header');
+  assert.equal(await page.locator(id+' .map-guide').count(),0);
+  const search=page.locator(id+' input[type=search]');
+  assert.equal(await search.getAttribute('placeholder'),'Search by county or state');
+  await search.fill('Texas');
+  assert.equal(await page.locator(id+' .county-suggestions button').count(),254);
+  await search.press('Escape');
+  await search.fill('');
+  assert(await page.locator(id).evaluate(el=>{const body=el.querySelector('.map-content').getBoundingClientRect(),map=el.querySelector('.map-wrap').getBoundingClientRect();return map.width>body.width-30;}),'Map occupies the full card width');
+
 }
 const server=require('node:http').createServer((req,res)=>{
   const file=path.join(root,decodeURIComponent(req.url.split('?')[0]==='/'?'index.html':req.url.split('?')[0]));
@@ -26,8 +30,8 @@ const server=require('node:http').createServer((req,res)=>{
       await page.setViewportSize({width,height:900});await page.goto(url+'#introduction');
       await page.waitForSelector('#population-map .county');
       await checkMapColumns(page,'#population-map');
-      assert.equal(await page.locator('.questions .question h3').first().textContent(),'How do migration flows vary across the country, and which counties have the largest migration inflows and outflows?');
-      assert(await page.locator('#population-map').evaluate(el=>{const controls=el.querySelector('.map-controls').getBoundingClientRect(),top=el.querySelector('.map-top').getBoundingClientRect(),guide=el.querySelector('.map-guide').getBoundingClientRect();return Math.abs(controls.right-top.right)<15&&guide.top>=top.bottom-1;}),'Population controls align right above the embedded guide');
+      assert.equal(await page.locator('.questions .question h3').first().textContent(),'Geographic patterns');
+      assert(await page.locator('#population-map').evaluate(el=>{const controls=el.querySelector('.map-controls').getBoundingClientRect(),top=el.querySelector('.map-top').getBoundingClientRect();return Math.abs(controls.right-top.right)<15;}),'Population controls align right');
       await page.locator('#population-map').screenshot({path:path.resolve(__dirname,`../data/interim/revised-population-map-${width}.png`)});
     }
     for(const width of [1440,768,390]){
@@ -35,7 +39,7 @@ const server=require('node:http').createServer((req,res)=>{
       for(const chapter of ['clustering','pca']){
         await page.goto(url+'#'+chapter);
         await page.waitForSelector(chapter==='clustering'?'#clustering-cross-view rect':'#pca-quintiles circle');
-        await page.locator('.method-details > summary').click();
+        assert.equal(await page.locator('.method-details,.supporting-detail').count(),0);
         assert.equal(await page.locator('.analysis-samples h3').count(),0);
         const empty=await page.locator('[data-analysis-chart] .interactive-body').evaluateAll(els=>els.filter(el=>!el.querySelector('svg,ol')).map(el=>el.parentElement.id));assert.deepEqual(empty,[]);
         const headers=await page.locator('.card-header').evaluateAll(els=>els.map(el=>{const title=el.querySelector('h3').getBoundingClientRect();return [...el.querySelectorAll('select')].every(s=>{const r=s.getBoundingClientRect();return Math.abs(r.top-title.top)<2&&r.height<=title.height+1;});}));
@@ -88,7 +92,7 @@ const server=require('node:http').createServer((req,res)=>{
           assert.equal(await page.locator('.question-answer').count(),0);
           assert(!/undefined/.test(await page.locator('#section-conclusions').locator('xpath=ancestor::section').textContent()));
           assert.equal(await page.locator('.pca-interpretations article').count(),5);
-          assert.equal(await page.locator('.pca-conclusion-summary p').count(),3);
+          assert.equal(await page.locator('#section-conclusions').locator('xpath=ancestor::section').locator('p').count(),4);
           assert.equal(await page.locator('#pca-associations rect').count(),15);
           assert.equal(await page.locator('.pca-supplement tbody tr').count(),13);
           assert.equal(await page.locator('.pca-supplement').getAttribute('open'),null);
@@ -102,13 +106,13 @@ const server=require('node:http').createServer((req,res)=>{
             assert.equal(await page.locator('#pca-quintiles circle').count(),5);
           }
         }
-        await page.locator('.section-nav a').filter({hasText:'Conclusions'}).click();
+        await page.locator('.section-nav a').filter({hasText:'Conclusion'}).click();
         await page.evaluate(()=>window.scrollBy(0,130));await page.waitForTimeout(150);
         const before=await page.evaluate(()=>window.scrollY);
         await page.locator('.section-nav a').filter({hasText:'Code',exact:true}).click();
         await page.waitForTimeout(100);await page.goBack();await page.waitForTimeout(150);
         assert(Math.abs(before-await page.evaluate(()=>window.scrollY))<3,'Same chapter section Back');
-        assert.equal(await page.locator('.section-nav [aria-current]').textContent(),'Conclusions');
+        assert.equal(await page.locator('.section-nav [aria-current]').textContent(),'Conclusion');
         await page.locator('#navigation a[href="#introduction"]').click();await page.waitForTimeout(150);
         await page.goBack();await page.waitForTimeout(750);
         const after=await page.evaluate(()=>window.scrollY);
@@ -129,7 +133,7 @@ const server=require('node:http').createServer((req,res)=>{
       for(const outcome of ['net','inflow','outflow']){
         await page.locator('#migration-map .outcome-select').selectOption(outcome);
         const gradient=await page.locator('#migration-map .gradient').evaluate(el=>el.style.background);
-        assert(gradient.includes(outcome==='outflow'?'105, 119, 135':'178, 124, 22'));
+        assert(gradient.includes(outcome==='outflow'?'61, 112, 103':'150, 80, 48'));
         if(outcome==='net')assert.equal(await page.locator('#migration-map .legend-labels span').nth(1).textContent(),'0');
         const before=await page.locator('#migration-map .legend-labels').textContent();
         await page.locator('#migration-map .year').selectOption('2009');
@@ -154,12 +158,6 @@ const server=require('node:http').createServer((req,res)=>{
           assert.deepEqual(actual,(unit==='rate'?data.rateRankings:data.countRankings).filter(r=>r.outcome===outcome).map(r=>r[field]));
         }
       }
-      const geometry=await page.locator('#migration-map').evaluate(el=>{
-        const map=el.getBoundingClientRect(),guide=el.querySelector('.map-guide').getBoundingClientRect(),top=el.querySelector('.map-top').getBoundingClientRect(),wrap=el.parentElement.getBoundingClientRect();
-        return {inside:guide.left>=map.left&&guide.right<=map.right&&guide.top>=top.bottom-1&&guide.bottom<=map.bottom,fullWidth:Math.abs(map.width-wrap.width)<2};
-      });
-      assert(geometry.inside,'Map instructions sit inside the card below the controls');
-      assert(geometry.fullWidth,'Map fills its available horizontal space');
       await checkMapColumns(page,'#migration-map');
       assert(await page.locator('.migration-unit').evaluate(el=>{const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=getComputedStyle(el).font;return el.clientWidth>Math.max(...[...el.options].map(o=>ctx.measureText(o.text).width))+25;}),'Both unit options fit');
       await page.locator('#migration-map input').focus();

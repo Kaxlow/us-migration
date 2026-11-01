@@ -7,6 +7,30 @@ import json
 import tempfile
 
 
+def notebook_conclusions(root, notebook):
+    """Read the reviewed prose from the notebook's conclusion Markdown cell.
+
+    Authors review these paragraphs against saved results after changing a model.
+    Exporting the same prose keeps the notebook and website in agreement.
+    """
+    cells = json.loads((Path(root)/'notebooks'/f'{notebook}.ipynb').read_text(encoding='utf-8'))['cells']
+    cell = next(c for c in cells if c['cell_type'] == 'markdown'
+                and any(line.startswith('## Conclusion') for line in ''.join(c['source']).splitlines()))
+    sections = []
+    for block in ''.join(cell['source']).strip().split('\n\n'):
+        if block.startswith('<a ') or block.startswith('## '):
+            continue
+        if block.startswith('### '):
+            sections.append({'title': block[4:].strip(), 'paragraphs': []})
+        else:
+            if not sections:
+                sections.append({'title': '', 'paragraphs': []})
+            sections[-1]['paragraphs'].append(block.replace('\n', ' '))
+    if not sections or any(not s['paragraphs'] for s in sections):
+        raise ValueError(f'{notebook}: conclusions need reviewed paragraphs')
+    return sections
+
+
 def write_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)

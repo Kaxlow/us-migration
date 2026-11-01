@@ -15,7 +15,7 @@ export const chapters = [
   {title:'PCA', heading:'Principal Component Analysis: Dimensions of County Characteristics', slug:'pca', group:'Analyses', status:'complete', datasets:['pcaResults'], ...pca},
   {title:'Naive Bayes', heading:'Naive Bayes: Classifying Inflow Intensity', slug:'naivebayes', group:'Analyses', status:'complete', datasets:['naiveBayesResults'], ...naiveBayes},
   {title:'Decision Trees', heading:'Decision Trees: Classifying Outflow and Net Direction', slug:'dectrees', group:'Analyses', status:'complete', datasets:['decisionTreeResults'], ...decisionTrees},
-  {title:'Exploration and data', heading:'Migration Patterns and Their Data Foundations', slug:'data-prep-eda', group:'Data & methods', status:'complete', datasets:['analysis','cleaningEvidence','geo','states'], ...eda},
+  {title:'Exploration and data', heading:'Migration Patterns and Their Data Foundations', slug:'data-prep-eda', group:'Data & Methods', status:'complete', datasets:['analysis','cleaningEvidence','geo','states'], ...eda},
   ...[['Regression','regression'],['AdaBoost','adaboost'],['Gradient boosting','gradientboosting'],['XGBoost','xgboost']].map(([title,slug])=>({title,heading:title,slug,group:'Future work',status:'planned',datasets:[],render:()=>placeholder.render(title),init:placeholder.init})),
 ];
 

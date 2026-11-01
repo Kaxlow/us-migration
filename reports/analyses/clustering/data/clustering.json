@@ -676,9 +676,26 @@
       "inertia": null
     }
   ],
+  "conclusion_sections": [
+    {
+      "title": "County characteristic profiles",
+      "paragraphs": [
+        "K-means and hierarchical clustering each select two characteristic profiles among 3,050 counties in 2023. Their adjusted Rand index of 0.548 indicates moderate agreement, so county assignments depend partly on the distance measure and clustering method.",
+        "The profile with higher income, education and housing costs has median inflow and outflow rates of 51.31 and 48.05 per 1,000 residents, compared with 41.97 and 40.88 in the other profile. The profiles differ by only 0.70 in median net migration, and their middle 50% of net rates overlap substantially. County characteristics primarily distinguish two-way turnover in this comparison."
+      ]
+    },
+    {
+      "title": "Migration patterns",
+      "paragraphs": [
+        "Clustering inflow and outflow rates directly also selects two groups. The higher-turnover group has a median net rate of 7.81 per 1,000 residents, compared with 0.62 for the lower-turnover group. Agreement between clustering methods is moderate (adjusted Rand index 0.448). These migration differences follow from grouping the rates themselves; the characteristic profiles compare migration after fitting.",
+        "Together, the two views answer Question 8: counties share broad characteristic and movement profiles, while grouping choices affect the boundaries. Rates measure IRS-covered individuals per 1,000 ACS residents. These descriptive group comparisons support interpretation of the observed cohort; causal explanations require a separate design."
+      ]
+    }
+  ],
   "conclusions": [
-    "Both methods select two characteristic profiles and two migration groups among 3,050 counties. Agreement between methods is moderate (adjusted Rand index 0.548 for characteristics and 0.448 for migration), so the group boundaries depend on the chosen geometry.",
-    "The higher-income, education and housing-cost characteristic profile has higher median inflow and outflow rates (51.31 and 48.05) than the other profile (41.97 and 40.88). Median net migration differs by only 0.70 per 1,000, and the middle halves of the net-migration distributions overlap substantially. The characteristic profiles primarily distinguish two-way turnover.",
-    "Clustering inflow and outflow directly separates higher-turnover and lower-turnover counties. Their median net rates are 7.81 and 0.62 per 1,000, respectively. These outcome contrasts follow the rate-based grouping; the characteristic analysis compares migration after fitting. All reported rates describe IRS-covered individuals per 1,000 ACS residents."
+    "K-means and hierarchical clustering each select two characteristic profiles among 3,050 counties in 2023. Their adjusted Rand index of 0.548 indicates moderate agreement, so county assignments depend partly on the distance measure and clustering method.",
+    "The profile with higher income, education and housing costs has median inflow and outflow rates of 51.31 and 48.05 per 1,000 residents, compared with 41.97 and 40.88 in the other profile. The profiles differ by only 0.70 in median net migration, and their middle 50% of net rates overlap substantially. County characteristics primarily distinguish two-way turnover in this comparison.",
+    "Clustering inflow and outflow rates directly also selects two groups. The higher-turnover group has a median net rate of 7.81 per 1,000 residents, compared with 0.62 for the lower-turnover group. Agreement between clustering methods is moderate (adjusted Rand index 0.448). These migration differences follow from grouping the rates themselves; the characteristic profiles compare migration after fitting.",
+    "Together, the two views answer Question 8: counties share broad characteristic and movement profiles, while grouping choices affect the boundaries. Rates measure IRS-covered individuals per 1,000 ACS residents. These descriptive group comparisons support interpretation of the observed cohort; causal explanations require a separate design."
   ]
 }

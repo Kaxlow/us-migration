@@ -18,7 +18,7 @@ const server=require('node:http').createServer((req,res)=>{
     await page.route('https://kennethlow.com/**',r=>r.fulfill({body:''}));
     await page.goto(url+'#introduction');await page.waitForSelector('#q10');
     assert(!requests.some(r=>/data\/(exploration|clustering|pca|classification)\//.test(r)),'Overview requests only its own datasets and compact findings');
-    assert.deepEqual(await page.locator('.nav-group-label').allTextContents(),['Overview','Findings','Analyses','Data & methods']);
+    assert.deepEqual(await page.locator('.nav-group-label').allTextContents(),['Overview','Data & Methods','Analyses','Findings']);
     assert.equal(await page.locator('.question-status').count(),10);
     assert(!/\[object Object\]|undefined/.test(await page.locator('main').innerText()));
     for(const width of [1440,768,390]){
